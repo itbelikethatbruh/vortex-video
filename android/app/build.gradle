@@ -164,7 +164,8 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            signingConfig signingConfigs.release
+            // unsigned in CI (the key isn't there); signed when keystore.properties is present
+            if (signingConfigs.release.storeFile != null) signingConfig signingConfigs.release
         }
     }
     compileOptions {
