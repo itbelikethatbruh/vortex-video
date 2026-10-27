@@ -21,9 +21,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
-      - name: Install SDK packages
-        run: sdkmanager "platforms;android-36" "build-tools;35.0.0"
+      - name: Install SDK packages (the runner image ships the Android SDK)
+        run: |
+          SM=$(ls -d "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | sort -V | tail -1)
+          yes | "$SM" --licenses > /dev/null || true
+          "$SM" "platforms;android-36" "build-tools;35.0.0"
       - name: Build unsigned release APK
         working-directory: android
         run: |
