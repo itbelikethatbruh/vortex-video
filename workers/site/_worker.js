@@ -1,6 +1,7 @@
 /* Vortex Video — the site, served by Cloudflare Pages (vortex-video.pages.dev).
-   The GitHub repo is the source of truth: files come from public/ at a pinned commit (REF),
-   so a deploy is atomic and a rollback is just pointing REF at an older commit.
+   The GitHub repo is the source of truth: files come from public/ at a pinned commit, so a deploy
+   is atomic and a rollback is just pointing back at an older commit. The commit is the "ref" key
+   in the CONFIG KV namespace (deploy = write a new SHA there), falling back to the REF variable.
    Extra routes:
    - /api/turn: short-lived Cloudflare TURN relay credentials (TURN_KEY_ID / TURN_KEY_TOKEN secrets)
    - /.well-known/assetlinks.json: links the Android app to this site (ANDROID_CERT_SHA256)
@@ -37,8 +38,18 @@ export default {
   },
 };
 
+let refCache = { v: '', at: 0 };
+async function currentRef(env) {
+  if (Date.now() - refCache.at < 30000 && refCache.v) return refCache.v;
+  let v = '';
+  try { if (env.CONFIG) v = (await env.CONFIG.get('ref')) || ''; } catch { /* KV unavailable: use REF */ }
+  v = /^[0-9a-f]{40}$/.test(v) ? v : String(env.REF || 'main');
+  refCache = { v, at: Date.now() };
+  return v;
+}
+
 async function file(env, ctx, repoPath, ext, headers) {
-  const ref = String(env.REF || 'main');
+  const ref = await currentRef(env);
   const src = `https://raw.githubusercontent.com/${REPO}/${ref}/${repoPath}`;
   const cache = caches.default, key = new Request(src);
   let r = await cache.match(key);

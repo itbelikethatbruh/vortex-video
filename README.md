@@ -159,7 +159,7 @@ flowchart LR
 
 1. Create a Pages project and deploy `workers/site/_worker.js` as its `_worker.js`.
 2. Set these production variables on the project:
-   - `REF`: the commit to serve, as a full SHA. To deploy, point it at a new commit; to roll back, point it at an older one.
+   - `REF`: fallback commit to serve. Deploys write the commit SHA to the `ref` key of the `CONFIG` KV namespace (bound to the project), which takes effect within 30 seconds; to roll back, write an older SHA.
    - `TURN_KEY_ID` / `TURN_KEY_TOKEN` (secrets): a Cloudflare Realtime TURN key.
    - `ANDROID_CERT_SHA256`: your Android signing certificate fingerprint.
 3. Deploy `workers/keepalive` with `wrangler deploy` from that folder.
