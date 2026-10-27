@@ -5,7 +5,10 @@
    Extra routes:
    - /api/turn: short-lived Cloudflare TURN relay credentials (TURN_KEY_ID / TURN_KEY_TOKEN secrets)
    - /.well-known/assetlinks.json: links the Android app to this site (ANDROID_CERT_SHA256)
-   - /download/android: the signed Android app (releases/vortex-video.apk at REF) */
+   - /download/android: the signed Android app (releases/vortex-video.apk at REF)
+   - /api/ring: call alerts. Sends a Web Push to every device of the friend being rung (VAPID_PUBLIC /
+     VAPID_PRIVATE_JWK secrets). The caller's own Supabase sign-in is used to look the devices up, so the
+     database decides who may ring whom (vortex_push_targets: friends only, rate limited). */
 const REPO = 'itbelikethatbruh/vortex-video';
 const PKG = 'dev.pages.vortex_video.twa';
 const TYPES = {
@@ -19,6 +22,7 @@ export default {
     const url = new URL(req.url);
     const p = url.pathname;
     if (p === '/api/turn') return turn(req, env);
+    if (p === '/api/ring') return ring(req, env, ctx);
     if (p === '/.well-known/assetlinks.json') {
       const fps = String(env.ANDROID_CERT_SHA256 || '').split(',').map((s) => s.trim()).filter(Boolean);
       const body = fps.length ? [{ relation: ['delegate_permission/common.handle_all_urls'], target: { namespace: 'android_app', package_name: PKG, sha256_cert_fingerprints: fps } }] : [];
@@ -83,3 +87,105 @@ async function turn(req, env) {
   }).filter(Boolean);
   return Response.json({ iceServers: list }, { headers: { 'cache-control': 'no-store' } });
 }
+
+/* ---------------- call alerts (Web Push: RFC 8291 payload encryption + RFC 8292 VAPID) ---------------- */
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+async function ring(req, env, ctx) {
+  const no = (msg, status) => Response.json({ error: msg }, { status, headers: { 'cache-control': 'no-store' } });
+  if (req.method !== 'POST') return no('method', 405);
+  const site = req.headers.get('sec-fetch-site');
+  if (site && site !== 'same-origin') return no('forbidden', 403);
+  if (!env.VAPID_PUBLIC || !env.VAPID_PRIVATE_JWK || !env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return no('call alerts not configured', 503);
+  const jwt = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
+  if (!jwt || jwt.length > 4000) return no('sign in first', 401);
+  let b;
+  try { b = await req.json(); } catch { return no('bad request', 400); }
+  b = b && typeof b === 'object' ? b : {};
+  const kind = b.kind === 'end' ? 'end' : b.kind === 'ring' ? 'ring' : '';
+  if (!kind || !UUID.test(String(b.to || '')) || !/^[a-z0-9]{6,20}$/.test(String(b.id || ''))) return no('bad request', 400);
+  const msg = { t: kind, id: b.id, at: Date.now() };
+  if (kind === 'ring') {
+    if (!/^VTX-[A-Z0-9]{4,24}$/.test(String(b.room || '')) || !/^[a-z0-9]{8,32}$/.test(String(b.tok || ''))) return no('bad request', 400);
+    msg.room = b.room; msg.tok = b.tok;
+  } else msg.reason = ['answered', 'declined', 'missed'].includes(b.reason) ? b.reason : 'missed';
+
+  const rpc = (fn, args) => fetch(`${env.SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers: { apikey: env.SUPABASE_ANON_KEY, authorization: `Bearer ${jwt}`, 'content-type': 'application/json' },
+    body: JSON.stringify(args),
+  });
+  const r = await rpc('vortex_push_targets', { target: b.to });
+  if (!r.ok) {
+    let m = 'not allowed';
+    try { m = (await r.json()).message || m; } catch { /* */ }
+    return no(m, r.status === 401 ? 401 : r.status >= 500 ? 502 : 403);
+  }
+  const t = await r.json();
+  msg.from = t.from; msg.name = String(t.name || 'A friend').slice(0, 40);
+  const subs = Array.isArray(t.subs) ? t.subs.slice(0, 10) : [];
+  const body = new TextEncoder().encode(JSON.stringify(msg));
+  const results = await Promise.all(subs.map(async (s) => {
+    try {
+      const res = await webPush(env, s, body, { ttl: kind === 'ring' ? 45 : 600, topic: 'r' + b.id });
+      if (res.status === 404 || res.status === 410) ctx.waitUntil(rpc('vortex_push_gone', { target: b.to, sub_endpoint: s.endpoint }).catch(() => {}));
+      return res.ok;
+    } catch { return false; }
+  }));
+  return Response.json({ devices: subs.length, sent: results.filter(Boolean).length }, { headers: { 'cache-control': 'no-store' } });
+}
+
+const b64u = {
+  enc(buf) { let s = ''; for (const c of new Uint8Array(buf)) s += String.fromCharCode(c); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); },
+  dec(str) { const s = atob(String(str).replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((String(str).length + 3) % 4)); return Uint8Array.from(s, (c) => c.charCodeAt(0)); },
+};
+const cat = (...parts) => { const out = new Uint8Array(parts.reduce((n, p) => n + p.length, 0)); let o = 0; for (const p of parts) { out.set(p, o); o += p.length; } return out; };
+const utf8 = (s) => new TextEncoder().encode(s);
+
+async function hkdf(salt, ikm, info, len) {
+  const key = await crypto.subtle.importKey('raw', ikm, 'HKDF', false, ['deriveBits']);
+  return new Uint8Array(await crypto.subtle.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt, info }, key, len * 8));
+}
+
+/* aes128gcm content coding for one push message (RFC 8291 §3.4, single record) */
+async function encryptPush(sub, plain) {
+  const uaPublic = b64u.dec(sub.p256dh), authSecret = b64u.dec(sub.auth);
+  if (uaPublic.length !== 65 || authSecret.length !== 16) throw new Error('bad subscription keys');
+  const as = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+  const asPublic = new Uint8Array(await crypto.subtle.exportKey('raw', as.publicKey));
+  const uaKey = await crypto.subtle.importKey('raw', uaPublic, { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+  const shared = new Uint8Array(await crypto.subtle.deriveBits({ name: 'ECDH', public: uaKey }, as.privateKey, 256));
+  const ikm = await hkdf(authSecret, shared, cat(utf8('WebPush: info\0'), uaPublic, asPublic), 32);
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const cek = await hkdf(salt, ikm, utf8('Content-Encoding: aes128gcm\0'), 16);
+  const nonce = await hkdf(salt, ikm, utf8('Content-Encoding: nonce\0'), 12);
+  const key = await crypto.subtle.importKey('raw', cek, 'AES-GCM', false, ['encrypt']);
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv: nonce }, key, cat(plain, new Uint8Array([2]))));
+  const rs = new Uint8Array([0, 0, 16, 0]);                               // record size 4096
+  return cat(salt, rs, new Uint8Array([65]), asPublic, ct);
+}
+
+let vapidKey = null;
+async function vapidAuth(env, endpoint) {
+  if (!vapidKey) vapidKey = await crypto.subtle.importKey('jwk', JSON.parse(env.VAPID_PRIVATE_JWK), { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
+  const u = new URL(endpoint);
+  const head = b64u.enc(utf8(JSON.stringify({ typ: 'JWT', alg: 'ES256' })));
+  const claims = b64u.enc(utf8(JSON.stringify({ aud: u.origin, exp: Math.floor(Date.now() / 1000) + 12 * 3600, sub: env.VAPID_SUBJECT || 'https://vortex-video.pages.dev' })));
+  const sig = await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, vapidKey, utf8(head + '.' + claims));
+  return `vapid t=${head}.${claims}.${b64u.enc(sig)}, k=${env.VAPID_PUBLIC}`;
+}
+
+async function webPush(env, sub, plain, { ttl, topic }) {
+  if (!/^https:\/\//.test(String(sub.endpoint || ''))) throw new Error('bad endpoint');
+  const body = await encryptPush(sub, plain);
+  return fetch(sub.endpoint, {
+    method: 'POST',
+    headers: {
+      authorization: await vapidAuth(env, sub.endpoint),
+      'content-encoding': 'aes128gcm', 'content-type': 'application/octet-stream',
+      ttl: String(ttl), urgency: 'high', topic,
+    },
+    body,
+  });
+}
+

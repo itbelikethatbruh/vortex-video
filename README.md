@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.png" alt="Vortex Video: video calls, movie nights and party games with your squad" width="100%">
+  <img src="docs/banner.png" alt="Vortex Video: video calls and movie nights with your squad" width="100%">
 </p>
 
 <p align="center">
@@ -11,9 +11,9 @@
 
 ---
 
-**Vortex Video is a hangout app for small friend groups: a video call, a movie theater and a game night in one browser tab.** Calls go directly between your devices, movies play in sync on everyone's screen at full quality, and there's nothing to install. On Android, an app is available that opens it full screen.
+**Vortex Video is a hangout app for small friend groups: a video call and a movie theater in one browser tab.** Calls go directly between your devices, movies play in sync on everyone's screen at full quality, and there's nothing to install. On Android, an app is available that opens it full screen and rings your phone when a friend calls.
 
-It's built for the way friends actually hang out online: someone starts a call, someone else puts on a movie, the movie dips when people talk, and between episodes you play a round of trivia. It's one tab, with no account needed for your guests and no time limit.
+It's built for the way friends actually hang out online: someone starts a call, someone else puts on a movie, and the movie dips when people talk. It's one tab, with no account needed for your guests and no time limit.
 
 ## Why Vortex
 
@@ -35,7 +35,7 @@ Most tools do one of these jobs well and make you stitch the rest together. A ca
 | Works on Android, Windows, Mac and iPhone | ✅ Browser | ✅ App | ✅ App | ✅ | ❌ SharePlay is Apple-only | ⚠️ Desktop browsers |
 | Guests join without an account | ✅ | ❌ | ✅ | ⚠️ Depends on settings | ⚠️ Web link, no SharePlay | ⚠️ Extension + own streaming subscription |
 | No time limit on group calls | ✅ | ✅ | ❌ 40 min | ❌ 60 min (3+ people) | ✅ | n/a |
-| Party games built into the call | ✅ 4 games | ✅ Activities | ❌ | ❌ | ⚠️ Some apps | ❌ |
+| See the caller's live video before you answer | ✅ | ❌ | ❌ | ❌ | ❌ | n/a |
 | Group calls go peer-to-peer (no media server) | ✅ | ❌ | ❌ | ❌ | ❌ | n/a |
 | Nothing to install | ✅ | ⚠️ Browser version | ⚠️ Browser version | ✅ | ❌ | ❌ Extension |
 
@@ -47,7 +47,8 @@ We'd rather you hear this from us:
 
 - **Big groups.** Vortex is a peer-to-peer mesh built for **up to 8 people**. Zoom, Meet and Discord route media through servers and scale to far larger calls.
 - **iPhone in the background.** Safari pauses web pages you switch away from. A native app like FaceTime keeps the call alive; a web app can't.
-- **Screen sharing from phones.** Android browsers can't share the screen at all, and iPhone support only arrived in iOS 27. Vortex shares screens from computers.
+- **Screen sharing from phones.** Chrome on Android gives web apps no way to capture the screen, so Vortex shares screens from computers only. Phones can still watch a share.
+- **A full-screen ringing call screen.** Call alerts arrive as a notification with Answer and Decline, not the full-screen incoming-call screen a native app like WhatsApp can show.
 - **Torrents.** Browsers can only download from WebRTC peers and web seeds, so many torrents shared only by desktop clients won't start. Debrid and direct links are the reliable option.
 
 ## Features
@@ -58,11 +59,13 @@ We'd rather you hear this from us:
 ### 🎥 Calls
 - Peer-to-peer video calls for up to 8 people, with automatic host migration. The call survives when whoever started it leaves.
 - Invite links (24 hours) and **ring a friend** with one tap: accept, audio-only or decline.
+- **See who's calling, live.** While your phone rings, the caller's camera plays on the ringing card (video only). They can't see or hear you until you answer, and callers can turn it off in Settings.
+- **Call alerts** when Vortex is closed or your phone is locked: "Drake is calling" with Answer and Decline, and a missed-call note if you don't pick up.
 - Friends list with online and in-call status.
 - Join preview: choose camera and mic before you go in.
 - Grid and speaker layouts, pin anyone, raise hand, reactions and chat.
 - **Squad PiP**: your friends' faces in a floating window while you use other apps.
-- Screen sharing from computers.
+- Screen sharing from computers (desktop only).
 - Live captions, call recording and auto clips. Auto clips save the last 20 seconds when the squad laughs or cheers, are opt-in, and show everyone a badge.
 - Squad radar: an optional, opt-in map of where friends are, exact or approximate. It's never stored.
 
@@ -99,12 +102,6 @@ We'd rather you hear this from us:
 - **Live avatar**: a cartoon that copies your expressions, so only the cartoon is sent.
 
 </td></tr>
-<tr><td valign="top" colspan="2">
-
-### 🎮 Party games
-**Quantum Drop** (1v1) · **Pulse Trivia Blitz** (1–8) · **Cipher Sketch**, a drawing and guessing game (2–8) · **Hyper-Disc Arena** (2–4). Games are played right inside the call, so you can see each other's reactions.
-
-</td></tr>
 </table>
 
 ## How it works
@@ -126,7 +123,7 @@ flowchart LR
 - **The app** is a single HTML file (`public/index.html`). It has no build step or framework, and its few libraries (PeerJS, WebTorrent, Supabase, MediaPipe, RNNoise, Leaflet) load from public CDNs with pinned versions.
 - **Calls** use a full mesh: every member connects directly to every other. The room is a well-known "beacon" peer that admits newcomers and checks their invite. If the beacon holder leaves, the longest-standing member takes over.
 - **Accounts, friends and ringing** run on Supabase with row-level security on every table. Rings go through a database function that checks you're friends, rate-limits, and stamps the real sender, so a ring can't be forged. Presence uses one private channel per user, so only your friends see when you're online.
-- **Hosting** is a Cloudflare Pages worker that serves `public/` from this repo at a pinned commit, hands out short-lived TURN relay credentials, and publishes the Android app-link file.
+- **Hosting** is a Cloudflare Pages worker that serves `public/` from this repo at a pinned commit, hands out short-lived TURN relay credentials, sends call alerts (Web Push), and publishes the Android app-link file.
 - **Android** is a [Trusted Web Activity](https://developer.chrome.com/docs/android/trusted-web-activity): the app opens the site full screen in Chrome, so it gets Chrome's full WebRTC, Picture-in-Picture and codec support. It uses Android's own permission prompts for notifications and location; camera and microphone permissions go through Chrome.
 
 ## Repository layout
@@ -162,6 +159,7 @@ flowchart LR
    - `REF`: fallback commit to serve. Deploys write the commit SHA to the `ref` key of the `CONFIG` KV namespace (bound to the project), which takes effect within 30 seconds; to roll back, write an older SHA.
    - `TURN_KEY_ID` / `TURN_KEY_TOKEN` (secrets): a Cloudflare Realtime TURN key.
    - `ANDROID_CERT_SHA256`: your Android signing certificate fingerprint.
+   - Call alerts: `VAPID_PUBLIC` (also set as `VAPID_PUBLIC` at the top of `public/index.html`) and `VAPID_PRIVATE_JWK` (secret, the private key as a JWK) — generate a P-256 key pair once. Plus `SUPABASE_URL` and `SUPABASE_ANON_KEY` (the same public values as the app), which `/api/ring` uses to look up a friend's devices with the caller's own sign-in.
 3. Deploy `workers/keepalive` with `wrangler deploy` from that folder.
 
 </details>

@@ -5,7 +5,7 @@
 -- Then, in the dashboard:
 --   1. Realtime → Settings → turn OFF "Allow public access"
 --      (required so the private ringing/presence channels below are enforced).
---   2. Authentication → URL Configuration → Site URL = your Netlify URL.
+--   2. Authentication → URL Configuration → Site URL = your site URL (https://vortex-video.pages.dev).
 --      Email confirmation: Supabase's built-in mailer only delivers to your
 --      project's team members (about 2 emails/hour), so friends can't confirm.
 --      Either turn OFF "Confirm email" (Authentication → Sign In / Providers →
@@ -359,3 +359,106 @@ create policy "vortex: publish own presence"
     realtime.messages.extension = 'presence'
     and (select realtime.topic()) = 'vortex:presence:' || (select auth.uid())::text
   );
+
+-- ---------------------------------------------------------------------
+-- 4. Call alerts (Web Push) — a ring reaches your phone or computer even
+--    when Vortex is closed. Each device that turns on "Call alerts" stores
+--    its push subscription here. The site's /api/ring worker reads them
+--    with the CALLER's own sign-in through vortex_push_targets(), which only
+--    answers for accepted friends and shares vortex_signal()'s rate limit.
+--    The push service only accepts messages signed with the site's private
+--    VAPID key, so a subscription can't be used to message you by anyone else.
+-- ---------------------------------------------------------------------
+create table if not exists public.push_subscriptions (
+  endpoint   text primary key check (endpoint ~ '^https://' and length(endpoint) <= 1000),
+  user_id    uuid not null references public.profiles (id) on delete cascade,
+  p256dh     text not null check (length(p256dh) between 80 and 100),
+  auth       text not null check (length(auth) between 16 and 32),
+  created_at timestamptz not null default now()
+);
+create index if not exists push_subscriptions_user on public.push_subscriptions (user_id, created_at);
+alter table public.push_subscriptions enable row level security;
+revoke all on public.push_subscriptions from anon, authenticated;
+
+-- this device's subscription, for the signed-in user (a device has one owner: the last to sign in)
+create or replace function public.vortex_push_register(sub_endpoint text, sub_p256dh text, sub_auth text)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  me uuid := (select auth.uid());
+begin
+  if me is null then
+    raise exception 'Sign in first.' using errcode = '42501';
+  end if;
+  delete from public.push_subscriptions s where s.endpoint = sub_endpoint;
+  insert into public.push_subscriptions (endpoint, user_id, p256dh, auth)
+  values (sub_endpoint, me, sub_p256dh, sub_auth);
+  -- at most 10 devices per account: drop the oldest
+  delete from public.push_subscriptions s
+  where s.user_id = me and s.endpoint not in (
+    select k.endpoint from public.push_subscriptions k where k.user_id = me order by k.created_at desc limit 10);
+end;
+$$;
+revoke execute on function public.vortex_push_register(text, text, text) from public, anon;
+grant execute on function public.vortex_push_register(text, text, text) to authenticated;
+
+create or replace function public.vortex_push_unregister(sub_endpoint text)
+returns void
+language sql
+security definer
+set search_path = ''
+as $$
+  delete from public.push_subscriptions s
+  where s.endpoint = sub_endpoint and s.user_id = (select auth.uid());
+$$;
+revoke execute on function public.vortex_push_unregister(text) from public, anon;
+grant execute on function public.vortex_push_unregister(text) to authenticated;
+
+-- called by the site worker with the caller's sign-in: the friend's devices + the caller's name
+create or replace function public.vortex_push_targets(target uuid)
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  me uuid := (select auth.uid());
+begin
+  if me is null then
+    raise exception 'Sign in first.' using errcode = '42501';
+  end if;
+  if target is null or target = me or not public.is_friend(target) then
+    raise exception 'You can only ring friends.' using errcode = '42501';
+  end if;
+  delete from public.vortex_signal_log where at < now() - interval '10 minutes';
+  if (select count(*) from public.vortex_signal_log l
+      where l.sender = me and l.at > now() - interval '1 minute') >= 30 then
+    raise exception 'Too many calls. Wait a minute.' using errcode = '54000';
+  end if;
+  insert into public.vortex_signal_log (sender) values (me);
+  return jsonb_build_object(
+    'from', me,
+    'name', (select p.display_name from public.profiles p where p.id = me),
+    'subs', coalesce((select jsonb_agg(jsonb_build_object('endpoint', s.endpoint, 'p256dh', s.p256dh, 'auth', s.auth))
+                      from public.push_subscriptions s where s.user_id = target), '[]'::jsonb));
+end;
+$$;
+revoke execute on function public.vortex_push_targets(uuid) from public, anon;
+grant execute on function public.vortex_push_targets(uuid) to authenticated;
+
+-- the worker reports a device the push service says is gone (404/410)
+create or replace function public.vortex_push_gone(target uuid, sub_endpoint text)
+returns void
+language sql
+security definer
+set search_path = ''
+as $$
+  delete from public.push_subscriptions s
+  where s.endpoint = sub_endpoint and s.user_id = target
+    and public.is_friend(target);
+$$;
+revoke execute on function public.vortex_push_gone(uuid, text) from public, anon;
+grant execute on function public.vortex_push_gone(uuid, text) to authenticated;
