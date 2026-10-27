@@ -1,0 +1,10 @@
+name = "vortex-keepalive"
+main = "index.js"
+compatibility_date = "2026-10-01"
+
+[triggers]
+crons = ["17 9 */2 * *"]
+
+[vars]
+SUPABASE_URL = "https://uyroxbozyyroxzlkrvun.supabase.co"
+SUPABASE_KEY = "sb_publishable_1i5R1YQUaxuBBgy2UioXIA_csNcsoCg"

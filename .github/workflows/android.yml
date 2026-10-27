@@ -1,0 +1,49 @@
+name: Android app
+
+# Builds the Android app (a Trusted Web Activity for vortex-video.pages.dev).
+# The release key never lives in this repo or in Actions: CI builds the unsigned APK and publishes
+# it with the signing tools on the `android-build` branch; the APK is signed offline with the key.
+on:
+  push:
+    branches: [main]
+    paths: ['android/**', '.github/workflows/android.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install SDK packages
+        run: sdkmanager "platforms;android-36" "build-tools;35.0.0"
+      - name: Build unsigned release APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleRelease
+      - name: Publish build output
+        run: |
+          set -e
+          BT="$ANDROID_HOME/build-tools/35.0.0"
+          mkdir -p /tmp/out
+          cp android/app/build/outputs/apk/release/*.apk /tmp/out/
+          cp "$BT/lib/apksigner.jar" /tmp/out/
+          cp "$BT/zipalign" /tmp/out/
+          (cd /tmp/out && sha256sum * > SHA256SUMS && ls -la)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan android-build
+          git rm -rfq .
+          cp /tmp/out/* .
+          printf 'Unsigned build of %s (run %s). Sign offline with the Vortex release key.\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > README.md
+          git add -A
+          git commit -qm "Android build from $GITHUB_SHA"
+          git push -f origin android-build
