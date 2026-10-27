@@ -44,6 +44,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan android-build
           git rm -rfq .
+          git clean -fdxq
           cp /tmp/out/* .
           printf 'Unsigned build of %s (run %s). Sign offline with the Vortex release key.\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > README.md
           git add -A
