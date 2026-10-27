@@ -1,7 +1,7 @@
 {
   "name": "Vortex Video",
   "short_name": "Vortex",
-  "description": "Video calls, watch parties and screen sharing with your squad.",
+  "description": "Video calls, watch parties and screen sharing with your friends.",
   "id": "/",
   "start_url": "/",
   "scope": "/",

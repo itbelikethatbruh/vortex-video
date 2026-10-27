@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.png" alt="Vortex Video: video calls and movie nights with your squad" width="100%">
+  <img src="docs/banner.png" alt="Vortex Video: video calls and movie nights with your friends" width="100%">
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@ It's built for the way friends actually hang out online: someone starts a call, 
 
 Most tools do one of these jobs well and make you stitch the rest together. A call app and a watch-party extension mean two windows, two invite links and a movie that never quite lines up with anyone's voice. Vortex was designed around the whole evening:
 
-- **The movie plays on everyone's own device, in sync.** Nobody is screen-sharing a blurry re-encoded copy. Each person streams the original file, and Vortex keeps playback within a fraction of a second across the squad. Pause, seek or skip from any device and it happens for everyone.
+- **The movie plays on everyone's own device, in sync.** Nobody is screen-sharing a blurry re-encoded copy. Each person streams the original file, and Vortex keeps playback within a fraction of a second for everyone in the call. Pause, seek or skip from any device and it happens for everyone.
 - **Your voices sit on top of the movie.** When a friend talks, the movie automatically dips, then comes back up. Vortex tells a voice apart from the movie leaking out of someone's speakers, so it won't duck all night. Friends' voices go through a clarity and levelling chain, so the mumbler and the shouter end up at the same volume.
 - **Calls are peer-to-peer.** Audio and video go straight between your devices, encrypted by WebRTC. They never pass through a Vortex media server. When a strict network blocks direct connections, an encrypted Cloudflare relay takes over automatically.
 - **Invite-only by design.** There are no guessable room codes. Only signed-in members can start a call, and guests get in only with a member's invite link. Fake or expired links are refused by the host's device.
@@ -57,6 +57,7 @@ We'd rather you hear this from us:
 <tr><td valign="top" width="50%">
 
 ### 🎥 Calls
+- **Works like Google Meet**: tap **New call**, share the link, and people join from a "Ready to join?" screen where they check their camera and mic first. Or paste an invite link on the home screen to join.
 - Peer-to-peer video calls for up to 8 people, with automatic host migration. The call survives when whoever started it leaves.
 - Invite links (24 hours) and **ring a friend** with one tap: accept, audio-only or decline.
 - **See who's calling, live.** While your phone rings, the caller's camera plays on the ringing card (video only). They can't see or hear you until you answer, and callers can turn it off in Settings.
@@ -64,10 +65,10 @@ We'd rather you hear this from us:
 - Friends list with online and in-call status.
 - Join preview: choose camera and mic before you go in.
 - Grid and speaker layouts, pin anyone, raise hand, reactions and chat.
-- **Squad PiP**: your friends' faces in a floating window while you use other apps.
+- **Picture-in-picture**: your friends' faces in a floating window while you use other apps.
 - Screen sharing from computers (desktop only).
-- Live captions, call recording and auto clips. Auto clips save the last 20 seconds when the squad laughs or cheers, are opt-in, and show everyone a badge.
-- Squad radar: an optional, opt-in map of where friends are, exact or approximate. It's never stored.
+- Live captions, call recording and auto clips. Auto clips save the last 20 seconds when everyone laughs or cheers, are opt-in, and show everyone a badge.
+- Radar: an optional, opt-in map of where friends are, exact or approximate. It's never stored.
 
 </td><td valign="top" width="50%">
 
@@ -76,7 +77,7 @@ We'd rather you hear this from us:
 - Streams are ranked by **what actually plays in a browser**: AAC audio and H.264 go to the top, while Dolby, DTS and HEVC are flagged before you click.
 - **Browse YouTube** inside the app, or paste any YouTube, video-file, magnet or `.torrent` link.
 - Follow a friend's browsing live, and ask whoever has add-ons to start a title.
-- **Cinema mode**: full-screen theater with your squad's faces underneath. You can resize, reshape, drag or pop out any face.
+- **Cinema mode**: full-screen theater with everyone's faces underneath. You can resize, reshape, drag or pop out any face.
 - Synced subtitles from torrents and subtitle add-ons, with timing adjustment for everyone.
 - Sound modes: Standard, Cinema, Dialogue and Night.
 - **Continue watching**: resume any movie for everyone where you left off.
@@ -97,7 +98,7 @@ We'd rather you hear this from us:
 - WebGL backgrounds, blur, color looks and **12 face filters**, plus skin touch-up.
 - **Low-light boost** that lifts shadows without blowing out highlights.
 - 60 fps when your camera supports it, with automatic quality adaptation.
-- **Hand gestures**: ✋ pause or play for everyone, ☝️ raise your hand, 👍 or 🤟 send a reaction, ✌️ take a squad snapshot.
+- **Hand gestures**: ✋ pause or play for everyone, ☝️ raise your hand, 👍 or 🤟 send a reaction, ✌️ take a group snapshot.
 - Auto-framing that keeps you centered.
 - **Live avatar**: a cartoon that copies your expressions, so only the cartoon is sent.
 
@@ -108,7 +109,7 @@ We'd rather you hear this from us:
 
 ```mermaid
 flowchart LR
-  subgraph Devices["Your squad's devices"]
+  subgraph Devices["Everyone's devices"]
     A["Drake's browser"] <-->|"video, voice, data<br/>WebRTC, encrypted"| B["Friend's browser"]
     A <--> C["Friend's phone<br/>(Android app)"]
     B <--> C
@@ -181,14 +182,14 @@ Keep the keystore and its passwords private and backed up. You need the same key
 ## Privacy & security
 
 - Calls are end-to-end between devices (DTLS-SRTP). When the relay is used, it forwards encrypted packets it can't read.
-- No analytics or ads, and no tracking. Movie history, add-ons and API keys stay on your device and are never sent to the squad.
+- No analytics or ads, and no tracking. Movie history, add-ons and API keys stay on your device and are never sent to anyone else.
 - Your profile (name, username, photo) is visible only to you, your friends and people you have a pending request with.
 - Location sharing is opt-in per call, can be rounded to about 1 km, and is never stored.
 - The Supabase key in the page is the public *publishable* key. Row-level security protects the data.
 
 ## Browser support
 
-Chrome, Edge and Firefox on desktop; Chrome on Android; Safari on iPhone and Mac. Squad PiP, screen sharing and some AI camera features depend on the browser and device, and the app tells you when one isn't available.
+Chrome, Edge and Firefox on desktop; Chrome on Android; Safari on iPhone and Mac. Picture-in-picture, screen sharing and some AI camera features depend on the browser and device, and the app tells you when one isn't available.
 
 ---
 

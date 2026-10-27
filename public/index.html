@@ -246,6 +246,14 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border: 0; bo
 .gr-side { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .gr-title { margin: 0; font-size: clamp(24px, 2.8vw, 36px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 750; }
 .gr-form { display: flex; flex-direction: column; gap: 12px; }
+.gr-lede { margin: -4px 0 4px; font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 46ch; }
+.gr-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+.gr-actions #gr-start { flex: 0 0 auto; min-width: 150px; }
+.gr-join { flex: 1 1 220px; display: flex; gap: 6px; min-width: 0; }
+.gr-join[hidden] { display: none; }
+.gr-join .input { flex: 1; min-width: 0; }
+.gr-join .btn:disabled { opacity: .45; }
+@media (max-width: 520px) { .gr-actions #gr-start { flex: 1 1 100%; } }
 .gr-guest-hint { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); text-align: center; }
 .gr-guest-hint[hidden] { display: none; }
 .gr-join { display: flex; gap: 8px; }
@@ -717,7 +725,8 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
   .gr-head { padding: calc(10px + var(--safe-t)) 14px 8px; }
   .gr-body { padding: 2px 14px calc(20px + var(--safe-b)); gap: 14px; }
   .gr-preview { aspect-ratio: 4 / 3; border-radius: 20px; }
-  .gr-title { display: none; }
+  .gr-title { font-size: 24px; }
+  .gr-lede { font-size: 14px; margin-top: -8px; }
   .desk-only, .dock-chev { display: none !important; }
   .dock-group { background: transparent; }
   .dock-group .dock-btn { background: var(--surface-3); }
@@ -794,18 +803,25 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
       </div>
 
       <div class="gr-side">
-        <h1 class="gr-title">Call and watch <span class="grad-text">together.</span></h1>
+        <h1 class="gr-title" id="gr-title">Video calls for <span class="grad-text">everyone.</span></h1>
+        <p class="gr-lede" id="gr-lede">Call your friends, share your screen and watch movies together. Free, with no time limit.</p>
         <form id="gr-form" class="gr-form" autocomplete="off" novalidate>
           <div class="field" id="gr-name-field">
             <label for="gr-name">Your name</label>
-            <input class="input" id="gr-name" maxlength="24" placeholder="What should the squad call you?" required>
+            <input class="input" id="gr-name" maxlength="24" placeholder="Your name" required>
+          </div>
+          <div class="gr-actions">
+            <button class="btn btn-primary btn-lg" id="gr-start" type="submit">New call</button>
+            <div class="gr-join" id="gr-join">
+              <input class="input" id="gr-code" placeholder="Paste an invite link" aria-label="Invite link" autocapitalize="none" spellcheck="false" inputmode="url">
+              <button class="btn btn-lg btn-ghost" id="gr-code-go" type="button" disabled>Join</button>
+            </div>
           </div>
           <div class="gr-friends" id="gr-friends-strip" hidden>
-            <div class="row-between"><span class="label">Friends online</span><button class="link-btn" id="gr-friends-all" type="button">All friends</button></div>
+            <div class="row-between"><span class="label">Call a friend</span><button class="link-btn" id="gr-friends-all" type="button">All friends</button></div>
             <div class="fstrip" id="fstrip"></div>
           </div>
-          <button class="btn btn-primary btn-lg btn-block" id="gr-start" type="submit">Start new squad</button>
-          <p class="gr-guest-hint" id="gr-guest-hint" hidden>Got an invite link from a member? Open it to join as a guest.</p>
+          <p class="gr-guest-hint" id="gr-guest-hint" hidden>No account? Paste the invite link someone sent you to join as a guest.</p>
         </form>
         <p class="gr-joinas" id="gr-joinas"></p>
         <p class="gr-status" id="gr-status" aria-live="polite"></p>
@@ -823,12 +839,12 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
       <div class="brand small" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span></div>
       <button class="pill room-pill" id="room-pill" type="button" title="Copy invite link"><span class="pill-ic" id="room-copy-ic"></span><span id="room-code">Invite</span></button>
       <button class="icon-btn" id="room-share" type="button" aria-label="Share invite" title="Share invite" hidden></button>
-      <span class="pill lock-pill" id="lock-pill" hidden title="Squad locked: new people wait for the host"></span>
+      <span class="pill lock-pill" id="lock-pill" hidden title="Call locked: new people wait for the host"></span>
       <div class="pill mono tele" id="tele" title="Connection">—</div>
       <div class="pill dsp-pill" id="dsp-pill">HD · Noise gate active</div>
       <div class="spacer"></div>
       <div class="pill warn" id="sig-pill" hidden>Reconnecting to signaling…</div>
-      <div class="pill ppl-pill" title="People in this squad"><span id="ppl-ic"></span><span id="ppl-count">1</span></div>
+      <div class="pill ppl-pill" title="People in this call"><span id="ppl-ic"></span><span id="ppl-count">1</span></div>
       <div class="seg" role="group" aria-label="Layout">
         <button type="button" id="lay-grid" aria-pressed="true" aria-label="Bento grid" title="Bento grid"></button>
         <button type="button" id="lay-stage" aria-pressed="false" aria-label="Stage and filmstrip" title="Stage and filmstrip"></button>
@@ -854,8 +870,8 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
         <button class="dock-chev" id="d-cam-more" type="button" aria-label="Backgrounds and filters" aria-haspopup="dialog"></button>
       </div>
       <button class="dock-btn desk-only" id="d-share" type="button" aria-label="Share screen" title="Share screen"><span class="ic"></span></button>
-      <button class="dock-btn desk-only" id="d-pip" type="button" aria-label="Squad PiP" title="Squad PiP — pop everyone out"><span class="ic"></span></button>
-      <button class="dock-btn" id="d-chat" type="button" aria-label="Squad chat" title="Squad chat"><span class="ic"></span><span class="badge" id="chat-badge" hidden>0</span></button>
+      <button class="dock-btn desk-only" id="d-pip" type="button" aria-label="Picture-in-picture" title="Picture-in-picture: pop everyone out"><span class="ic"></span></button>
+      <button class="dock-btn" id="d-chat" type="button" aria-label="In-call messages" title="In-call messages"><span class="ic"></span><span class="badge" id="chat-badge" hidden>0</span></button>
       <button class="dock-btn" id="d-more" type="button" aria-label="More" title="More" aria-haspopup="dialog" aria-expanded="false"><span class="ic"></span></button>
       <button class="dock-btn end" id="d-end" type="button" aria-label="Leave call" title="Leave call"><span class="ic"></span></button>
     </nav>
@@ -866,11 +882,11 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
   <section id="left" class="view" hidden>
     <div class="left-card">
       <div class="brand" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span></div>
-      <h2>You left the squad</h2>
+      <h2>You left the call</h2>
       <p class="muted" id="left-sub"></p>
       <div class="left-actions">
         <button class="btn btn-primary btn-lg" id="left-rejoin" type="button">Rejoin</button>
-        <button class="btn btn-lg" id="left-home" type="button">Back to start</button>
+        <button class="btn btn-lg" id="left-home" type="button">Return to home screen</button>
       </div>
     </div>
   </section>
@@ -880,8 +896,8 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 <div id="media-sink" aria-hidden="true">
   <div class="invite-card" id="invite-card">
     <div class="ic-in">
-      <div class="ic-title">Waiting for your squad</div>
-      <p class="ic-sub" id="invite-sub">Send your invite link or ring a friend. Up to 8 people can join.</p>
+      <div class="ic-title">Your call is ready</div>
+      <p class="ic-sub" id="invite-sub">Share this link with people you want in the call, or ring a friend. Up to 8 people can join.</p>
       <div class="ic-actions">
         <button class="btn btn-primary btn-sm" id="invite-copy" type="button"><span class="ic-bi" data-ic="link"></span><span>Copy link</span></button>
         <button class="btn btn-sm" id="invite-ring" type="button"><span class="ic-bi" data-ic="phone"></span><span>Ring a friend</span></button>
@@ -954,7 +970,7 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
     <section class="lens-panel lens-ai" id="lens-p-ai" data-panel="ai" role="tabpanel" hidden>
       <label class="switch"><span><span class="sw-label">Low light boost</span><span class="sw-sub">Brightens a dark room and smooths the grain.</span></span><input type="checkbox" id="lens-low"><span class="track"></span></label>
       <label class="switch"><span><span class="sw-label">Auto-framing</span><span class="sw-sub">Keeps you centered and zoomed as you move.</span></span><input type="checkbox" id="lens-frame"><span class="track"></span></label>
-      <label class="switch"><span><span class="sw-label">Hand gestures</span><span class="sw-sub">Hold ✋ to pause/play · ☝️ raise hand · 👍 · 🤟 · ✌️ squad snapshot</span></span><input type="checkbox" id="lens-gest"><span class="track"></span></label>
+      <label class="switch"><span><span class="sw-label">Hand gestures</span><span class="sw-sub">Hold ✋ to pause/play · ☝️ raise hand · 👍 · 🤟 · ✌️ group snapshot</span></span><input type="checkbox" id="lens-gest"><span class="track"></span></label>
       <label class="switch"><span><span class="sw-label">Live avatar</span><span class="sw-sub">A cartoon that copies your expressions goes out instead of your video. Your camera stays on to read your face; the video never leaves your device.</span></span><input type="checkbox" id="lens-toon"><span class="track"></span></label>
       <div class="toon-skins" id="toon-skins" role="radiogroup" aria-label="Avatar skin tone" hidden></div>
       <p class="hint" id="lens-ai-status">All of these run on your device with Google's MediaPipe; nothing is uploaded.</p>
@@ -991,11 +1007,11 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 </aside>
 
 <!-- ============ Chat drawer ============ -->
-<aside class="drawer" id="drawer-chat" role="dialog" aria-label="Squad chat" hidden>
-  <div class="drawer-head"><span>Squad chat</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
+<aside class="drawer" id="drawer-chat" role="dialog" aria-label="In-call messages" hidden>
+  <div class="drawer-head"><span>In-call messages</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
   <div class="chat-list" id="chat-list" aria-live="polite"></div>
   <form class="chat-form" id="chat-form" autocomplete="off">
-    <input class="input" id="chat-input" maxlength="1000" placeholder="Message the squad" aria-label="Message" data-autofocus>
+    <input class="input" id="chat-input" maxlength="1000" placeholder="Send a message to everyone" aria-label="Message" data-autofocus>
     <button class="icon-btn send" type="submit" id="chat-send" aria-label="Send"></button>
   </form>
 </aside>
@@ -1026,7 +1042,7 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
     <div class="field" id="set-spk-wrap"><label for="set-spk">Speaker</label><select class="select" id="set-spk"></select></div>
     <div class="sec-title">Presenting</div>
     <label class="switch"><span><span class="sw-label">Auto-PiP on screen share</span><span class="sw-sub">Pop everyone into a floating window when you present or switch tabs</span></span><input type="checkbox" id="set-autopip"><span class="track"></span></label>
-    <label class="switch"><span><span class="sw-label">Show me in Squad PiP</span><span class="sw-sub">Off: the floating window shows only the others. You still appear when you're alone.</span></span><input type="checkbox" id="set-pipself"><span class="track"></span></label>
+    <label class="switch"><span><span class="sw-label">Show me in picture-in-picture</span><span class="sw-sub">Off: the floating window shows only the others. You still appear when you're alone.</span></span><input type="checkbox" id="set-pipself"><span class="track"></span></label>
     <label class="switch"><span><span class="sw-label">Show my camera while ringing</span><span class="sw-sub">The friend you call sees your live video (no sound) before they answer, until they pick up.</span></span><input type="checkbox" id="set-ringpreview"><span class="track"></span></label>
     <div class="field"><label for="set-hint">Optimize shared screen for</label>
       <select class="select" id="set-hint"><option value="detail">Text and detail</option><option value="motion">Motion and games</option></select></div>
@@ -3013,7 +3029,7 @@ const GESTURES = {
   Pointing_Up: { e: '☝️', label: 'Raise / lower hand', hold: 750 },
   Thumb_Up: { e: '👍', label: 'Thumbs up', hold: 400 },
   ILoveYou: { e: '🤟', label: 'Love it', hold: 450 },
-  Victory: { e: '✌️', label: 'Squad snapshot', hold: 600 },
+  Victory: { e: '✌️', label: 'Group snapshot', hold: 600 },
 };
 const Gestures = {
   state: 'idle', reason: '', rec: null, last: -1e9, cur: null, since: 0, fired: false, cool: new Map(), hud: null, told: false,
@@ -3027,7 +3043,7 @@ const Gestures = {
       this.rec = (img, ts) => r.recognizeForVideo(img, ts);
       this.state = 'ready';
       NetLog.add('ai', 'hand gestures ready');
-      if (!this.told && !Store.get('gestTold', false)) { this.told = true; Store.set('gestTold', true); toast('Hand gestures are on: hold ✋ to pause or play, ☝️ to raise your hand, 👍 or 🤟 to react, ✌️ for a squad snapshot. Turn them off in Camera effects → AI.', { ms: 10000 }); }
+      if (!this.told && !Store.get('gestTold', false)) { this.told = true; Store.set('gestTold', true); toast('Hand gestures are on: hold ✋ to pause or play, ☝️ to raise your hand, 👍 or 🤟 to react, ✌️ for a group snapshot. Turn them off in Camera effects → AI.', { ms: 10000 }); }
     } catch (e) { this.state = 'failed'; this.reason = (e && e.message) || 'failed'; NetLog.add('ai', `gestures unavailable: ${this.reason}`); }
     Bus.emit('ai:state');
   },
@@ -3074,13 +3090,13 @@ const Gestures = {
       const c = SquadPiP.comp;
       c.toBlob((b) => {
         if (!b) return;
-        const a = h('a', { href: URL.createObjectURL(b), download: `vortex-squad-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.png` });
+        const a = h('a', { href: URL.createObjectURL(b), download: `vortex-call-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.png` });
         document.body.append(a); a.click(); a.remove();
         setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       }, 'image/png');
       const f = h('div', { class: 'snap-flash' }); document.body.append(f); setTimeout(() => f.remove(), 600);
       Sound.play('pop', 0.6);
-      toast('✌️ Squad snapshot saved', { ms: 2500 });
+      toast('✌️ Group snapshot saved', { ms: 2500 });
     } catch (e) { toast("Couldn't take the snapshot.", { type: 'warn' }); }
   },
   hudShow(name, prog, done) {
@@ -3407,7 +3423,7 @@ const Moments = {
     const clip = { id: rid(8), url: URL.createObjectURL(blob), size: blob.size, at: Date.now(), secs, why: r.why, ext: /mp4/.test(type) ? 'mp4' : 'webm' };
     this.clips.unshift(clip);
     while (this.clips.length > 20) { const x = this.clips.pop(); URL.revokeObjectURL(x.url); }
-    toast(`🎬 Clip saved: the squad was ${clip.why}`, { ms: 6000, action: { label: 'View', fn: () => this.showPanel() } });
+    toast(`🎬 Clip saved: everyone was ${clip.why}`, { ms: 6000, action: { label: 'View', fn: () => this.showPanel() } });
     if (this.panel && !this.panel.hidden) this.renderPanel();
     Chrome.updateDock();
   },
@@ -3527,7 +3543,7 @@ const Radar = {
   },
   prompt(mem) {
     const el = h('div', { class: 'radar-ask', role: 'dialog', 'aria-label': 'Location request' },
-      h('div', { class: 'ra-t' }, h('span', { class: 'ra-ic', svg: ICONS.signal }), h('b', { text: `${mem.name} wants to see the squad on the radar` })),
+      h('div', { class: 'ra-t' }, h('span', { class: 'ra-ic', svg: ICONS.signal }), h('b', { text: `${mem.name} wants to see everyone on the radar` })),
       h('p', { text: 'Share your location with the people in this call? Only while you share, never stored. You can stop any time.' }),
       h('div', { class: 'wt-row' },
         h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => { el.remove(); this.share('exact'); } }, 'Share exact'),
@@ -3552,8 +3568,8 @@ const Radar = {
   },
   open() {
     if (!this.panel) {
-      this.panel = h('div', { class: 'radar-panel', role: 'dialog', 'aria-label': 'Squad radar', hidden: true },
-        h('div', { class: 'cine-pop-h' }, h('span', { svg: ICONS.signal }), 'Squad radar', h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Close', svg: ICONS.x, onclick: () => this.close() })),
+      this.panel = h('div', { class: 'radar-panel', role: 'dialog', 'aria-label': 'Radar', hidden: true },
+        h('div', { class: 'cine-pop-h' }, h('span', { svg: ICONS.signal }), 'Radar', h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Close', svg: ICONS.x, onclick: () => this.close() })),
         this.mapEl = h('div', { class: 'radar-map' }, this.radarC = h('canvas', { class: 'radar-canvas', width: 600, height: 600 }), h('div', { class: 'radar-sweep', 'aria-hidden': 'true' })),
         this.listEl = h('div', { class: 'radar-list' }),
         this.ctlEl = h('div', { class: 'radar-ctl' }));
@@ -4079,11 +4095,11 @@ const Net = {
     check();
   },
   setLocked(on) {
-    if (!this.amLeader()) { toast('Only the room host can lock the squad.'); return; }
+    if (!this.amLeader()) { toast('Only the host can lock the call.'); return; }
     this.locked = !!on;
     this.broadcast({ t: 'LOCK', on: this.locked });
     if (!this.locked) for (const k of [...this.pendingKnocks.values()]) k.admit();
-    toast(this.locked ? 'Squad locked. New people wait for you to admit them.' : 'Squad unlocked');
+    toast(this.locked ? 'Call locked. New people wait for you to admit them.' : 'Call unlocked');
     Bus.emit('lock');
   },
   canDial() { return !!(this.peer && !this.peer.destroyed && this.peer.open && !this.leaving); },
@@ -4096,7 +4112,7 @@ const Net = {
   /* ---------------- entry points ---------------- */
   async startNew(name) {
     this.me.name = cleanName(name);
-    NetLog.add('start', 'new squad');
+    NetLog.add('start', 'new call');
     await loadPeerJS();
     await Ice.ready();
     this.peer = await createPeer(NS + 'm-' + rid(14), this.peerOptions());
@@ -4232,7 +4248,7 @@ const Net = {
             // locked room: wait (up to ~95s) for the host to admit us
             clearTimeout(timer);
             timer = setTimeout(() => finish('denied'), 95000);
-            if (onStatus) onStatus('This squad is locked. Waiting for the host to let you in…');
+            if (onStatus) onStatus('This call is locked. Waiting for the host to let you in…');
           }
         });
         conn.on('error', () => finish('error'));
@@ -4252,7 +4268,7 @@ const Net = {
       const w = await this.knock(this.room, null, 1);
       if (this.leaving) return false;
       this.applyWelcome(w);
-      Chat.system('Rejoined the squad');
+      Chat.system('Rejoined the call');
       return true;
     } catch (e) {
       if (e && e.type === 'full') toast(`${this.room} filled up while you were away.`, { type: 'warn' });
@@ -4667,7 +4683,7 @@ const Net = {
         const l = this.leader();
         if (!l || l.id !== mem.id) break;              // only the room host locks
         const on = !!msg.on;
-        if (on !== this.locked) { this.locked = on; toast(on ? `${mem.name} locked the squad` : `${mem.name} unlocked the squad`); Bus.emit('lock'); }
+        if (on !== this.locked) { this.locked = on; toast(on ? `${mem.name} locked the call` : `${mem.name} unlocked the call`); Bus.emit('lock'); }
         break;
       }
       case 'TOK':
@@ -5331,7 +5347,7 @@ const Chrome = {
     if (!el) return;
     const res = t.h ? `${t.h}p${t.fps ? Math.round(t.fps) : ''}` : '—';
     el.textContent = t.rtt != null ? `${Math.round(t.rtt)}ms · ${res}` : `Solo · ${res}`;
-    el.title = t.rtt != null ? 'Average round-trip to your squad · your outgoing camera resolution' : 'Your outgoing camera resolution';
+    el.title = t.rtt != null ? 'Average round-trip to others in the call · your outgoing camera resolution' : 'Your outgoing camera resolution';
   },
 };
 
@@ -5420,8 +5436,8 @@ const SquadPiP = {
       console.warn('[pip] open failed', e && (e.name + ': ' + e.message));
       if (opts.silent) return false;
       if (opts.auto) {
-        toast('Pop out your squad so you can see everyone while you present?', { action: { label: 'Pop out', fn: () => this.open() }, ms: 10000 });
-      } else if (e && e.name === 'NotAllowedError') toast('Click Squad PiP again to pop out the floating window.');
+        toast('Pop out the call so you can see everyone while you present?', { action: { label: 'Pop out', fn: () => this.open() }, ms: 10000 });
+      } else if (e && e.name === 'NotAllowedError') toast('Click Picture-in-picture again to pop out the floating window.');
       else toast("The floating window couldn't open in this browser.", { type: 'warn' });
       return false;
     } finally { this.pending = false; }
@@ -5445,7 +5461,7 @@ const SquadPiP = {
     const w = await window.documentPictureInPicture.requestWindow({ width: 420, height: 500 });
     this.win = w;
     const d = w.document;
-    d.title = `Squad · ${Net.room || 'Vortex Video'}`;
+    d.title = `Call · ${Net.room || 'Vortex Video'}`;
     const st = d.createElement('style'); st.textContent = PIP_CSS; d.head.append(st);
     const fl = d.createElement('link'); fl.rel = 'stylesheet'; fl.href = FONT_URL; d.head.append(fl);
     w.addEventListener('pagehide', () => { if (this.win === w) { this.win = null; this.docTiles.clear(); Chrome.updateDock(); } });
@@ -6469,7 +6485,7 @@ const Ring = {
     Social.sendTo(i.from, 'ring-reply', { id: i.id, ok: true }).catch(() => {});
     if (!video && Local.camOn) await Local.setCam(false);
     await App.prejoin({
-      room: i.room, tok: i.tok, label: `${i.name}'s squad`,
+      room: i.room, tok: i.tok, label: `${i.name}'s call`,
       onCancel: () => Social.sendTo(i.from, 'ring-reply', { id: i.id, ok: false, late: true }).catch(() => {}),
     });
   },
@@ -6545,7 +6561,7 @@ const IncomingCall = {
     const el = $('#modal-incoming-call');
     Avatars.fill($('.ic-av', el), i.name, i.avatar);
     $('#ic-name').textContent = i.name;
-    $('.ic-sub', el).textContent = App.inCall ? `Calling you into ${i.room} · you'll leave this squad` : `Video call · ${i.room}`;
+    $('.ic-sub', el).textContent = App.inCall ? `Calling you into ${i.room} · you'll leave this call` : `Video call · ${i.room}`;
     el.hidden = false;
     requestAnimationFrame(() => el.classList.add('open'));
     const btn = $('#ic-accept');
@@ -6749,7 +6765,7 @@ const Captions = {
   maybeConsent() {
     if (this.consentShown || this.enabled || !this.supported) return;
     this.consentShown = true;
-    toast('Live captions are on in this squad, so your browser is transcribing your speech for them.', {
+    toast('Live captions are on in this call, so your browser is transcribing your speech for them.', {
       ms: 10000,
       action: { label: "Don't transcribe me", fn: () => { this.optOut = true; this.update(); toast("Your speech won't be transcribed in this call."); } },
     });
@@ -7004,7 +7020,7 @@ const Recorder = {
   start() {
     if (this.active) return;
     if (this.finishing) { toast('Still saving the last clip. Try again in a moment.'); return; }
-    if (typeof App === 'undefined' || !App.inCall) { toast('Join a squad to record a clip.'); return; }
+    if (typeof App === 'undefined' || !App.inCall) { toast('Join a call to record a clip.'); return; }
     if (typeof window.MediaRecorder === 'undefined') { toast("This browser can't record clips (MediaRecorder isn't available).", { type: 'warn' }); return; }
     const c = AudioEngine.ctx;
     if (!c || !AudioEngine.outBus) { toast("Recording needs Web Audio, which isn't available here.", { type: 'warn' }); return; }
@@ -7046,7 +7062,7 @@ const Recorder = {
     });
     Net.pushState();
     this.renderIndicator();
-    toast('Recording faces and call audio (not the shared screen). Everyone in the squad sees a REC badge.', { ms: 6000 });
+    toast('Recording faces and call audio (not the shared screen). Everyone in the call sees a REC badge.', { ms: 6000 });
   },
 
   stop() {
@@ -7545,7 +7561,7 @@ const Watch = {
     this.build();
     let v = this.els.video;
     const cap = typeof v.captureStream === 'function' ? 'captureStream' : (typeof v.mozCaptureStream === 'function' ? 'mozCaptureStream' : null);
-    if (!cap) { toast("This browser can't stream a local file to the squad. Use Chrome, Edge or Firefox, or paste a link instead.", { type: 'warn', ms: 7000 }); return; }
+    if (!cap) { toast("This browser can't stream a local file to the call. Use Chrome, Edge or Firefox, or paste a link instead.", { type: 'warn', ms: 7000 }); return; }
     this.teardownMedia(null);
     Torrents.stop();
     if (this.els.video._vxGraph) v = this.swapVideo();
@@ -10737,7 +10753,7 @@ const Cinema = {
     E.ambi = h('canvas', { class: 'cine-ambi', width: 32, height: 18, 'aria-hidden': 'true' });
     E.ambiG = E.ambi.getContext('2d');
     E.media.prepend(E.ambi);
-    E.front = h('div', { class: 'cine-front', role: 'list', 'aria-label': 'Your squad' },
+    E.front = h('div', { class: 'cine-front', role: 'list', 'aria-label': 'People in the call' },
       E.grip = h('div', { class: 'cf-grip', title: 'Drag to move the whole row', 'aria-hidden': 'true' }, h('i'), h('i'), h('i'), h('i'), h('i'), h('i')));
     E.float = h('div', { class: 'cine-float', role: 'list', 'aria-label': 'Faces you moved' });
     E.count = h('div', { class: 'cine-count', hidden: true, 'aria-live': 'polite' });
@@ -11670,7 +11686,7 @@ const Discover = {
     const site = location.origin && /^https:/.test(location.origin) ? location.origin + '/*' : 'https://your-site.netlify.app/*';
     return h('details', { class: 'dsc-ykey', open: open || undefined },
       h('summary', {}, has ? 'YouTube search: using your free key' : 'Make YouTube search more reliable (free key)'),
-      h('p', { class: 'dsc-msg small', text: has ? 'Your key stays on this device and is never sent to your squad. Google gives about 100 searches a day for free; popular videos barely count.'
+      h('p', { class: 'dsc-msg small', text: has ? 'Your key stays on this device and is never sent to others in the call. Google gives about 100 searches a day for free; popular videos barely count.'
         : 'Search works without this through free public servers, but they come and go. A key from Google is free (no card) and gives about 100 searches a day:' }),
       has ? null : h('ol', { class: 'dsc-steps' },
         h('li', {}, 'Open ', h('a', { href: 'https://console.cloud.google.com/apis/library/youtube.googleapis.com', target: '_blank', rel: 'noopener noreferrer', text: 'YouTube Data API v3 in Google Cloud' }), ', make a project if it asks, and tap Enable.'),
@@ -11945,7 +11961,7 @@ const Discover = {
     if (!M) return;
     const helpers = this.helpers();
     for (const x of helpers) Net.send(x.id, { t: 'WATCH', op: 'dsc', gen: Watch.gen, ev: 'ask', id: M.id, type: M.type, name: M.name + (v ? ` S${String(v.season).padStart(2, '0')}E${String(v.episode).padStart(2, '0')}` : ''), epId: v ? v.id : undefined, season: v ? v.season : undefined });
-    toast(helpers.length ? `Asked ${helpers.map((x) => x.name).join(', ')} to start it` : 'Nobody in the squad has stream add-ons yet.', { ms: 3500 });
+    toast(helpers.length ? `Asked ${helpers.map((x) => x.name).join(', ')} to start it` : 'Nobody in the call has stream add-ons yet.', { ms: 3500 });
   },
   /* who else is in Discover right now */
   renderSquad() {
@@ -12036,7 +12052,7 @@ const Discover = {
         h('form', { class: 'dsc-search', onsubmit: (ev) => { ev.preventDefault(); useKey(keyIn.value); } }, keyIn, h('button', { class: 'btn btn-sm', type: 'submit' }, 'Use key')));
       acct.append(h('div', { class: 'dsc-acct-in' },
         h('div', { class: 'dsc-acct-t' }, h('span', { class: 'dsc-acct-ic', svg: ICONS.user }), h('b', { text: 'Sign in to Stremio' })),
-        h('p', { class: 'dsc-msg small', text: 'Brings in the add-ons saved to your Stremio account. Your password goes straight to Stremio; Vortex keeps only the sign-in key, on this device, and never shares it with your squad.' }),
+        h('p', { class: 'dsc-msg small', text: 'Brings in the add-ons saved to your Stremio account. Your password goes straight to Stremio; Vortex keeps only the sign-in key, on this device, and never shares it with others in the call.' }),
         h('form', { class: 'dsc-acct-form', onsubmit: (ev) => { ev.preventDefault(); signIn(email.value, pass.value); pass.value = ''; } }, email, pass, h('button', { class: 'btn btn-primary btn-sm', type: 'submit' }, 'Sign in')),
         h('button', { class: 'link-btn', type: 'button', onclick: () => { keyBox.hidden = !keyBox.hidden; } }, 'No Stremio password (you signed up with Facebook or similar)? Use a sign-in key'),
         keyBox));
@@ -12060,7 +12076,7 @@ const Discover = {
     B.append(h('div', { class: 'dsc-addwrap' },
       acct, amsg,
       h('h3', { text: 'Add-ons' }),
-      h('p', { class: 'dsc-msg', text: 'Or paste an add-on’s install link, the same one you’d use in Stremio. Links can include private keys (like a debrid account), so they stay on this device and are never sent to your squad.' }),
+      h('p', { class: 'dsc-msg', text: 'Or paste an add-on’s install link, the same one you’d use in Stremio. Links can include private keys (like a debrid account), so they stay on this device and are never sent to others in the call.' }),
       h('form', { class: 'dsc-search dsc-addform', onsubmit: (ev) => { ev.preventDefault(); add(); } }, input, h('button', { class: 'btn btn-primary btn-sm', type: 'submit' }, 'Add')),
       msg, list,
       h('p', { class: 'dsc-msg small', text: 'What plays: direct https streams (debrid add-ons give these) play for everyone in sync. Plain torrent streams only work if browsers can reach peers, which most torrents don’t have. Subtitle add-ons (like OpenSubtitles) show up in the CC menu. Add-ons are run by third parties: only stream what you have the rights to.' })));
@@ -12643,7 +12659,7 @@ const App = {
     if (code) {
       this.invited = code;
       this.inviteTok = inv && /^[a-z0-9]{8,32}$/.test(inv) ? inv : '';
-      this.status(this.inviteTok ? `You're invited to a call. ${name || Account.signedIn ? 'Tap Join.' : 'Enter your name and join.'}` : "This link has no invite in it. Ask a member of the call to send you their invite link.", !this.inviteTok);
+      this.status(this.inviteTok ? `You're invited to a call. ${name || Account.signedIn ? 'Tap Join now.' : 'Enter your name and join.'}` : "This link has no invite in it. Ask a member of the call to send you their invite link.", !this.inviteTok);
     }
     this.renderStart();
     this.envCheck();
@@ -12683,7 +12699,7 @@ const App = {
     set('#ic-decline', ICONS.phoneOff); set('#ic-audio', ICONS.phone); set('#ic-accept', ICONS.cam);
     for (const b of $$('[data-close]')) b.innerHTML = ICONS.x;
     if (!CAN_SHARE_SCREEN) $('#d-share').hidden = true;
-    if (!SquadPiP.supported()) $('#d-pip').title = 'Squad PiP is not supported in this browser';
+    if (!SquadPiP.supported()) $('#d-pip').title = 'Picture-in-picture is not supported in this browser';
     // invite buttons are shown by renderInvite() (members only)
     if (!('setSinkId' in HTMLMediaElement.prototype)) $('#set-spk-wrap').hidden = true;
     Chrome.updateDock();
@@ -12763,7 +12779,7 @@ const App = {
     $('#acct-remove-av').hidden = !av;
     $('#acct-signout').textContent = signed ? 'Sign out' : Account.configured ? 'Sign in' : 'Set up accounts';
     $('#acct-signout').disabled = !signed && Account.configured && !Account.sb;
-    $('#acct-note').textContent = signed ? 'Your squad and friends see this picture and name.'
+    $('#acct-note').textContent = signed ? 'People in your calls and your friends see this picture and name.'
       : Account.configured ? 'Your picture stays on this device until you sign in.'
         : "Accounts aren't set up on this site, so your picture and name stay on this device.";
   },
@@ -12827,6 +12843,10 @@ const App = {
     });
     $('#gr-name').addEventListener('change', (e) => { if (e.target.value.trim()) { Settings.name = cleanName(e.target.value); saveSettings(); } });
     $('#gr-form').addEventListener('submit', (e) => { e.preventDefault(); this.enter(this.invited ? 'join' : 'start'); });
+    const code = $('#gr-code'), go = $('#gr-code-go');
+    code.addEventListener('input', () => { go.disabled = !code.value.trim(); });
+    code.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); if (code.value.trim()) this.joinFromLink(); } });
+    go.onclick = () => this.joinFromLink();
     $('#gr-start').addEventListener('click', (e) => { e.preventDefault(); this.enter(this.invited ? 'join' : 'start'); });
   },
 
@@ -12894,17 +12914,37 @@ const App = {
     const b = $('#gr-start');
     if (!b) return;
     const signed = Account.signedIn;
-    if (this.invited) b.textContent = 'Join the call';
-    else if (signed) b.textContent = 'Start new squad';
+    if (this.invited) b.textContent = 'Join now';
+    else if (signed) b.textContent = 'New call';
     else if (Account.configured && Account.sb) b.textContent = 'Sign in to start a call';
-    else b.textContent = Account.ready ? 'Accounts offline: calls need a member invite' : 'Start new squad';
+    else b.textContent = Account.ready ? 'Accounts offline: calls need a member invite' : 'New call';
+    // Google Meet-style home: "New call" + "join with a link"; an invite link turns it into "Ready to join?"
+    $('#gr-title').innerHTML = this.invited ? 'Ready to <span class="grad-text">join?</span>' : 'Video calls for <span class="grad-text">everyone.</span>';
+    $('#gr-lede').textContent = this.invited ? `You're invited to a call (${this.invited}). Check your camera and mic, then join.` : 'Call your friends, share your screen and watch movies together. Free, with no time limit.';
+    $('#gr-join').hidden = !!this.invited;
     b.disabled = !this.invited && !signed && Account.ready && !(Account.configured && Account.sb);
     const hint = $('#gr-guest-hint');
     if (hint) hint.hidden = !!this.invited || signed;
     $('#gr-name-field').hidden = signed || !this.invited;          // guests only need a name when they have an invite
   },
 
-  /* start a squad or join one by code; resolves true once you're in */
+  /* "Paste an invite link" on the home screen. Invites carry a key (inv=…): a bare room code isn't
+     enough to get in, by design. */
+  joinFromLink() {
+    const raw = $('#gr-code').value.trim();
+    const code = normalizeCode(raw);
+    const m = raw.match(/[?&]inv=([a-z0-9]{8,32})(?:&|#|$)/);
+    if (!code) { this.status("That isn't a Vortex invite link. Paste the whole link someone sent you.", true); return; }
+    if (!m) { this.status('A call code on its own isn\'t enough to join. Ask someone in the call to send you the invite link.', true); return; }
+    this.invited = code; this.inviteTok = m[1];
+    try { history.replaceState(null, '', location.pathname + '?room=' + encodeURIComponent(code) + '&inv=' + m[1]); } catch { /* */ }
+    $('#gr-code').value = ''; $('#gr-code-go').disabled = true;
+    this.renderStart();
+    if (!Account.signedIn && !$('#gr-name').value.trim()) { this.status("You're invited. Enter your name, then tap Join now."); $('#gr-name').focus(); return; }
+    this.enter('join');
+  },
+
+  /* start a call or join one by link; resolves true once you're in */
   async enter(mode, opts = {}) {
     if (this.busy || this.inCall) return false;
     let name;
@@ -12938,8 +12978,8 @@ const App = {
     $('#gr-start').disabled = true;
     AudioEngine.resume();
     const say = (m) => { this.status(m); JoinSheet.status(m); };
-    JoinSheet.open(mode === 'start' ? 'Starting your squad…' : opts.label ? `Joining ${opts.label}…` : 'Joining the call…', () => this.enter(mode, opts));
-    say(mode === 'start' ? 'Creating your squad…' : 'Joining the call…');
+    JoinSheet.open(mode === 'start' ? 'Starting your call…' : opts.label ? `Joining ${opts.label}…` : 'Joining the call…', () => this.enter(mode, opts));
+    say(mode === 'start' ? 'Starting your call…' : 'Joining the call…');
     try {
       if (mode === 'start') await Net.startNew(name);
       else await Net.join(code, name, say, opts.tok || this.inviteTok || '');
@@ -13037,7 +13077,7 @@ const App = {
     $('#call').hidden = true;
     $('#toasts').innerHTML = '';
     $('#left').hidden = false;
-    $('#left-sub').textContent = 'You left the call';
+    $('#left-sub').textContent = 'Rejoin with the same link, or go back to start a new call.';
     const back = Account.signedIn ? Net.myLink : this.inviteTok;
     $('#left-rejoin').onclick = () => { location.href = location.pathname + '?room=' + encodeURIComponent(room) + (back ? '&inv=' + back : ''); };   // not in a call any more: no leave prompt
     $('#left-home').onclick = () => { location.href = location.pathname; };
@@ -13068,7 +13108,7 @@ const App = {
     $('#invite-copy').hidden = !m;
     $('#invite-ring').hidden = !m;
     $('#invite-share').hidden = !m || !navigator.share;
-    $('#invite-sub').textContent = m ? 'Send your invite link or ring a friend. Up to 8 people can join.' : 'Only signed-in members can invite people. Ask whoever invited you.';
+    $('#invite-sub').textContent = m ? 'Share this link with people you want in the call, or ring a friend. Up to 8 people can join.' : 'Only signed-in members can invite people. Ask whoever invited you.';
   },
   async copyInvite() {
     if (!Account.signedIn) { toast('Only signed-in members can invite people.'); return; }
@@ -13167,18 +13207,18 @@ const App = {
     item({ icon: ICONS.userPlus, hue: '#22D3EE', label: Account.signedIn ? 'Invite / Ring' : 'Invite', fn: () => this.inviteFlow() });
     // screen sharing is desktop only: phones and tablets never show it (they still see others present)
     if (CAN_SHARE_SCREEN) item({ icon: Share.active ? ICONS.screenStop : ICONS.screen, hue: '#60A5FA', label: Share.active ? 'Stop sharing' : 'Share screen', on: Share.active, toggle: true, fn: () => (Share.active ? Share.stop() : Share.start()) });
-    item({ icon: ICONS.pip, hue: '#8B5CF6', label: 'Squad PiP', on: SquadPiP.isOpen(), toggle: true, disabled: !SquadPiP.supported(),
+    item({ icon: ICONS.pip, hue: '#8B5CF6', label: 'Picture-in-picture', on: SquadPiP.isOpen(), toggle: true, disabled: !SquadPiP.supported(),
       title: SquadPiP.supported() ? 'Pop everyone out into a floating window' : "This browser can't show a floating window", fn: () => SquadPiP.toggle() });
     item({ icon: ICONS.smile, hue: '#FBBF24', label: 'Reactions & sounds', keep: true, fn: () => Panels.open('pop-react', anchor) });
     item({ icon: ICONS.cc, hue: '#34D399', label: Captions.enabled ? 'Captions on' : 'Live captions', on: Captions.enabled, toggle: true, fn: () => Captions.toggle() });
     item({ icon: ICONS.tv, hue: '#EC4899', label: 'Watch together', on: Stage.watchOn, fn: () => Watch.open() });
-    item({ icon: ICONS.signal, hue: '#22D3EE', label: Radar.sharing ? 'Radar · sharing' : 'Squad radar', on: Radar.sharing, fn: () => Radar.open() });
+    item({ icon: ICONS.signal, hue: '#22D3EE', label: Radar.sharing ? 'Radar · sharing' : 'Radar', on: Radar.sharing, fn: () => Radar.open() });
     item({ icon: ICONS.bolt, hue: '#FBBF24', label: Moments.on ? `Auto clips on${Moments.clips.length ? ' · ' + Moments.clips.length : ''}` : Moments.clips.length ? `Auto clips · ${Moments.clips.length}` : 'Auto clips', on: Moments.on, toggle: true,
       disabled: typeof window.MediaRecorder === 'undefined', fn: () => Moments.menu() });
     item({ icon: ICONS.rec, hue: '#FB4F6E', label: Recorder.active ? 'Stop recording' : 'Record clip', on: Recorder.active, cls: 'rec', toggle: true,
       disabled: typeof window.MediaRecorder === 'undefined', title: typeof window.MediaRecorder === 'undefined' ? "This browser can't record" : 'Record faces and call audio to a file on this device', fn: () => Recorder.toggle() });
     const host = Net.amLeader();
-    item({ icon: Net.locked ? ICONS.lock : ICONS.unlock, hue: '#FB923C', label: Net.locked ? 'Unlock squad' : 'Lock squad', on: Net.locked, cls: 'lock', toggle: true,
+    item({ icon: Net.locked ? ICONS.lock : ICONS.unlock, hue: '#FB923C', label: Net.locked ? 'Unlock call' : 'Lock call', on: Net.locked, cls: 'lock', toggle: true,
       disabled: !host, title: host ? 'New people wait until you admit them' : 'Only the room host can lock or unlock', fn: () => Net.setLocked(!Net.locked) });
     const row = $('#more-row');
     row.innerHTML = '';
@@ -13258,7 +13298,7 @@ const App = {
     setTimeout(() => location.reload(), 700);
   },
 
-  presLabel(p) { return p === 'in-call' ? 'In a squad' : p === 'online' ? 'Online' : 'Offline'; },
+  presLabel(p) { return p === 'in-call' ? 'In a call' : p === 'online' ? 'Online' : 'Offline'; },
   callFriend(id) {
     if (IS_NARROW() && Panels.drawer === 'drawer-friends') Panels.close('drawer');
     Ring.call(id).catch((e) => toast(e.message || 'Call failed', { type: 'error' }));
@@ -13267,7 +13307,7 @@ const App = {
     const ringing = Ring.out && Ring.out.to === f.id;
     return h('button', {
       class: 'btn btn-sm btn-call', type: 'button', disabled: !!Ring.out,
-      title: ringing ? 'Ringing…' : this.inCall ? `Ring ${f.display_name} into this squad` : `Call ${f.display_name}`,
+      title: ringing ? 'Ringing…' : this.inCall ? `Add ${f.display_name} to this call` : `Call ${f.display_name}`,
       onclick: () => this.callFriend(f.id),
     }, h('span', { svg: ICONS.phone }), ringing ? 'Ringing…' : this.inCall ? 'Invite' : 'Call');
   },
@@ -13533,10 +13573,10 @@ const App = {
     d.innerHTML = '';
     const row = (a, b, ok) => d.append(h('div', { class: 'diag-row' }, h('span', { text: a }), h('span', { class: ok ? 'ok' : 'bad', text: b })));
     row('Accounts', Account.signedIn ? 'signed in' : Account.configured ? (Account.sb ? 'guest' : 'offline') : 'not set up', !Account.configured || !!Account.sb);
-    if (!this.inCall) { row('Not in a squad', '—', true); return; }
+    if (!this.inCall) { row('Not in a call', '—', true); return; }
     row('Signaling server', Net.sigOK ? 'connected' : 'reconnecting', Net.sigOK);
     row('Room host', Net.beacon ? 'you' : 'another member', true);
-    if (Net.locked) row('Squad', 'locked', true);
+    if (Net.locked) row('Call', 'locked', true);
     for (const m of Net.members.values()) {
       const state = m.lost ? 'reconnecting' : !m.ready ? 'connecting' : `${m.ice}${m.path ? ' · ' + m.path : ''}${m.rtt != null ? ' · ' + Math.round(m.rtt) + 'ms' : ''}`;
       row(m.name, state, m.ready && !m.lost);
@@ -13814,7 +13854,7 @@ const Background = {
     const ms = navigator.mediaSession;
     if (!ms || !App.inCall) return;
     const others = Net.readyMembers().map((m) => m.name);
-    const squad = others.length ? others.slice(0, 3).join(', ') + (others.length > 3 ? ` +${others.length - 3}` : '') : 'Waiting for your squad';
+    const squad = others.length ? others.slice(0, 3).join(', ') + (others.length > 3 ? ` +${others.length - 3}` : '') : 'Waiting for others to join';
     const watching = !!Watch.src;
     try {
       ms.metadata = new MediaMetadata({
