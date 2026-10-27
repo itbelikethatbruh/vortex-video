@@ -55,7 +55,7 @@ android {
     namespace "dev.pages.vortex_video.twa"
     defaultConfig {
         applicationId "dev.pages.vortex_video.twa"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 36
         versionCode 1
         versionName ""
