@@ -78,29 +78,30 @@ We'd rather you hear this from us:
 <tr><td valign="top" width="50%">
 
 ### 🎥 Calls
-- **A home screen like FaceTime, calls like Meet and Zoom.** Home shows your friends (who's online, who's in a call) and your recent calls, with no camera on. Tap a face to ring someone, tap **New call** to start one, or paste an invite link to get a "Ready to join?" preview.
-- **A call screen built for phones**: who you're with and a timer up top, people, chat and layout buttons, and a ⋮ sheet with reactions, raise hand, effects, noise reduction, captions, recording and more.
+- **A native-app home screen.** A tab bar on phones and a side rail on computers, a greeting with who's online, and four quick actions: **New call**, **Join with a link**, **Watch together** and **Add a friend**. Your friends and recent calls sit underneath. Invite links open a "Ready to join?" preview.
+- **Command palette**: press Ctrl+K (⌘K on Mac) to call a friend, mute, start a watch party or open any screen by typing. Single-key shortcuts N, J, W and A work on the home screen.
+- **A call screen built for phones**: who you're with and a timer up top, people, chat and layout buttons, and a ⋮ sheet with reactions and big tiles for watch together, screen share, effects, raise hand, captions and recording.
 - **Tiled, Sidebar or Spotlight** layouts, plus pin anyone.
-- **People list** with search, connection bars, mic status and per-person options, and optional live call stats.
+- **People list** with search, connection bars, mic status and per-person options.
 - **Bad-connection alerts**: when someone starts breaking up, everyone else sees it on their tile, and that person gets a banner with a one-tap fix (turn off camera).
 - Peer-to-peer video calls for up to 8 people, with automatic host migration. The call survives when whoever started it leaves.
 - Invite links (24 hours) and **ring a friend** with one tap: accept, audio-only or decline.
 - **See who's calling, live.** While your phone rings, the caller's camera plays on the ringing card (video only). They can't see or hear you until you answer, and callers can turn it off in Settings.
 - **Call alerts** when Vortex is closed or your phone is locked: "Drake is calling" with Answer and Decline, and a missed-call note if you don't pick up.
-- Friends list with online and in-call status.
+- **Friends** shows only your friends, sorted by who's online. Adding someone is a separate step: type their exact username or email, so nobody can browse the user base.
 - Join preview: choose camera and mic before you go in.
 - Raise hand, reactions and chat bubbles.
 - **Picture-in-picture**: your friends' faces in a floating window while you use other apps.
 - Screen sharing from computers (desktop only).
 - Live captions, call recording and auto clips. Auto clips save the last 20 seconds when everyone laughs or cheers, are opt-in, and show everyone a badge.
-- Radar: an optional, opt-in map of where friends are, exact or approximate. It's never stored.
 
 </td><td valign="top" width="50%">
 
 ### 🍿 Watch together
-- **Movies & shows** with Stremio add-ons: sign in to import your add-ons, browse catalogs, pick episodes.
+- **Movies & shows, powered by [MKCinema](https://mkcinema-site.pages.dev).** Sign in with your MKCinema account and Vortex brings in your add-ons, watchlist and continue-watching list. Browse catalogs, pick episodes, or jump back to a title in MKCinema. You can also paste an add-on link by hand.
 - Streams are ranked by **what actually plays in a browser**: AAC audio and H.264 go to the top, while Dolby, DTS and HEVC are flagged before you click.
 - **Browse YouTube** inside the app, or paste any YouTube, video-file, magnet or `.torrent` link.
+- **Change video** takes you back to where you picked it (YouTube results or the show's episode list), not to the start.
 - Follow a friend's browsing live, and ask whoever has add-ons to start a title.
 - **Cinema mode**: full-screen theater with everyone's faces underneath. You can resize, reshape, drag or pop out any face.
 - Synced subtitles from torrents and subtitle add-ons, with timing adjustment for everyone.
@@ -230,7 +231,7 @@ Keep the keystore and its passwords private and backed up. You need the same key
 - Calls are end-to-end between devices (DTLS-SRTP). When the relay is used, it forwards encrypted packets it can't read.
 - No analytics or ads, and no tracking. Movie history, add-ons and API keys stay on your device and are never sent to anyone else.
 - Your profile (name, username, photo) is visible only to you, your friends and people you have a pending request with.
-- Location sharing is opt-in per call, can be rounded to about 1 km, and is never stored.
+- Connecting MKCinema is read-only: Vortex signs in with your MKCinema account and reads only your own add-ons, watchlist and progress. Your password isn't stored.
 - The Supabase key in the page is the public *publishable* key. Row-level security protects the data.
 
 ## Browser support
@@ -239,4 +240,4 @@ Chrome, Edge and Firefox on desktop; Chrome on Android; Safari on iPhone and Mac
 
 ---
 
-<p align="center"><sub>Made for movie nights. 🍿</sub></p>
+<p align="center"><sub>Vortex is made by one person, <b>Drake Christopher</b>, in his spare time. Made for movie nights. 🍿</sub></p>

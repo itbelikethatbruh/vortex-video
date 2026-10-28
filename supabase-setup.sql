@@ -198,7 +198,7 @@ $$;
 revoke execute on function public.is_friend(uuid) from public, anon;
 grant execute on function public.is_friend(uuid) to authenticated;
 
--- Friend search: exact (confirmed) email match, or literal username prefix.
+-- Friend search: exact (confirmed) email match, or exact username. No prefix browsing.
 -- Never returns yourself; max 10.
 create or replace function public.search_profiles(q text)
 returns table (id uuid, username text, display_name text, avatar_url text)
@@ -219,8 +219,8 @@ as $$
         and exists (select 1 from auth.users au
                     where au.id = p.id and lower(au.email) = lower(term.t) and au.email_confirmed_at is not null))
       or (position('@' in term.t) <= 1
-        and char_length(term.u) >= 2
-        and left(p.username, char_length(term.u)) = term.u)   -- no LIKE: '_' is a literal here
+        and char_length(term.u) >= 3
+        and p.username = term.u)   -- exact username only: nobody can browse the user list
     )
   order by p.username
   limit 10;

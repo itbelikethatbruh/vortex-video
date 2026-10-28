@@ -535,10 +535,6 @@ details.more[open] summary { margin-bottom: 6px; }
 .more-item .mi-ic { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; color: var(--mi, #A78BFA); background: color-mix(in srgb, var(--mi, #8B5CF6) 16%, #14111F); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mi, #8B5CF6) 38%, transparent); transition: background .2s, color .2s, box-shadow .2s; }
 .more-item .mi-ic svg { width: 20px; height: 20px; }
 .more-item .mi-l { overflow-wrap: anywhere; }
-.more-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.more-row .btn { padding: 0 8px; gap: 5px; min-width: 0; font-size: 12.5px; }
-.more-row .btn > span:first-child { flex: none; }
-.more-row .btn { justify-content: center; }
 .more-item.on { border-color: color-mix(in srgb, var(--mi, #8B5CF6) 60%, transparent); background: color-mix(in srgb, var(--mi, #8B5CF6) 10%, #14111F); }
 .more-item.on .mi-ic { background: var(--mi, #8B5CF6); color: #fff; box-shadow: 0 0 20px -4px var(--mi, #8B5CF6); }
 .more-item.rec.on { border-color: rgba(251,79,110,.6); background: rgba(251,79,110,.1); }
@@ -878,6 +874,19 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 .ml-ic { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; flex: none; color: var(--mi, #A78BFA); background: color-mix(in srgb, var(--mi, #8B5CF6) 15%, transparent); transition: background .2s, color .2s; }
 .ml-ic svg { width: 19px; height: 19px; }
 .ml-l { flex: 1; min-width: 0; }
+.ml-chev { color: var(--muted-2, rgba(255,255,255,.35)); display: grid; }
+.ml-chev svg { width: 16px; height: 16px; }
+.more-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.mt { appearance: none; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.045); color: var(--text); border-radius: 18px; padding: 14px 6px 11px; display: flex; flex-direction: column; align-items: center; gap: 8px; font: 600 12.5px var(--sans); cursor: pointer; transition: background .18s, transform .25s var(--spring), border-color .2s; min-width: 0; }
+.mt:hover:not(:disabled) { background: rgba(255,255,255,.08); }
+.mt:active:not(:disabled) { transform: scale(.95); }
+.mt:disabled { opacity: .42; cursor: not-allowed; }
+.mt-ic { width: 40px; height: 40px; border-radius: 14px; display: grid; place-items: center; color: var(--mi, #A78BFA); background: color-mix(in srgb, var(--mi, #8B5CF6) 16%, transparent); transition: background .2s, color .2s; }
+.mt-ic svg { width: 21px; height: 21px; }
+.mt-l { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.mt.on { border-color: color-mix(in srgb, var(--mi) 45%, transparent); background: color-mix(in srgb, var(--mi) 12%, rgba(255,255,255,.03)); }
+.mt.on .mt-ic { background: var(--mi); color: #0B0A12; }
+.mt.rec.on .mt-ic { background: var(--coral); color: #fff; }
 .ml-item.on .ml-ic { background: var(--grad); color: #fff; }
 .ml-item.rec.on .ml-ic { background: var(--coral); }
 .ml-sw { width: 36px; height: 21px; border-radius: 999px; background: rgba(255,255,255,.14); position: relative; flex: none; transition: background .2s; }
@@ -962,55 +971,275 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 @media (max-width: 720px) { .netq-banner { top: auto; bottom: calc(92px + var(--safe-b)); } }
 
 /* settings: grouped cards */
+/* settings: grouped rows like iOS / Android system settings */
 .drawer-set { width: 420px; }
-.set-body { gap: 14px; background: radial-gradient(120% 40% at 50% 0%, rgba(139,92,246,.08), transparent 70%); }
-.set-hero { padding: 14px; border-radius: 20px; background: linear-gradient(135deg, rgba(34,211,238,.12), rgba(139,92,246,.14) 55%, rgba(236,72,153,.12)); border: 1px solid rgba(196,181,253,.2); }
-.set-hero .av { width: 52px; height: 52px; font-size: 18px; border-width: 1.5px; }
-.set-hero .acct-name { font-size: 16px; font-weight: 650; }
-.set-group { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 10px; border-radius: 20px; background: rgba(255,255,255,.03); border: 1px solid var(--hair); }
-.set-group[hidden] { display: none; }
-.set-gh { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; font-size: 14px; font-weight: 650; letter-spacing: -0.01em; }
-.sg-ic { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; color: var(--sc); background: color-mix(in srgb, var(--sc) 16%, transparent); flex: none; }
-.sg-ic svg { width: 17px; height: 17px; }
-.set-group .switch { padding: 8px 0; }
-.set-group .switch + .switch { border-top: 1px solid var(--hair); }
-.relay-card { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; background: var(--surface-2); border: 1px solid var(--hair); }
-.rl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--faint); flex: none; }
-.rl-dot.ok { background: var(--mint); box-shadow: 0 0 10px var(--mint); }
-.rl-dot.bad { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
-.rl-dot.wait { background: var(--cyan); animation: cidot 1s ease-in-out infinite; }
-.rl-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--muted); }
-.rl-text b { color: var(--text); font-size: 14px; }
-.set-about { gap: 10px; }
-.about-row { display: flex; align-items: center; gap: 12px; }
-.about-row > div { display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--muted); }
-.about-row b { color: var(--text); font-size: 15px; display: inline-flex; align-items: center; }
-.about-row .beta-badge { align-self: center; margin: 0 0 0 6px; }
-.about-links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; }
-.about-links a { color: var(--cyan); text-decoration: none; }
-.about-links a:hover { text-decoration: underline; }
+@media (max-width: 900px) { .drawer-set { width: auto; } }
+.set-body { gap: 0; padding: 14px 16px 22px; }
+.set-hero { display: flex; align-items: center; gap: 14px; padding: 16px; margin-bottom: 6px; border-radius: 22px; background: linear-gradient(135deg, rgba(34,211,238,.13), rgba(139,92,246,.16) 55%, rgba(236,72,153,.13)); border: 1px solid rgba(196,181,253,.2); min-width: 0; }
+.set-hero .av { width: 56px; height: 56px; font-size: 20px; border-width: 1.5px; flex: none; cursor: pointer; }
+.set-hero .acct-id { flex: 1; min-width: 0; }
+.set-hero .acct-name { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.set-hero .acct-handle { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.set-hero .btn { flex: none; }
+.set-cap { margin: 18px 6px 7px; font-size: 11.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); }
+.set-group { display: flex; flex-direction: column; padding: 0; border-radius: 18px; background: rgba(255,255,255,.035); border: 1px solid var(--hair); overflow: hidden; }
+.set-group[hidden], #set-present[hidden] { display: none; }
+.srow { display: flex; align-items: center; gap: 12px; padding: 11px 14px; min-height: 54px; width: 100%; min-width: 0; color: var(--text); text-decoration: none; background: transparent; border: 0; text-align: left; font: inherit; position: relative; }
+.srow + .srow::before { content: ''; position: absolute; top: 0; left: 58px; right: 0; height: 1px; background: var(--hair); }
+.srow.switch { cursor: pointer; justify-content: flex-start; }
+.srow-btn { cursor: pointer; transition: background .15s; }
+.srow-btn:hover, .srow.switch:hover { background: rgba(255,255,255,.035); }
+.srow-btn:active { background: rgba(255,255,255,.06); }
+.sr-ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; flex: none; color: var(--c, #A78BFA); background: color-mix(in srgb, var(--c, #8B5CF6) 16%, transparent); }
+.sr-ic svg { width: 18px; height: 18px; }
+.sr-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.sr-l, .srow .sw-label { font-size: 14.5px; font-weight: 550; }
+.srow .sw-sub { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.sr-chev { color: var(--faint); display: grid; flex: none; }
+.sr-chev svg { width: 16px; height: 16px; }
+.sr-input { width: 46%; max-width: 200px; height: 38px; text-align: right; background: transparent; border-color: transparent; padding: 0 4px; font-weight: 550; }
+.sr-input:focus { background: var(--surface-2); border-color: var(--hair-2); text-align: left; padding: 0 10px; }
+.sr-select { width: 50%; max-width: 210px; height: 38px; min-width: 0; font-size: 13px; }
+.sr-kbd, kbd { font: 600 11px var(--mono); padding: 3px 7px; border-radius: 7px; background: rgba(255,255,255,.07); border: 1px solid var(--hair); color: var(--muted); white-space: nowrap; }
+.mkc-ic { font: 800 11px var(--sans); letter-spacing: -.02em; color: #0A0A0B !important; background: linear-gradient(135deg, #F5F0E1, #D9D4C7) !important; }
+.set-foot { display: flex; align-items: center; gap: 12px; margin: 22px 6px 4px; color: var(--muted); font-size: 12px; }
+.set-foot .logo-mark { width: 38px; height: 38px; flex: none; }
+.set-foot > div { display: flex; flex-direction: column; gap: 1px; }
+.set-foot b { color: var(--text); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.set-foot .beta-badge { margin: 0; align-self: center; }
 
 /* 3D splash (once per session, about 1.6 s) */
-#splash { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; background: radial-gradient(55% 45% at 50% 44%, #1A1433, #07070C 72%); perspective: 900px; animation: spOut .55s 1.35s cubic-bezier(.7,0,.3,1) forwards; pointer-events: none; }
-.sp-stage { position: relative; width: 168px; height: 168px; transform-style: preserve-3d; animation: spTilt 1.9s cubic-bezier(.22,1,.36,1) both; }
-.sp-ring { position: absolute; inset: 0; border-radius: 50%; padding: 3px; background: conic-gradient(from 0deg, #22D3EE, #8B5CF6, #EC4899, rgba(236,72,153,0) 70%, #22D3EE); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); filter: drop-shadow(0 0 14px rgba(139,92,246,.85)); transform-style: preserve-3d; }
-.sp-ring.r1 { animation: spR1 1.6s linear infinite; }
-.sp-ring.r2 { inset: 14px; animation: spR2 1.3s linear infinite; }
-.sp-ring.r3 { inset: -18px; opacity: .55; animation: spR3 2.2s linear infinite; }
-.sp-orb { position: absolute; inset: 44px; border-radius: 50%; background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 28%), conic-gradient(from 90deg, #22D3EE, #8B5CF6, #EC4899, #22D3EE); box-shadow: 0 0 60px rgba(139,92,246,.75), inset -10px -14px 30px rgba(7,7,12,.55); animation: spOrb 1.6s cubic-bezier(.22,1.4,.36,1) both, spSwirl 1.2s linear infinite; }
-.sp-logo { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; opacity: 0; animation: spLogo .7s .55s cubic-bezier(.22,1.4,.36,1) forwards; filter: drop-shadow(0 6px 18px rgba(0,0,0,.5)); }
-.sp-word { display: flex; align-items: center; gap: 6px; font-size: 28px; font-weight: 750; letter-spacing: -0.03em; color: var(--text); opacity: 0; animation: spWord .7s .45s cubic-bezier(.22,1,.36,1) forwards; }
-.sp-word .brand-sub { margin-left: 0; }
-.sp-word .beta-badge { align-self: flex-start; margin-left: 2px; }
-@keyframes spTilt { from { transform: rotateX(62deg) rotateZ(-40deg) scale(.4); opacity: 0; } 60% { opacity: 1; } to { transform: rotateX(18deg) rotateZ(0) scale(1); } }
-@keyframes spR1 { from { transform: rotateX(68deg) rotateZ(0); } to { transform: rotateX(68deg) rotateZ(360deg); } }
-@keyframes spR2 { from { transform: rotateY(64deg) rotateZ(0); } to { transform: rotateY(64deg) rotateZ(-360deg); } }
-@keyframes spR3 { from { transform: rotate3d(1, 1, 0, 58deg) rotateZ(0); } to { transform: rotate3d(1, 1, 0, 58deg) rotateZ(360deg); } }
-@keyframes spOrb { from { transform: scale(0); } to { transform: scale(1); } }
-@keyframes spSwirl { to { filter: hue-rotate(360deg); } }
-@keyframes spLogo { from { opacity: 0; transform: scale(.3) translateZ(40px); } to { opacity: 1; transform: none; } }
-@keyframes spWord { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
-@keyframes spOut { to { opacity: 0; transform: scale(1.12); visibility: hidden; } }
+#splash { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #040406; overflow: hidden; cursor: default; animation: spOut .7s 3.05s cubic-bezier(.65,0,.35,1) forwards; }
+#splash.skip { animation: spOut .45s cubic-bezier(.65,0,.35,1) forwards; }
+.sp-aura { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; filter: blur(80px); opacity: 0; will-change: transform, opacity; }
+.sp-aura.a1 { left: -28vmax; bottom: -36vmax; background: radial-gradient(closest-side, rgba(34,211,238,.38), transparent); animation: spAura 3.6s .1s cubic-bezier(.22,1,.36,1) forwards; }
+.sp-aura.a2 { right: -30vmax; top: -38vmax; background: radial-gradient(closest-side, rgba(236,72,153,.32), transparent); animation: spAura 3.6s .25s cubic-bezier(.22,1,.36,1) forwards; }
+.sp-aura.a3 { width: 38vmax; height: 38vmax; left: 50%; top: 50%; margin: -19vmax 0 0 -19vmax; background: radial-gradient(closest-side, rgba(139,92,246,.42), transparent); animation: spCore 3.2s .3s ease-out forwards; }
+.sp-center { position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.sp-mark { position: relative; width: 104px; height: 104px; }
+.sp-mark svg { width: 100%; height: 100%; display: block; overflow: visible; opacity: 0; transform: scale(.86); filter: blur(14px); animation: spMark 1.1s .15s cubic-bezier(.22,1,.36,1) forwards; }
+.sp-mark .spl-arms path { stroke-dasharray: 22; stroke-dashoffset: 22; animation: spDraw 1.1s .55s cubic-bezier(.65,0,.35,1) forwards; }
+.sp-mark .spl-arms { animation: spSpin 1.6s .5s cubic-bezier(.22,1,.36,1) both; }
+.sp-mark::after { content: ''; position: absolute; inset: -6px; border-radius: 22px; background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.55) 50%, transparent 62%); background-size: 260% 100%; background-position: 130% 0; mix-blend-mode: overlay; -webkit-mask: radial-gradient(closest-side, #000 70%, transparent); mask: radial-gradient(closest-side, #000 70%, transparent); animation: spGlint 1s 1.45s ease-in-out forwards; opacity: 0; }
+.sp-word { display: flex; align-items: center; gap: 0; font-size: 34px; font-weight: 760; letter-spacing: -0.035em; color: #F4F2FC; line-height: 1; }
+.sp-l { display: inline-block; opacity: 0; transform: translateY(18px); filter: blur(8px); animation: spLetter .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay: calc(1s + var(--i) * 45ms); }
+.sp-sp { width: .28em; }
+.sp-g { background: linear-gradient(90deg, #22D3EE, #8B5CF6 55%, #EC4899); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sp-word .beta-badge { margin: -14px 0 0 6px; opacity: 0; transform: scale(.4); animation: spBadge .6s 1.65s cubic-bezier(.34,1.56,.64,1) forwards; }
+.sp-tag { font: 600 11px var(--mono); letter-spacing: .34em; text-transform: uppercase; color: rgba(242,240,251,.5); opacity: 0; animation: spTag 1s 1.75s ease-out forwards; margin-top: -10px; }
+.sp-bar { position: absolute; bottom: calc(56px + var(--safe-b)); left: 50%; width: 132px; height: 2px; margin-left: -66px; border-radius: 2px; background: rgba(255,255,255,.08); overflow: hidden; }
+.sp-bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #22D3EE, #8B5CF6, #EC4899); transform-origin: left; transform: scaleX(0); animation: spFill 2.75s .25s cubic-bezier(.45,.05,.25,1) forwards; box-shadow: 0 0 12px rgba(139,92,246,.9); }
+.sp-by { position: absolute; bottom: calc(26px + var(--safe-b)); font-size: 11.5px; color: rgba(242,240,251,.32); letter-spacing: .02em; opacity: 0; animation: spTag 1s 2s ease-out forwards; }
+@keyframes spAura { to { opacity: 1; transform: translate3d(4vmax, -3vmax, 0) scale(1.06); } }
+@keyframes spCore { 0% { opacity: 0; transform: scale(.4); } 40% { opacity: 1; } 100% { opacity: .75; transform: scale(1.15); } }
+@keyframes spMark { to { opacity: 1; transform: none; filter: drop-shadow(0 18px 40px rgba(139,92,246,.55)); } }
+@keyframes spDraw { to { stroke-dashoffset: 0; } }
+@keyframes spSpin { from { transform: translate(24px, 32px) rotate(-200deg) scale(.6); } to { transform: translate(24px, 32px) rotate(0) scale(1); } }
+@keyframes spGlint { 0% { opacity: 1; background-position: 130% 0; } 100% { opacity: 1; background-position: -30% 0; } }
+@keyframes spLetter { to { opacity: 1; transform: none; filter: none; } }
+@keyframes spBadge { to { opacity: 1; transform: none; } }
+@keyframes spTag { to { opacity: 1; } }
+@keyframes spFill { to { transform: scaleX(1); } }
+@keyframes spOut { 0% { opacity: 1; } 100% { opacity: 0; visibility: hidden; transform: scale(1.04); filter: blur(6px); } }
+
+/* =====================================================================
+   2026-10-28: native app shell — side rail on computers, tab bar on phones,
+   a real home screen instead of a landing-page hero
+   ===================================================================== */
+#green[data-mode="home"] .gr-body { display: none; }
+body:not(.vx-incall) .drawer:not(.page) { bottom: calc(16px + var(--safe-b)); }
+#tele, #dsp-pill { display: none !important; }
+#green[data-mode="preview"] .home, #green[data-mode="preview"] .app-nav { display: none; }
+#green[data-mode="home"] #gr-friends, #green[data-mode="home"] #gr-settings { display: none; }
+.cmdk-btn { display: none; }
+kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; background: rgba(255,255,255,.07); border: 1px solid var(--hair); border-bottom-width: 2px; color: var(--muted); white-space: nowrap; }
+
+.app-nav { position: fixed; z-index: 60; display: flex; }
+.an-item { appearance: none; border: 0; background: transparent; color: var(--muted); cursor: pointer; position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; font: 600 10.5px var(--sans); letter-spacing: .01em; transition: color .2s; -webkit-tap-highlight-color: transparent; }
+.an-item b { font-weight: 600; }
+.an-ic { width: 44px; height: 32px; border-radius: 12px; display: grid; place-items: center; transition: background .25s var(--spring), transform .3s var(--spring); }
+.an-ic svg { width: 22px; height: 22px; }
+.an-item:hover { color: var(--text); }
+.an-item:hover .an-ic { background: rgba(255,255,255,.06); }
+.an-item:active .an-ic { transform: scale(.9); }
+.an-item.on { color: var(--text); }
+.an-item.on .an-ic { background: var(--grad-soft); box-shadow: inset 0 0 0 1px rgba(196,181,253,.28); color: #fff; }
+.an-item.on .an-ic svg .d { fill: url(#vx-ig); fill-opacity: .55; }
+.an-item .badge { top: -2px; right: calc(50% - 26px); }
+.an-logo { display: none; }
+.an-spacer { flex: 1; }
+
+@media (min-width: 900px) {
+  .app-nav { left: 0; top: 0; bottom: 0; width: 80px; flex-direction: column; align-items: center; gap: 10px; padding: calc(16px + var(--safe-t)) 0 18px; background: linear-gradient(180deg, rgba(14,11,26,.92), rgba(9,7,16,.92)); border-right: 1px solid var(--hair); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); }
+  .an-logo { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 14px; border-radius: 15px; background: rgba(255,255,255,.04); border: 1px solid var(--hair); }
+  .an-logo .logo-mark { width: 30px; height: 30px; }
+  .an-item { width: 68px; padding: 6px 0; }
+  .an-item.on::before { content: ''; position: absolute; left: -6px; top: 12px; width: 3px; height: 22px; border-radius: 0 3px 3px 0; background: var(--grad); }
+  #green[data-mode="home"] { padding-left: 80px; }
+  #green[data-mode="home"] .gr-head { padding-left: 32px; padding-right: 28px; background: transparent; }
+  #green[data-mode="home"] .gr-head .brand { visibility: hidden; }
+  #green[data-mode="home"] .cmdk-btn { display: inline-flex; }
+}
+.cmdk-btn { appearance: none; align-items: center; gap: 10px; height: 40px; width: min(380px, 34vw); padding: 0 8px 0 12px; border-radius: 12px; border: 1px solid var(--hair); background: rgba(255,255,255,.035); color: var(--faint); font: 500 13px var(--sans); cursor: pointer; transition: border-color .2s, background .2s; margin-right: 6px; }
+.cmdk-btn:hover { border-color: var(--hair-2); background: rgba(255,255,255,.06); color: var(--muted); }
+.cmdk-btn > span:first-child svg { width: 17px; height: 17px; display: block; }
+.cmdk-btn .ck-t { flex: 1; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.home { width: min(1120px, 100%); margin: 0 auto; padding: 4px 32px calc(40px + var(--safe-b)); display: flex; flex-direction: column; gap: 22px; }
+.home-top { display: flex; flex-direction: column; gap: 2px; padding-top: 8px; }
+.ht-hello { font-size: 15px; color: var(--muted); font-weight: 500; }
+.ht-name { margin: 0; font-size: clamp(32px, 3.4vw, 44px); line-height: 1.08; font-weight: 760; letter-spacing: -0.04em; background: linear-gradient(180deg, #fff, #C9C3E6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ht-sub { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 6px; font-size: 13px; color: var(--muted); }
+.ht-sub .pdot { position: static; width: 8px; height: 8px; border: 0; }
+.ht-sub .pdot.online { box-shadow: 0 0 8px var(--mint); }
+.ht-dot { color: var(--faint); }
+
+.home-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.ha { --ha: #8B5CF6; appearance: none; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 18px; min-height: 142px; padding: 18px; border-radius: 24px; border: 1px solid var(--hair); background: linear-gradient(180deg, rgba(30,25,50,.7), rgba(16,13,28,.7)); color: var(--text); text-align: left; cursor: pointer; isolation: isolate; transition: transform .35s var(--spring), border-color .25s, box-shadow .35s; }
+.ha::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .3s; background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--ha) 26%, transparent), transparent 70%); }
+.ha:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--ha) 45%, transparent); box-shadow: 0 24px 50px -28px color-mix(in srgb, var(--ha) 80%, transparent); }
+.ha:hover::before { opacity: 1; }
+.ha:active { transform: scale(.97); }
+.ha-ic { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; color: var(--ha); background: color-mix(in srgb, var(--ha) 16%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ha) 28%, transparent); }
+.ha-ic svg { width: 24px; height: 24px; }
+.ha-t { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.ha-t b { font-size: 16.5px; font-weight: 680; letter-spacing: -0.015em; }
+.ha-t span { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.ha-k { position: absolute; top: 16px; right: 16px; opacity: .7; }
+.ha-new { --ha: #fff; border-color: transparent; background: var(--grad); box-shadow: 0 22px 50px -24px rgba(139,92,246,.9), inset 0 1px 0 rgba(255,255,255,.25); }
+.ha-new::after { content: ''; position: absolute; inset: -40% -60%; z-index: -1; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.28) 50%, transparent 60%); transform: translateX(-60%); animation: haShine 5.5s 1.2s ease-in-out infinite; }
+@keyframes haShine { 0%, 70% { transform: translateX(-60%); } 100% { transform: translateX(60%); } }
+.ha-new .ha-ic { color: #fff; background: rgba(255,255,255,.2); box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+.ha-new .ha-t span { color: rgba(255,255,255,.85); }
+.ha-new .ha-k { color: #fff; background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.3); }
+.ha-new:hover { box-shadow: 0 30px 60px -24px rgba(139,92,246,1); border-color: transparent; }
+.home-status { margin: -10px 2px 0; font-size: 13px; color: var(--muted); min-height: 0; }
+.home-status:empty { display: none; }
+.home-status.err { color: #FF9AAF; }
+.home-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.home .hub-card { padding: 18px 18px 12px; }
+
+@media (max-width: 899px) {
+  .app-nav { left: 0; right: 0; bottom: 0; height: calc(64px + var(--safe-b)); padding: 6px 8px var(--safe-b); justify-content: space-around; align-items: stretch; background: rgba(10,8,18,.88); border-top: 1px solid var(--hair); backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%); }
+  .an-item { flex: 1; justify-content: center; }
+  .an-spacer, .an-cmd { display: none; }
+  #green[data-mode="home"] { padding-bottom: calc(64px + var(--safe-b)); }
+  .home { padding: 0 16px 24px; gap: 18px; }
+  .home-top { padding-top: 2px; }
+  .ht-name { font-size: 32px; }
+  .home-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ha { min-height: 118px; padding: 15px; border-radius: 22px; gap: 14px; }
+  .ha-ic { width: 42px; height: 42px; border-radius: 14px; }
+  .ha-t b { font-size: 15.5px; }
+  .ha-t span { font-size: 12px; }
+  .ha-k { display: none; }
+  .home-grid { grid-template-columns: 1fr; }
+  .drawer.page { top: 0; bottom: calc(64px + var(--safe-b)); left: 0; right: 0; width: auto; height: auto; max-height: none; border-radius: 0; border: 0; background: var(--void); box-shadow: none; padding: var(--safe-t) 0 0; transform: translateY(10px); }
+  .drawer.page.open { transform: none; }
+  .drawer.page .drawer-head { padding: 18px 18px 10px; border: 0; }
+  .drawer.page .drawer-head::after { display: none; }
+  .drawer.page .drawer-head > span { font-size: 30px; font-weight: 760; letter-spacing: -0.035em; }
+  .drawer.page [data-close] { display: none; }
+}
+@media (hover: none) { .ha-k { display: none; } }
+
+/* inputs with a leading icon */
+.in-ic { position: relative; flex: 1; min-width: 0; display: flex; }
+.in-ic > span:first-child { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--faint); pointer-events: none; display: grid; }
+.in-ic > span:first-child svg { width: 17px; height: 17px; }
+.in-ic .input { flex: 1; min-width: 0; padding-left: 38px; }
+
+/* sheets: centered on computers, bottom sheets on phones */
+.small-card { width: min(460px, 100%); padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 14px; }
+.small-card .modal-head { margin-bottom: 0; }
+.small-card .modal-head h2 { font-size: 21px; }
+#modal-join .gr-join { display: flex; gap: 8px; }
+#modal-join .gr-join .input { height: 48px; letter-spacing: 0; text-transform: none; font-size: 14px; }
+#modal-join .gr-join .btn { flex: none; }
+.paste-btn { gap: 8px; color: var(--muted); }
+.paste-btn svg { width: 16px; height: 16px; }
+.join-status { margin: 0; font-size: 13px; color: var(--muted); }
+.join-status:empty { display: none; }
+.join-status.err { color: #FF9AAF; }
+@media (max-width: 640px) {
+  .modal.sheetish { align-items: flex-end; padding: 0; }
+  .modal.sheetish .modal-card { width: 100%; max-height: 88vh; border-radius: 26px 26px 0 0; padding-bottom: calc(20px + var(--safe-b)); transform: translateY(40px); }
+  .modal.sheetish.open .modal-card { transform: none; }
+}
+
+/* friends: your list, with Add as its own step */
+.fr-top { display: flex; gap: 8px; align-items: center; }
+.fr-top .fr-filter[hidden] { display: none; }
+.fr-top .fr-filter .input { height: 42px; }
+.dh-acts { display: inline-flex; align-items: center; gap: 6px; }
+.fr-add { gap: 6px; flex: none; }
+.fr-top:has(.fr-filter[hidden]) { display: none; }
+.fr-add svg { width: 17px; height: 17px; }
+.fempty-big { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 34px 18px; }
+.fempty-big .fe-ic { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; background: var(--grad-soft); color: var(--cyan); margin-bottom: 6px; }
+.fempty-big .fe-ic svg { width: 28px; height: 28px; }
+.fempty-big b { color: var(--text); font-size: 15px; }
+.fempty-big .btn { margin-top: 10px; gap: 6px; }
+#modal-addfriend .fsearch .input { height: 46px; }
+#modal-addfriend .fsearch .btn { height: 46px; }
+.af-me { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,.035); border: 1px solid var(--hair); font-size: 13px; color: var(--muted); }
+.af-me:empty { display: none; }
+.af-me b { color: var(--text); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.af-me .btn { gap: 6px; }
+.af-me svg { width: 15px; height: 15px; }
+
+/* command palette */
+.modal.cmdk { align-items: flex-start; padding-top: max(10vh, 24px); }
+.cmdk-card { width: min(640px, 100%); padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.cmdk-in { display: flex; align-items: center; gap: 10px; padding: 6px 14px; border-bottom: 1px solid var(--hair); color: var(--muted); }
+.cmdk-in > span:first-child svg { width: 20px; height: 20px; display: block; }
+.cmdk-in .input { flex: 1; height: 54px; border: 0; background: transparent; font-size: 16px; padding: 0; box-shadow: none !important; }
+.cmdk-list { max-height: min(56vh, 460px); overflow: auto; padding: 8px; }
+.cmdk-g { padding: 10px 10px 4px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+.cmdk-it { appearance: none; width: 100%; border: 0; background: transparent; color: var(--text); display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 12px; font: 500 14px var(--sans); text-align: left; cursor: pointer; }
+.cmdk-it.on { background: var(--grad-soft); box-shadow: inset 0 0 0 1px rgba(196,181,253,.22); }
+.cmdk-ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.06); color: var(--muted); flex: none; }
+.cmdk-it.on .cmdk-ic { color: #fff; background: rgba(255,255,255,.1); }
+.cmdk-ic svg { width: 18px; height: 18px; }
+.cmdk-av.av { width: 32px; height: 32px; font-size: 12px; border-width: 1px; flex: none; }
+.cmdk-t { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cmdk-t small { font-size: 12px; color: var(--muted); }
+.cmdk-it.danger { color: #FF9AAF; }
+.cmdk-empty { padding: 26px; text-align: center; color: var(--muted); }
+
+/* MKCinema */
+.mkc-chip { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 7px; font: 800 9.5px/1 var(--sans); letter-spacing: -.02em; color: #0A0A0B; background: linear-gradient(135deg, #F5F0E1, #D9D4C7); flex: none; }
+.mkc-chip.big { width: 40px; height: 40px; border-radius: 12px; font-size: 14px; box-shadow: 0 8px 24px -10px rgba(217,212,199,.6); }
+.yt-chip { display: inline-block; width: 22px; height: 16px; border-radius: 5px; background: #FF0033; position: relative; flex: none; }
+.yt-chip::after { content: ''; position: absolute; left: 8.5px; top: 4.5px; border: 3.5px solid transparent; border-left: 6px solid #fff; border-right: 0; }
+.mkc-brand { display: flex; align-items: center; gap: 12px; }
+.mkc-logo { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font: 800 16px var(--sans); color: #0A0A0B; background: linear-gradient(135deg, #F5F0E1, #D9D4C7); box-shadow: 0 10px 30px -10px rgba(217,212,199,.55); flex: none; }
+.mkc-card { background: linear-gradient(180deg, rgba(20,18,16,.98), rgba(10,10,11,.98)); border-color: rgba(217,212,199,.18); }
+.mkc-perks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.mkc-perks li { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #D9D4C7; }
+.mkc-perks li span { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: rgba(217,212,199,.08); color: #F5F0E1; flex: none; }
+.mkc-perks li svg { width: 16px; height: 16px; }
+.mkc-form { display: flex; flex-direction: column; gap: 10px; }
+.mkc-form .input { height: 46px; }
+.mkc-card .btn-primary { background: linear-gradient(135deg, #F5F0E1, #CFC8B6); color: #0A0A0B; box-shadow: 0 12px 30px -14px rgba(217,212,199,.7); }
+.mkc-msg { margin: 0; font-size: 13px; color: #D9D4C7; }
+.mkc-msg:empty { display: none; }
+.mkc-msg.err { color: #FF9AAF; }
+.mkc-fine { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.5; }
+.mkc-fine a { color: #F5F0E1; }
+.mkc-acct { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.25); }
+.mkc-acct > div { flex: 1; min-width: 0; display: flex; flex-direction: column; font-size: 12.5px; color: var(--muted); }
+.mkc-acct > div span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mkc-acct b { color: var(--text); font-size: 14px; }
+.mkc-ok { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: #062; flex: none; }
+.mkc-ok svg { width: 16px; height: 16px; }
+.mkc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.mkc-stats > div { display: flex; flex-direction: column; align-items: center; padding: 12px 6px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid var(--hair); }
+.mkc-stats b { font-size: 22px; font-weight: 750; letter-spacing: -0.03em; }
+.mkc-stats span { font-size: 11.5px; color: var(--muted); }
+.mkc-acts { display: flex; gap: 8px; }
+.mkc-acts .btn { flex: 1; gap: 6px; text-decoration: none; }
+.mkc-acts svg { width: 16px; height: 16px; }
 
 </style>
 <link rel="manifest" href="manifest.webmanifest">
@@ -1026,21 +1255,32 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
   <linearGradient id="vx-ig" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5EEAF8"/><stop offset=".5" stop-color="#B69CFF"/><stop offset="1" stop-color="#F472B6"/></linearGradient>
 </defs></svg>
 <div id="splash" aria-hidden="true">
-  <div class="sp-stage">
-    <div class="sp-ring r1"></div><div class="sp-ring r2"></div><div class="sp-ring r3"></div>
-    <div class="sp-orb"></div>
-    <span class="logo-mark sp-logo"></span>
+  <div class="sp-aura a1"></div><div class="sp-aura a2"></div><div class="sp-aura a3"></div>
+  <div class="sp-center">
+    <div class="sp-mark"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="vxl1spg" x1="4" y1="14" x2="60" y2="50" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#22D3EE"/><stop offset=".52" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899"/></linearGradient><radialGradient id="vxl1spd" cx="21" cy="28" r="15" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2A1B5E"/><stop offset=".7" stop-color="#110A2A"/><stop offset="1" stop-color="#07050F"/></radialGradient><linearGradient id="vxl1sps" x1="-10" y1="-10" x2="10" y2="10" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#67E8F9"/><stop offset=".5" stop-color="#C4B5FD"/><stop offset="1" stop-color="#F9A8D4"/></linearGradient></defs><rect x="3" y="14" width="42" height="36" rx="11.5" fill="url(#vxl1spg)"/><rect x="3.6" y="14.6" width="40.8" height="34.8" rx="11" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1.2"/><path d="M47 27.4 L56.4 21 C58.6 19.6 61 20.7 61 23.3 V40.7 C61 43.3 58.6 44.4 56.4 43 L47 36.6 Z" fill="url(#vxl1spg)"/><circle cx="24" cy="32" r="12.8" fill="url(#vxl1spd)"/><circle cx="24" cy="32" r="12.8" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1"/><g class="spl-arms" transform="translate(24 32)" fill="none" stroke="url(#vxl1sps)" stroke-width="2.2" stroke-linecap="round"><path d="M9.4 0.2 C9 5.9 4.2 8.2 0.4 6.1 C-1.9 4.8 -2.3 2.3 -1.2 0.6" transform="rotate(0)"/><path d="M9.4 0.2 C9 5.9 4.2 8.2 0.4 6.1 C-1.9 4.8 -2.3 2.3 -1.2 0.6" transform="rotate(90)"/><path d="M9.4 0.2 C9 5.9 4.2 8.2 0.4 6.1 C-1.9 4.8 -2.3 2.3 -1.2 0.6" transform="rotate(180)"/><path d="M9.4 0.2 C9 5.9 4.2 8.2 0.4 6.1 C-1.9 4.8 -2.3 2.3 -1.2 0.6" transform="rotate(270)"/></g><circle cx="24" cy="32" r="2" fill="#fff"/><path d="M15.5 26.2 A10 10 0 0 1 21.6 21.9" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4" stroke-linecap="round"/><circle cx="37.6" cy="20.4" r="2.3" fill="#fff" fill-opacity=".92"/></svg></div>
+    <div class="sp-word"><span class="sp-l" style="--i:0">V</span><span class="sp-l" style="--i:1">o</span><span class="sp-l" style="--i:2">r</span><span class="sp-l" style="--i:3">t</span><span class="sp-l" style="--i:4">e</span><span class="sp-l" style="--i:5">x</span><span class="sp-sp"></span><span class="sp-l sp-g" style="--i:7">V</span><span class="sp-l sp-g" style="--i:8">i</span><span class="sp-l sp-g" style="--i:9">d</span><span class="sp-l sp-g" style="--i:10">e</span><span class="sp-l sp-g" style="--i:11">o</span><span class="beta-badge">Beta</span></div>
+    <div class="sp-tag">Calls · Watch parties · Friends</div>
   </div>
-  <div class="sp-word"><span class="brand-word">Vortex</span> <span class="brand-sub">Video</span><span class="beta-badge">Beta</span></div>
+  <div class="sp-bar"><i></i></div>
+  <div class="sp-by">by Drake Christopher</div>
 </div>
-<script>(function(){var s=document.getElementById('splash');function rm(){if(s&&s.parentNode)s.parentNode.removeChild(s);}try{if(sessionStorage.getItem('vx-splash')||/[?&]ring=/.test(location.search)||matchMedia('(prefers-reduced-motion: reduce)').matches){rm();return;}sessionStorage.setItem('vx-splash','1');}catch(e){}setTimeout(rm,2000);})();</script>
+<script>(function(){var s=document.getElementById('splash'),t;function rm(){if(s&&s.parentNode)s.parentNode.removeChild(s);}try{if(sessionStorage.getItem('vx-splash')||/[?&]ring=/.test(location.search)||matchMedia('(prefers-reduced-motion: reduce)').matches){rm();return;}sessionStorage.setItem('vx-splash','1');}catch(e){}t=setTimeout(rm,3800);s.addEventListener('pointerdown',function(){clearTimeout(t);s.classList.add('skip');setTimeout(rm,460);});})();</script>
 <div id="app">
 
   <!-- ============ Green room ============ -->
   <section id="green" class="view" data-mode="home">
+    <nav class="app-nav" id="app-nav" aria-label="Vortex">
+      <div class="an-logo" aria-hidden="true"><span class="logo-mark"></span></div>
+      <button class="an-item on" type="button" data-tab="home" aria-current="page"><span class="an-ic" data-ic="home"></span><b>Home</b></button>
+      <button class="an-item" type="button" data-tab="friends"><span class="an-ic" data-ic="users"></span><b>Friends</b><span class="badge" id="nav-friends-badge" hidden>0</span></button>
+      <button class="an-item" type="button" data-tab="settings"><span class="an-ic" data-ic="gear"></span><b>Settings</b></button>
+      <span class="an-spacer"></span>
+      <button class="an-item an-cmd" type="button" data-tab="search" title="Search and shortcuts (Ctrl K)"><span class="an-ic" data-ic="search"></span><b>Search</b></button>
+    </nav>
     <header class="gr-head">
       <div class="brand" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span><span class="beta-badge">Beta</span></div>
       <div class="gr-head-actions">
+        <button class="cmdk-btn" id="cmdk-btn" type="button" aria-label="Search and shortcuts"><span data-ic="search"></span><span class="ck-t">Search friends, calls and actions</span><kbd id="cmdk-kbd">Ctrl K</kbd></button>
         <button class="profile-pill" id="me-pill" type="button" aria-haspopup="dialog">
           <span class="av pp-av" id="me-av"></span>
           <span class="pp-text"><span class="pp-name" id="me-name">Sign in</span><span class="pp-handle" id="me-handle"></span></span>
@@ -1070,32 +1310,39 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 
       <div class="gr-side">
         <button class="gr-back" id="gr-back" type="button" hidden><span class="gb-ic"></span>Back</button>
-        <h1 class="gr-title" id="gr-title">Video calls for <span class="grad-text">everyone.</span></h1>
-        <p class="gr-lede" id="gr-lede">Call your friends, share your screen and watch movies together. Free, with no time limit.</p>
+        <h1 class="gr-title" id="gr-title">Ready to <span class="grad-text">join?</span></h1>
+        <p class="gr-lede" id="gr-lede"></p>
         <form id="gr-form" class="gr-form" autocomplete="off" novalidate>
           <div class="field" id="gr-name-field">
             <label for="gr-name">Your name</label>
             <input class="input" id="gr-name" maxlength="24" placeholder="Your name" required>
           </div>
           <div class="gr-actions">
-            <button class="btn btn-primary btn-lg" id="gr-start" type="submit">New call</button>
-            <div class="gr-join" id="gr-join">
-              <input class="input" id="gr-code" placeholder="Paste an invite link" aria-label="Invite link" autocapitalize="none" spellcheck="false" inputmode="url">
-              <button class="btn btn-lg btn-ghost" id="gr-code-go" type="button" disabled>Join</button>
-            </div>
+            <button class="btn btn-primary btn-lg" id="gr-start" type="submit">Join now</button>
           </div>
-          <p class="gr-guest-hint" id="gr-guest-hint" hidden>No account? Paste the invite link someone sent you to join as a guest.</p>
         </form>
-        <ul class="gr-perks" aria-label="What you get">
-          <li><span data-ic="cam"></span>HD video</li><li><span data-ic="tv"></span>Watch together</li><li><span data-ic="bell"></span>Call alerts</li><li><span data-ic="shield"></span>Peer-to-peer</li>
-        </ul>
         <p class="gr-joinas" id="gr-joinas"></p>
         <p class="gr-status" id="gr-status" aria-live="polite"></p>
       </div>
 
-      <div class="gr-hub" id="gr-hub">
+    </div>
+
+    <div class="home" id="home">
+      <header class="home-top">
+        <div class="ht-hello" id="home-hello">Welcome</div>
+        <h1 class="ht-name" id="home-name">Vortex</h1>
+        <div class="ht-sub" id="home-sub"></div>
+      </header>
+      <div class="home-actions" role="group" aria-label="Start">
+        <button class="ha ha-new" id="ha-new" type="button"><span class="ha-ic" data-ic="cam"></span><span class="ha-t"><b id="ha-new-t">New call</b><span id="ha-new-s">Start one and invite people</span></span><kbd class="ha-k">N</kbd></button>
+        <button class="ha" id="ha-join" type="button" style="--ha:#22D3EE"><span class="ha-ic" data-ic="link"></span><span class="ha-t"><b>Join</b><span>Paste an invite link</span></span><kbd class="ha-k">J</kbd></button>
+        <button class="ha" id="ha-watch" type="button" style="--ha:#EC4899"><span class="ha-ic" data-ic="film"></span><span class="ha-t"><b>Watch party</b><span>MKCinema or YouTube, in sync</span></span><kbd class="ha-k">W</kbd></button>
+        <button class="ha" id="ha-add" type="button" style="--ha:#34D399"><span class="ha-ic" data-ic="userPlus"></span><span class="ha-t"><b>Add friend</b><span>By username or email</span></span><kbd class="ha-k">A</kbd></button>
+      </div>
+      <p class="home-status" id="home-status" aria-live="polite"></p>
+      <div class="home-grid">
         <div class="hub-card" id="gr-friends-strip">
-          <div class="hub-h"><span class="label">Friends</span><button class="link-btn" id="gr-friends-all" type="button">All friends</button></div>
+          <div class="hub-h"><span class="label">Friends</span><button class="link-btn" id="gr-friends-all" type="button">See all</button></div>
           <div class="hub-friends" id="fstrip"></div>
         </div>
         <div class="hub-card" id="hub-recent-card">
@@ -1295,80 +1542,57 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 <aside class="drawer drawer-set" id="drawer-settings" role="dialog" aria-label="Settings" hidden>
   <div class="drawer-head"><span>Settings</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
   <div class="drawer-body set-body">
-    <div class="acct-row set-hero" id="set-acct-row">
+    <div class="set-hero" id="set-acct-row">
       <button class="av" id="set-acct-av" type="button" aria-label="Change profile picture" title="Change profile picture"></button>
       <div class="acct-id"><div class="acct-name" id="set-acct-name"></div><div class="acct-handle mono" id="set-acct-handle"></div></div>
       <button class="btn btn-sm" id="set-acct-btn" type="button"></button>
     </div>
 
-    <section class="set-group" style="--sc:#22D3EE">
-      <h3 class="set-gh"><span class="sg-ic" data-ic="user"></span>Profile</h3>
-      <div class="field"><label for="set-name">Display name</label><input class="input" id="set-name" maxlength="24"></div>
+    <div class="set-cap">Profile</div>
+    <section class="set-group">
+      <div class="srow"><span class="sr-ic" style="--c:#22D3EE" data-ic="user"></span><label class="sr-main" for="set-name"><span class="sr-l">Display name</span></label><input class="input sr-input" id="set-name" maxlength="24" autocomplete="nickname"></div>
     </section>
 
-    <section class="set-group" style="--sc:#FBBF24">
-      <h3 class="set-gh"><span class="sg-ic" data-ic="bell"></span>Calls</h3>
-      <label class="switch" id="set-alerts-wrap" hidden><span><span class="sw-label">Call alerts</span><span class="sw-sub" id="set-alerts-sub">Ring this device when a friend calls, even when Vortex is closed</span></span><input type="checkbox" id="set-alerts"><span class="track"></span></label>
-      <label class="switch"><span><span class="sw-label">Show my camera while ringing</span><span class="sw-sub">The friend you call sees your live video (no sound) until they pick up.</span></span><input type="checkbox" id="set-ringpreview"><span class="track"></span></label>
+    <div class="set-cap">Calls</div>
+    <section class="set-group">
+      <label class="switch srow" id="set-alerts-wrap" hidden><span class="sr-ic" style="--c:#FBBF24" data-ic="bell"></span><span class="sr-main"><span class="sw-label">Call alerts</span><span class="sw-sub" id="set-alerts-sub">Ring this device when a friend calls, even when Vortex is closed</span></span><input type="checkbox" id="set-alerts"><span class="track"></span></label>
+      <label class="switch srow"><span class="sr-ic" style="--c:#EC4899" data-ic="eye"></span><span class="sr-main"><span class="sw-label">Show my camera while ringing</span><span class="sw-sub">Video only, until they pick up</span></span><input type="checkbox" id="set-ringpreview"><span class="track"></span></label>
     </section>
 
-    <section class="set-group" style="--sc:#EC4899">
-      <h3 class="set-gh"><span class="sg-ic" data-ic="cam"></span>Camera and sound</h3>
-      <div class="field"><label for="set-cam">Camera</label><select class="select" id="set-cam"></select></div>
-      <div class="field"><label for="set-mic">Microphone</label><select class="select" id="set-mic"></select></div>
-      <div class="field" id="set-spk-wrap"><label for="set-spk">Speaker</label><select class="select" id="set-spk"></select></div>
+    <div class="set-cap">Audio and video</div>
+    <section class="set-group">
+      <div class="srow"><span class="sr-ic" style="--c:#8B5CF6" data-ic="cam"></span><label class="sr-main" for="set-cam"><span class="sr-l">Camera</span></label><select class="select sr-select" id="set-cam"></select></div>
+      <div class="srow"><span class="sr-ic" style="--c:#22D3EE" data-ic="mic"></span><label class="sr-main" for="set-mic"><span class="sr-l">Microphone</span></label><select class="select sr-select" id="set-mic"></select></div>
+      <div class="srow" id="set-spk-wrap"><span class="sr-ic" style="--c:#60A5FA" data-ic="speaker"></span><label class="sr-main" for="set-spk"><span class="sr-l">Speaker</span></label><select class="select sr-select" id="set-spk"></select></div>
+      <label class="switch srow"><span class="sr-ic" style="--c:#34D399" data-ic="noise"></span><span class="sr-main"><span class="sw-label">Noise reduction</span><span class="sw-sub">On-device AI removes fans, keyboards and traffic</span></span><input type="checkbox" id="set-noise"><span class="track"></span></label>
+      <button class="srow srow-btn" id="set-studio" type="button"><span class="sr-ic" style="--c:#FB923C" data-ic="sliders"></span><span class="sr-main"><span class="sr-l">Studio audio</span><span class="sw-sub">Voice EQ, noise gate and compressor</span></span><span class="sr-chev" data-ic="chevRight"></span></button>
     </section>
 
-    <section class="set-group" id="set-present" style="--sc:#60A5FA">
-      <h3 class="set-gh"><span class="sg-ic" data-ic="screen"></span>Presenting</h3>
-      <label class="switch"><span><span class="sw-label">Auto picture-in-picture</span><span class="sw-sub">Pop everyone into a floating window when you present or switch tabs</span></span><input type="checkbox" id="set-autopip"><span class="track"></span></label>
-      <label class="switch"><span><span class="sw-label">Show me in picture-in-picture</span><span class="sw-sub">Off: the floating window shows only the others</span></span><input type="checkbox" id="set-pipself"><span class="track"></span></label>
-      <div class="field"><label for="set-hint">Optimize shared screen for</label>
-        <select class="select" id="set-hint"><option value="detail">Text and detail</option><option value="motion">Motion and games</option></select></div>
+    <div class="set-cap">Watch together</div>
+    <section class="set-group">
+      <button class="srow srow-btn" id="set-mkc" type="button"><span class="sr-ic mkc-ic" aria-hidden="true">MK</span><span class="sr-main"><span class="sr-l">MKCinema</span><span class="sw-sub" id="set-mkc-sub">Connect your account</span></span><span class="sr-chev" data-ic="chevRight"></span></button>
     </section>
 
-    <section class="set-group" style="--sc:#34D399">
-      <h3 class="set-gh"><span class="sg-ic" data-ic="globe"></span>Connection</h3>
-      <div class="relay-card" id="set-relay">
-        <span class="rl-dot" id="set-relay-dot"></span>
-        <div class="rl-text"><b id="set-relay-title">Checking the relay…</b><span id="set-relay-sub">Calls connect directly when they can, and through the Vortex relay on strict networks (mobile data, offices).</span></div>
-        <button class="btn btn-sm" id="set-relay-test" type="button">Test</button>
-      </div>
-      <div class="diag" id="diag"></div>
-      <button class="btn btn-block" id="set-copy-report" type="button">Copy connection report</button>
-      <details class="more" id="set-adv">
-        <summary>Advanced network settings</summary>
-        <p class="hint">You don't need these: the relay above is set up automatically. Only add your own TURN server if someone asked you to. Everyone in a call should use the same settings; changes apply the next time you join.</p>
-        <div class="field"><label for="set-turn-urls">Extra TURN server URLs</label><input class="input mono" id="set-turn-urls" placeholder="turn:turn.example.com:3478"></div>
-        <div class="two">
-          <div class="field"><label for="set-turn-user">Username</label><input class="input" id="set-turn-user"></div>
-          <div class="field"><label for="set-turn-cred">Credential</label><input class="input" id="set-turn-cred" type="password"></div>
-        </div>
-        <p class="hint">Signaling server (leave blank for the free PeerJS cloud).</p>
-        <div class="two">
-          <div class="field"><label for="set-srv-host">Host</label><input class="input mono" id="set-srv-host" placeholder="peer.example.com"></div>
-          <div class="field"><label for="set-srv-port">Port</label><input class="input mono" id="set-srv-port" placeholder="443"></div>
-        </div>
-        <div class="two">
-          <div class="field"><label for="set-srv-path">Path</label><input class="input mono" id="set-srv-path" placeholder="/"></div>
-          <div class="field"><label for="set-srv-key">Key</label><input class="input mono" id="set-srv-key" placeholder="peerjs"></div>
-        </div>
-        <label class="switch"><span class="sw-label">Use TLS (wss)</span><input type="checkbox" id="set-srv-secure"><span class="track"></span></label>
-        <button class="btn btn-block" id="set-save-net" type="button">Save network settings</button>
-        <details class="more" id="set-supa">
-          <summary>Accounts server (Supabase)</summary>
-          <p class="hint" id="set-supa-hint"></p>
-          <div class="field"><label for="set-supa-url">Project URL</label><input class="input mono" id="set-supa-url" placeholder="https://xxxx.supabase.co" autocapitalize="none" spellcheck="false"></div>
-          <div class="field"><label for="set-supa-key">Publishable key</label><input class="input mono" id="set-supa-key" placeholder="sb_publishable_… (or legacy anon key)" autocapitalize="none" spellcheck="false"></div>
-          <button class="btn btn-block" id="set-save-supa" type="button">Save and reconnect</button>
-        </details>
-      </details>
-    </section>
+    <div id="set-present">
+      <div class="set-cap">Presenting</div>
+      <section class="set-group">
+        <label class="switch srow"><span class="sr-ic" style="--c:#8B5CF6" data-ic="pip"></span><span class="sr-main"><span class="sw-label">Auto picture-in-picture</span><span class="sw-sub">Float everyone when you present or switch tabs</span></span><input type="checkbox" id="set-autopip"><span class="track"></span></label>
+        <label class="switch srow"><span class="sr-ic" style="--c:#22D3EE" data-ic="user"></span><span class="sr-main"><span class="sw-label">Show me in the floating window</span></span><input type="checkbox" id="set-pipself"><span class="track"></span></label>
+        <div class="srow"><span class="sr-ic" style="--c:#60A5FA" data-ic="screen"></span><label class="sr-main" for="set-hint"><span class="sr-l">Shared screen</span></label><select class="select sr-select" id="set-hint"><option value="detail">Sharp text</option><option value="motion">Smooth motion</option></select></div>
+      </section>
+    </div>
 
-    <section class="set-group set-about" style="--sc:#8B5CF6">
-      <div class="about-row"><span class="logo-mark" aria-hidden="true"></span><div><b>Vortex Video <span class="beta-badge">Beta</span></b><span class="mono" id="set-version"></span></div></div>
-      <div class="about-links"><a href="/welcome.html" target="_blank" rel="noopener">Download the apps</a><a href="https://github.com/itbelikethatbruh/vortex-video" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/itbelikethatbruh/vortex-video/issues" target="_blank" rel="noopener">Report a problem</a></div>
+    <div class="set-cap">About</div>
+    <section class="set-group">
+      <a class="srow srow-btn" href="/welcome.html" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#22D3EE" data-ic="upload"></span><span class="sr-main"><span class="sr-l">Get the apps</span><span class="sw-sub">Windows and Android</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
+      <button class="srow srow-btn desk-only" id="set-keys" type="button"><span class="sr-ic" style="--c:#8B5CF6" data-ic="keyboard"></span><span class="sr-main"><span class="sr-l">Keyboard shortcuts</span></span><kbd class="sr-kbd">Ctrl K</kbd></button>
+      <a class="srow srow-btn" href="https://github.com/itbelikethatbruh/vortex-video" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#F2F0FB" data-ic="github"></span><span class="sr-main"><span class="sr-l">Source code on GitHub</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
+      <a class="srow srow-btn" href="https://github.com/itbelikethatbruh/vortex-video/issues" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#FB4F6E" data-ic="info"></span><span class="sr-main"><span class="sr-l">Report a problem</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
     </section>
+    <div class="set-foot">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <div><b>Vortex Video <span class="beta-badge">Beta</span></b><span class="mono" id="set-version"></span><span>Made by Drake Christopher</span></div>
+    </div>
   </div>
 </aside>
 
@@ -1377,8 +1601,8 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 <div class="pop pop-more" id="pop-more" role="dialog" aria-label="More actions" hidden>
   <div class="sheet-grip" aria-hidden="true"></div>
   <div class="more-emoji" id="more-emoji"></div>
+  <div class="more-tiles" id="more-tiles"></div>
   <div class="more-list" id="more-grid"></div>
-  <div class="more-row" id="more-row" hidden></div>
 </div>
 
 <!-- ============ Layout menu ============ -->
@@ -1416,21 +1640,19 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 
 <!-- ============ Friends drawer ============ -->
 <aside class="drawer" id="drawer-friends" role="dialog" aria-label="Friends" hidden>
-  <div class="drawer-head"><span>Friends</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
+  <div class="drawer-head"><span>Friends</span><span class="dh-acts"><button class="btn btn-sm btn-primary fr-add" id="fr-add" type="button"><span data-ic="userPlus"></span><span>Add friend</span></button><button class="icon-btn" data-close type="button" aria-label="Close"></button></span></div>
   <div class="drawer-body" id="friends-body">
     <div class="friends-gate" id="friends-gate" hidden>
       <p>Sign in to add friends, see who's online and ring them with one tap.</p>
       <button class="btn btn-primary btn-block" id="friends-signin" type="button">Sign in or create account</button>
     </div>
     <div id="friends-main">
-      <form class="fsearch" id="fsearch" autocomplete="off">
-        <input class="input" id="fsearch-q" placeholder="@username or email" aria-label="Search people">
-        <button class="btn" type="submit">Search</button>
-      </form>
-      <div class="flist" id="fsearch-res"></div>
+      <div class="fr-top">
+        <div class="in-ic fr-filter"><span data-ic="search"></span><input class="input" id="ffilter" placeholder="Search your friends" aria-label="Search your friends" autocomplete="off" spellcheck="false"></div>
+      </div>
       <div class="sec-title" id="freq-title" hidden>Requests</div>
       <div class="flist" id="freq-list"></div>
-      <div class="sec-title">Friends</div>
+      <div class="sec-title" id="flist-title">Friends</div>
       <div class="flist" id="flist"></div>
       <div class="sec-title" id="fout-title" hidden>Sent</div>
       <div class="flist" id="fout-list"></div>
@@ -1465,6 +1687,57 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
       <button class="btn btn-primary btn-lg btn-block" id="auth-submit" type="submit">Sign in</button>
       <button class="btn btn-ghost btn-block" id="auth-guest" type="button">Continue as guest</button>
     </form>
+  </div>
+</div>
+
+<!-- ============ Join with a link ============ -->
+<div class="modal sheetish" id="modal-join" role="dialog" aria-modal="true" aria-labelledby="join-title" hidden>
+  <div class="modal-card small-card">
+    <div class="modal-head">
+      <div><h2 id="join-title">Join a call</h2><p class="muted">Paste the invite link someone sent you.</p></div>
+      <button class="icon-btn" data-close type="button" aria-label="Close"></button>
+    </div>
+    <form class="gr-join" id="gr-join" autocomplete="off">
+      <div class="in-ic"><span data-ic="link"></span><input class="input" id="gr-code" placeholder="https://vortex-video.pages.dev/?room=…" aria-label="Invite link" autocapitalize="none" spellcheck="false" inputmode="url" data-autofocus></div>
+      <button class="btn btn-primary btn-lg" id="gr-code-go" type="submit" disabled>Join</button>
+    </form>
+    <button class="btn btn-block btn-ghost paste-btn" id="gr-paste" type="button" hidden><span data-ic="copy"></span>Paste from clipboard</button>
+    <p class="gr-status join-status" id="join-status" aria-live="polite"></p>
+  </div>
+</div>
+
+<!-- ============ Add a friend ============ -->
+<div class="modal sheetish" id="modal-addfriend" role="dialog" aria-modal="true" aria-labelledby="af-title" hidden>
+  <div class="modal-card small-card">
+    <div class="modal-head">
+      <div><h2 id="af-title">Add a friend</h2><p class="muted">Type their exact username or the email they signed up with.</p></div>
+      <button class="icon-btn" data-close type="button" aria-label="Close"></button>
+    </div>
+    <form class="fsearch" id="fsearch" autocomplete="off">
+      <div class="in-ic"><span data-ic="search"></span><input class="input" id="fsearch-q" placeholder="@username or name@email.com" aria-label="Username or email" autocapitalize="none" spellcheck="false" data-autofocus></div>
+      <button class="btn btn-primary" type="submit">Find</button>
+    </form>
+    <div class="flist" id="fsearch-res"></div>
+    <div class="af-me" id="af-me"></div>
+  </div>
+</div>
+
+<!-- ============ MKCinema account ============ -->
+<div class="modal sheetish" id="modal-mkc" role="dialog" aria-modal="true" aria-labelledby="mkc-title" hidden>
+  <div class="modal-card small-card mkc-card">
+    <div class="modal-head">
+      <div class="mkc-brand"><span class="mkc-logo" aria-hidden="true">MK</span><div><h2 id="mkc-title">MKCinema</h2><p class="muted">Movies and shows for your watch parties</p></div></div>
+      <button class="icon-btn" data-close type="button" aria-label="Close"></button>
+    </div>
+    <div id="mkc-body"></div>
+  </div>
+</div>
+
+<!-- ============ Command palette ============ -->
+<div class="modal cmdk" id="modal-cmdk" role="dialog" aria-modal="true" aria-label="Search and shortcuts" hidden>
+  <div class="modal-card cmdk-card">
+    <div class="cmdk-in"><span data-ic="search"></span><input class="input" id="cmdk-q" placeholder="Call a friend, join, settings…" aria-label="Search" autocomplete="off" spellcheck="false" data-autofocus><kbd>Esc</kbd></div>
+    <div class="cmdk-list" id="cmdk-list" role="listbox"></div>
   </div>
 </div>
 
@@ -1960,6 +2233,14 @@ const ICONS = (() => {
     search: s(D('<circle cx="11" cy="11" r="6.5"/>') + '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>'),
     bot: s(D('<rect x="4.5" y="8" width="15" height="11" rx="3"/>') + '<rect x="4.5" y="8" width="15" height="11" rx="3"/><path d="M12 4.5V8M9.5 16h5"/><circle cx="9" cy="12.75" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12.75" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="4" r="1"/>', 'width="16" height="16"'),
     chevLeft: s('<path d="M15 5l-7 7 7 7"/>'),
+    chevRight: s('<path d="M9 5l7 7-7 7"/>'),
+    home: s(D('<path d="M4 10.5L12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5H5.5A1.5 1.5 0 0 1 4 19z"/>') + '<path d="M4 10.5L12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5H5.5A1.5 1.5 0 0 1 4 19z"/><path d="M9.5 20.5v-6h5v6"/>'),
+    film: s(D('<rect x="3" y="4" width="18" height="16" rx="3"/>') + '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7.5 4v16M16.5 4v16M3 9h4.5M3 15h4.5M16.5 9H21M16.5 15H21"/>'),
+    command: s('<path d="M9 6.5A2.5 2.5 0 1 0 6.5 9H9zM9 9h6v6H9zM15 6.5A2.5 2.5 0 1 1 17.5 9H15zM9 17.5A2.5 2.5 0 1 1 6.5 15H9zM15 17.5a2.5 2.5 0 1 0 2.5-2.5H15z"/>', 'width="16" height="16"'),
+    keyboard: s(D('<rect x="2.5" y="6" width="19" height="12" rx="2.5"/>') + '<rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6.5 10h.01M10 10h.01M14 10h.01M17.5 10h.01M8 14.5h8"/>'),
+    sliders: s('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>'),
+    heart: s(D('<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>') + '<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>'),
+    github: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>',
     callIn: s('<path d="M20 4l-6.5 6.5M13.5 5.5v5h5"/><path d="M5.2 3.5h2.6l1.4 3.6-1.9 1.3a11 11 0 0 0 5.3 5.3l1.3-1.9 3.6 1.4v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.2 5.7a2 2 0 0 1 2-2.2z"/>', 'width="16" height="16"'),
     callOut: s('<path d="M14 10l6.5-6.5M15 3.5h5.5V9"/><path d="M5.2 3.5h2.6l1.4 3.6-1.9 1.3a11 11 0 0 0 5.3 5.3l1.3-1.9 3.6 1.4v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.2 5.7a2 2 0 0 1 2-2.2z"/>', 'width="16" height="16"'),
     callMiss: s('<path d="M14 4l6 6M20 4l-6 6"/><path d="M5.2 3.5h2.6l1.4 3.6-1.9 1.3a11 11 0 0 0 5.3 5.3l1.3-1.9 3.6 1.4v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.2 5.7a2 2 0 0 1 2-2.2z"/>', 'width="16" height="16"'),
@@ -1977,6 +2258,12 @@ const ICONS = (() => {
     speaker: s(D('<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>') + '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/>'),
   };
 })();
+/* a light tick on phones that support it (Android Chrome); silent everywhere else */
+const Haptics = {
+  buzz(ms) { try { if (navigator.vibrate && matchMedia('(pointer: coarse)').matches) navigator.vibrate(ms); } catch { /* */ } },
+  tap() { this.buzz(8); },
+  thud() { this.buzz(18); },
+};
 
 /* Vortex Video logo: an aurora-gradient video camera whose lens is a swirling
    vortex aperture. tile:true adds the app-icon background (PWA icons, favicon). */
@@ -2050,8 +2337,9 @@ const SETTINGS_DEFAULTS = {
   cineFree: {},                     // faces dragged out of the row: { faceKey: [x, y] } (fractions of the screen)
   cineBarXY: null,                  // where the row sits when moved ('free'): [x, y] (fractions)
   subsSize: 1,                      // subtitle size: 0 small, 1 medium, 2 large
-  addons: [],                       // Discover: Stremio add-ons [{ url, name, id, res, types, prefixes, subTypes, subPrefixes, from }] (this device only)
-  stremio: null,                    // Stremio account on this device: { authKey, email } (never sent to the squad)
+  addons: [],                       // Discover: add-ons [{ url, name, id, res, types, prefixes, subTypes, subPrefixes, from }] (this device only)
+  mkc: null,                        // MKCinema sign-in on this device: { rt, uid, email } (never sent to the call)
+  mkcLib: null,                     // read-only copy of your MKCinema watchlist + continue watching
   audioLang: 'en',                  // preferred audio language: ranks Discover streams, picks torrent files and audio tracks
   dscBest: true,                    // Discover: list only streams that play in browsers and are in your language
   ytKey: '',                        // optional free YouTube Data API key for YouTube search (this device only)
@@ -3828,231 +4116,6 @@ const Moments = {
 };
 Clock.every(1000, () => { try { Moments.renderBadge(); } catch { /* */ } });
 
-/* =====================================================================
-   SQUAD RADAR — see where your squad is, only if they say yes.
-   Each person chooses to share (exact, or approximate to about a kilometre)
-   and can stop at any time. Positions go peer-to-peer to the people in this
-   call only, are never stored, and disappear when someone stops or leaves.
-   ===================================================================== */
-const LEAFLET = { js: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js', css: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css' };
-const Radar = {
-  sharing: false, mode: 'exact', watchId: null, me: null, peers: new Map(), lastSent: null, panel: null, map: null, markers: new Map(), mapState: 'idle', asked: new Set(), sweep: 0,
-
-  geo() { return typeof navigator !== 'undefined' && navigator.geolocation; },
-  /* -------- sharing -------- */
-  share(mode) {
-    if (!this.geo()) { toast("This browser can't share its location.", { type: 'warn' }); return; }
-    this.mode = mode === 'approx' ? 'approx' : 'exact';
-    if (this.watchId != null) this.geo().clearWatch(this.watchId);
-    this.sharing = true;
-    this.lastSent = null;
-    Net.pushState();
-    this.watchId = this.geo().watchPosition((p) => this.onPos(p), (e) => {
-      const why = e && e.code === 1 ? 'Location permission was denied.' : "Couldn't get your location.";
-      toast(`${why} You're not sharing it.`, { type: 'warn', ms: 6000 });
-      this.stop();
-    }, { enableHighAccuracy: this.mode === 'exact', maximumAge: 15000, timeout: 30000 });
-    this.renderBadge(); this.render();
-    toast(this.mode === 'exact' ? '📍 Sharing your location with this call. Stop any time.' : '📍 Sharing your approximate area (about 1 km) with this call.', { ms: 4500 });
-  },
-  stop(quiet) {
-    if (this.watchId != null && this.geo()) this.geo().clearWatch(this.watchId);
-    this.watchId = null;
-    const was = this.sharing;
-    this.sharing = false; this.me = null; this.lastSent = null;
-    if (was && Net.joined) { Net.broadcast({ t: 'LOC', off: true }); Net.pushState(); }
-    if (quiet) { this.peers.clear(); this.asked.clear(); }
-    this.renderBadge(); this.render();
-  },
-  pos(p) {
-    let lat = p.coords.latitude, lon = p.coords.longitude, acc = Math.max(5, Math.min(100000, p.coords.accuracy || 50));
-    if (this.mode === 'approx') { lat = Math.round(lat * 100) / 100; lon = Math.round(lon * 100) / 100; acc = Math.max(acc, 1500); }
-    return { lat: +lat.toFixed(5), lon: +lon.toFixed(5), acc: Math.round(acc), approx: this.mode === 'approx' };
-  },
-  onPos(p) {
-    if (!this.sharing) return;
-    const me = this.pos(p);
-    this.me = Object.assign(me, { at: Date.now() });
-    const L = this.lastSent, t = now();
-    // send when you've moved ~25 m, or every 20 s anyway
-    if (!L || t - L.t > 20000 || radarDist(L, me) > 25) { this.lastSent = { lat: me.lat, lon: me.lon, t }; Net.broadcast({ t: 'LOC', lat: me.lat, lon: me.lon, acc: me.acc, approx: me.approx }); }
-    this.render();
-  },
-  ask() {
-    Net.broadcast({ t: 'LOC_ASK' });
-    toast('Asked everyone to share their location. They can say no.', { ms: 3500 });
-  },
-  onMemberJoined(mem) { if (this.sharing && this.me) Net.send(mem.id, { t: 'LOC', lat: this.me.lat, lon: this.me.lon, acc: this.me.acc, approx: this.me.approx }); },
-  receive(mem, msg) {
-    if (msg.t === 'LOC_ASK') {
-      if (this.sharing || this.asked.has(mem.id)) return;
-      this.asked.add(mem.id);
-      this.prompt(mem);
-      return;
-    }
-    if (msg.off) { this.peers.delete(mem.id); this.render(); return; }
-    const lat = +msg.lat, lon = +msg.lon, acc = +msg.acc;
-    if (!(Number.isFinite(lat) && Number.isFinite(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180)) return;
-    this.peers.set(mem.id, { lat, lon, acc: Number.isFinite(acc) ? clamp(acc, 5, 100000) : 100, approx: !!msg.approx, at: Date.now() });
-    this.render();
-  },
-  prompt(mem) {
-    const el = h('div', { class: 'radar-ask', role: 'dialog', 'aria-label': 'Location request' },
-      h('div', { class: 'ra-t' }, h('span', { class: 'ra-ic', svg: ICONS.signal }), h('b', { text: `${mem.name} wants to see everyone on the radar` })),
-      h('p', { text: 'Share your location with the people in this call? Only while you share, never stored. You can stop any time.' }),
-      h('div', { class: 'wt-row' },
-        h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => { el.remove(); this.share('exact'); } }, 'Share exact'),
-        h('button', { class: 'btn btn-sm', type: 'button', onclick: () => { el.remove(); this.share('approx'); } }, 'Approximate'),
-        h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: () => el.remove() }, 'Not now')));
-    document.body.append(el);
-    setTimeout(() => el.remove(), 60000);
-  },
-  onPeerLeft(id) { if (this.peers.delete(id)) this.render(); this.asked.delete(id); },
-  /* -------- UI -------- */
-  renderBadge() {
-    let b = $('#loc-pill');
-    const inCall = typeof App !== 'undefined' && App.inCall;
-    if (!this.sharing || !inCall) { if (b) b.hidden = true; return; }
-    if (!b) {
-      b = h('button', { id: 'loc-pill', class: 'pill loc-pill', type: 'button', title: 'You are sharing your location. Tap to stop.', onclick: () => this.open() });
-      const bar = $('#topbar'), spacer = bar && bar.querySelector('.spacer');
-      if (bar && spacer) bar.insertBefore(b, spacer);
-    }
-    b.textContent = this.mode === 'approx' ? '📍 Sharing area' : '📍 Sharing location';
-    b.hidden = false;
-  },
-  open() {
-    if (!this.panel) {
-      this.panel = h('div', { class: 'radar-panel', role: 'dialog', 'aria-label': 'Radar', hidden: true },
-        h('div', { class: 'cine-pop-h' }, h('span', { svg: ICONS.signal }), 'Radar', h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Close', svg: ICONS.x, onclick: () => this.close() })),
-        this.mapEl = h('div', { class: 'radar-map' }, this.radarC = h('canvas', { class: 'radar-canvas', width: 600, height: 600 }), h('div', { class: 'radar-sweep', 'aria-hidden': 'true' })),
-        this.listEl = h('div', { class: 'radar-list' }),
-        this.ctlEl = h('div', { class: 'radar-ctl' }));
-      document.body.append(this.panel);
-      this.stopSweep = Clock.every(50, () => { if (this.panel && !this.panel.hidden && !this.map) this.drawRadar(); });
-    }
-    this.panel.hidden = false;
-    this.loadMap();
-    this.render();
-  },
-  close() { if (this.panel) this.panel.hidden = true; },
-  mapFailed(why) {
-    if (!this.map) return;
-    NetLog.add('radar', `map unavailable: ${why}; radar view only`);
-    try { this.map.remove(); } catch { /* */ }
-    this.map = null; this.markers.clear(); this.mapState = 'failed';
-    this.mapEl.classList.remove('has-map');
-    for (const el of [...this.mapEl.children]) if (!el.classList.contains('radar-canvas') && !el.classList.contains('radar-sweep')) el.remove();
-    this.mapEl.className = 'radar-map';
-    this.render();
-  },
-  async loadMap() {
-    if (this.mapState !== 'idle') return;
-    this.mapState = 'loading';
-    try {
-      if (!document.querySelector('link[data-leaflet]')) document.head.append(h('link', { rel: 'stylesheet', href: LEAFLET.css, 'data-leaflet': '1' }));
-      await loadScript([LEAFLET.js], () => !!(window.L && window.L.map), 15000);
-      const L = window.L;
-      this.map = L.map(this.mapEl, { zoomControl: true, attributionControl: true, worldCopyJump: true }).setView([20, 0], 2);
-      // OpenStreetMap's own tiles: free, no key (light use by people looking at the map is allowed);
-      // darkened with a CSS filter to fit the app. If tiles keep failing, the radar view takes over.
-      let loaded = 0, failed = 0;
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors' })
-        .on('tileload', () => { loaded++; })
-        .on('tileerror', () => { if (++failed >= 8 && !loaded) this.mapFailed('map tiles would not load'); })
-        .addTo(this.map);
-      this.mapState = 'ready';
-      this.mapEl.classList.add('has-map');
-      setTimeout(() => this.map && this.map.invalidateSize(), 60);
-      this.fitted = false;
-      this.render();
-    } catch (e) { this.mapState = 'failed'; NetLog.add('radar', `map unavailable: ${(e && e.message) || e}; radar view only`); this.render(); }
-  },
-  people() {
-    const out = [];
-    if (this.me) out.push({ key: 'self', name: 'You', av: Avatars.mine(), p: this.me });
-    for (const [id, p] of this.peers) { const m = Net.members.get(id); if (m) out.push({ key: id, name: m.name, av: Avatars.clean(m.avatar), p }); }
-    return out;
-  },
-  render() {
-    if (!this.panel || this.panel.hidden) return;
-    const ppl = this.people();
-    // list
-    this.listEl.innerHTML = '';
-    for (const x of ppl) {
-      const d = this.me && x.key !== 'self' ? radarDist(this.me, x.p) : null;
-      const av = h('span', { class: 'av radar-av' });
-      Avatars.fill(av, x.name, x.av);
-      this.listEl.append(h('div', { class: 'radar-row' }, av, h('div', { class: 'radar-rt' }, h('b', { text: x.name }), h('span', { text: [d != null ? radarFmt(d) + ' away' : '', x.p.approx ? 'approximate' : `±${radarFmt(x.p.acc)}`, `updated ${wtAgo(x.p.at)}`].filter(Boolean).join(' · ') }))));
-    }
-    const waiting = [...Net.members.values()].filter((m) => m.ready && !this.peers.has(m.id)).map((m) => m.name);
-    if (waiting.length) this.listEl.append(h('p', { class: 'cfp-hint', text: `Not sharing: ${waiting.join(', ')}` }));
-    // controls
-    this.ctlEl.innerHTML = '';
-    if (this.sharing) this.ctlEl.append(h('button', { class: 'btn btn-sm', type: 'button', onclick: () => this.stop() }, h('span', { svg: ICONS.x }), 'Stop sharing my location'));
-    else this.ctlEl.append(h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => this.share('exact') }, '📍 Share mine'), h('button', { class: 'btn btn-sm', type: 'button', onclick: () => this.share('approx') }, 'Share approximate'));
-    if (Net.readyMembers().length) this.ctlEl.append(h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: () => this.ask() }, 'Ask everyone'));
-    // map markers
-    if (this.map) {
-      const L = window.L, seen = new Set();
-      for (const x of ppl) {
-        seen.add(x.key);
-        let m = this.markers.get(x.key);
-        const html = `<div class="radar-pin${x.key === 'self' ? ' me' : ''}"><span class="rp-dot"></span><span class="rp-name"></span></div>`;
-        if (!m) {
-          const icon = L.divIcon({ className: 'radar-icon', html, iconSize: [20, 20], iconAnchor: [10, 10] });
-          m = { pin: L.marker([x.p.lat, x.p.lon], { icon }).addTo(this.map), ring: L.circle([x.p.lat, x.p.lon], { radius: x.p.acc, color: x.key === 'self' ? '#22D3EE' : '#EC4899', weight: 1, opacity: 0.6, fillOpacity: 0.08 }).addTo(this.map) };
-          this.markers.set(x.key, m);
-        } else { m.pin.setLatLng([x.p.lat, x.p.lon]); m.ring.setLatLng([x.p.lat, x.p.lon]); m.ring.setRadius(x.p.acc); }
-        const el = m.pin.getElement && m.pin.getElement();
-        if (el) { const n = el.querySelector('.rp-name'); if (n) n.textContent = x.name; }
-      }
-      for (const [k, m] of this.markers) if (!seen.has(k)) { this.map.removeLayer(m.pin); this.map.removeLayer(m.ring); this.markers.delete(k); }
-      if (ppl.length && (!this.fitted || ppl.length !== this.fitN)) {
-        this.fitted = true; this.fitN = ppl.length;
-        if (ppl.length === 1) this.map.setView([ppl[0].p.lat, ppl[0].p.lon], ppl[0].p.approx ? 12 : 15);
-        else this.map.fitBounds(L.latLngBounds(ppl.map((x) => [x.p.lat, x.p.lon])), { padding: [40, 40], maxZoom: 15 });
-      }
-    }
-  },
-  /* no map tiles available: a radar centred on you, friends at their bearing and distance */
-  drawRadar() {
-    const c = this.radarC, g = c.getContext('2d'), S = c.width, r0 = S / 2;
-    g.clearRect(0, 0, S, S);
-    g.fillStyle = '#05140F'; g.beginPath(); g.arc(r0, r0, r0 - 4, 0, Math.PI * 2); g.fill();
-    g.strokeStyle = 'rgba(52,211,153,.35)'; g.lineWidth = 1.5;
-    for (let i = 1; i <= 4; i++) { g.beginPath(); g.arc(r0, r0, (r0 - 8) * i / 4, 0, Math.PI * 2); g.stroke(); }
-    g.beginPath(); g.moveTo(r0, 8); g.lineTo(r0, S - 8); g.moveTo(8, r0); g.lineTo(S - 8, r0); g.stroke();
-    this.sweep = (this.sweep + 0.04) % (Math.PI * 2);
-    const gr = g.createConicGradient ? g.createConicGradient(this.sweep - Math.PI / 2, r0, r0) : null;
-    if (gr) { gr.addColorStop(0, 'rgba(52,211,153,.35)'); gr.addColorStop(0.12, 'rgba(52,211,153,0)'); gr.addColorStop(1, 'rgba(52,211,153,0)'); g.fillStyle = gr; g.beginPath(); g.arc(r0, r0, r0 - 8, 0, Math.PI * 2); g.fill(); }
-    const ppl = this.people().filter((x) => x.key !== 'self');
-    const far = Math.max(1000, ...ppl.map((x) => (this.me ? radarDist(this.me, x.p) : 0)));
-    g.font = '600 15px Inter, system-ui, sans-serif'; g.textAlign = 'center';
-    g.fillStyle = '#22D3EE'; g.beginPath(); g.arc(r0, r0, 7, 0, Math.PI * 2); g.fill();
-    g.fillStyle = 'rgba(255,255,255,.75)'; g.fillText(this.me ? 'You' : 'You (not sharing)', r0, r0 + 24);
-    for (const x of ppl) {
-      if (!this.me) continue;
-      const d = radarDist(this.me, x.p), b = radarBearing(this.me, x.p), rr = (r0 - 30) * Math.sqrt(d / far);
-      const px = r0 + Math.sin(b) * rr, py = r0 - Math.cos(b) * rr;
-      g.fillStyle = '#EC4899'; g.beginPath(); g.arc(px, py, 8, 0, Math.PI * 2); g.fill();
-      g.fillStyle = '#fff'; g.fillText(`${x.name} · ${radarFmt(d)}`, px, py - 14);
-    }
-    g.fillStyle = 'rgba(255,255,255,.45)'; g.font = '500 13px Inter, system-ui, sans-serif';
-    g.fillText(`edge ≈ ${radarFmt(far)}`, r0, S - 14);
-  },
-};
-function radarDist(a, b) {
-  const R = 6371000, t = Math.PI / 180, dLat = (b.lat - a.lat) * t, dLon = (b.lon - a.lon) * t;
-  const s = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * t) * Math.cos(b.lat * t) * Math.sin(dLon / 2) ** 2;
-  return 2 * R * Math.asin(Math.min(1, Math.sqrt(s)));
-}
-function radarBearing(a, b) {
-  const t = Math.PI / 180, y = Math.sin((b.lon - a.lon) * t) * Math.cos(b.lat * t);
-  const x = Math.cos(a.lat * t) * Math.sin(b.lat * t) - Math.sin(a.lat * t) * Math.cos(b.lat * t) * Math.cos((b.lon - a.lon) * t);
-  return Math.atan2(y, x);
-}
-function radarFmt(m) { return m < 1000 ? `${Math.round(m)} m` : m < 100000 ? `${(m / 1609.34).toFixed(1)} mi` : `${Math.round(m / 1609.34)} mi`; }
 
 /* ---- 06-local.js ---- */
 /* =====================================================================
@@ -4158,7 +4221,7 @@ const Local = {
   },
 
   state() { return { mic: this.micOn, cam: this.camOn, share: Share.active, hand: Reactions.hand, rec: !!(typeof Recorder !== 'undefined' && Recorder.active), cc: !!(typeof Captions !== 'undefined' && Captions.enabled),
-    acct: !!(typeof Account !== 'undefined' && Account.signedIn), clips: !!(typeof Moments !== 'undefined' && Moments.on), loc: !!(typeof Radar !== 'undefined' && Radar.sharing) }; },
+    acct: !!(typeof Account !== 'undefined' && Account.signedIn), clips: !!(typeof Moments !== 'undefined' && Moments.on) }; },
 
   async setMic(on) {
     if (on && !this.micStream) {
@@ -4304,7 +4367,7 @@ function normalizeCode(input) {
 }
 function sanitizeState(st) {
   st = st && typeof st === 'object' ? st : {};
-  return { mic: st.mic !== false, cam: st.cam !== false, share: !!st.share, hand: !!st.hand, rec: !!st.rec, cc: !!st.cc, acct: !!st.acct, clips: !!st.clips, loc: !!st.loc };
+  return { mic: st.mic !== false, cam: st.cam !== false, share: !!st.share, hand: !!st.hand, rec: !!st.rec, cc: !!st.cc, acct: !!st.acct, clips: !!st.clips };
 }
 function videoSender(pc) {
   if (!pc) return null;
@@ -5046,7 +5109,6 @@ const Net = {
         // invite links only count from signed-in members
         if (typeof msg.tok === 'string' && /^[a-z0-9]{8,32}$/.test(msg.tok) && (!msg.link || (mem.st && mem.st.acct))) this.addInvite(msg.tok, mem.id, !!msg.link);
         break;
-      case 'LOC': case 'LOC_ASK': Radar.receive(mem, msg); break;
       case 'CC': case 'CC_REQ': Captions.receive(mem, msg); break;
       case 'WATCH': Watch.receive(mem, msg); break;
       case 'ANNO': Anno.receive(mem, msg); break;
@@ -5063,7 +5125,6 @@ const Net = {
     Watch.onMemberJoined(mem, reconnected);
     // whoever hosts later must know my invite link too
     if (this.myLink && this.invites.has(this.myLink)) setTimeout(() => this.send(mem.id, { t: 'TOK', tok: this.myLink, link: true }), 600);
-    Radar.onMemberJoined(mem);
     Moments.syncSources();
     Quality.schedule();
     SquadPiP.refresh();
@@ -5111,7 +5172,6 @@ const Net = {
     if (this.members.size === 0) this.aloneSince = now();
     Captions.onPeerLeft(id);
     Watch.onPeerLeft(id);
-    Radar.onPeerLeft(id);
     Moments.syncSources();
     Anno.onPeerLeft(id);
     Quality.schedule();
@@ -5632,11 +5692,13 @@ const Panels = {
     if (this[k] && this[k] !== id) this.close(k);
     this[k] = id;
     if (k === 'pop') { this.anchor = anchor || null; }
+    // on the home screen of a phone, Friends and Settings are full pages above the tab bar
+    if (k === 'drawer') el.classList.toggle('page', this.homePage());
     el.hidden = false;
     if (k === 'pop') this.place();
     requestAnimationFrame(() => el.classList.add('open'));
     document.body.classList.toggle('drawer-open', !!this.drawer);
-    $('#scrim').hidden = !(this.modal || (this.drawer && innerWidth < 900));
+    this.scrim();
     if (anchor) anchor.setAttribute('aria-expanded', 'true');
     Bus.emit('panel', id, true);
     const f = el.querySelector('[data-autofocus]');
@@ -5653,11 +5715,16 @@ const Panels = {
     if (k === 'pop' && this.anchor) { this.anchor.setAttribute('aria-expanded', 'false'); this.anchor = null; }
     this[k] = null;
     document.body.classList.toggle('drawer-open', !!this.drawer);
-    $('#scrim').hidden = !(this.modal || (this.drawer && innerWidth < 900));
+    this.scrim();
     Bus.emit('panel', id, false);
     setTimeout(() => Layout.fit(), 260);
   },
   toggle(id, anchor) { if (this.isOpen(id)) this.close(this.kind(id)); else this.open(id, anchor); },
+  homePage() { const g = $('#green'); return innerWidth < 900 && !!g && !g.hidden && g.dataset.mode === 'home' && !(typeof App !== 'undefined' && App.inCall); },
+  scrim() {
+    const d = this.drawer && $('#' + this.drawer);
+    $('#scrim').hidden = !(this.modal || (d && innerWidth < 900 && !d.classList.contains('page')));
+  },
   place() {
     const el = $('#' + this.pop), a = this.anchor;
     if (!el) return;
@@ -8400,7 +8467,7 @@ const Watch = {
     const E = this.els;
     E.title = h('div', { class: 'wt-title', text: 'Watch together' });
     E.by = h('div', { class: 'wt-by', text: 'Pick something to watch' });
-    E.change = h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: () => this.showLoader(true) }, 'Change');
+    E.change = h('button', { class: 'btn btn-sm btn-ghost', type: 'button', title: 'Pick something else', onclick: () => this.change() }, 'Change');
     E.end = h('button', { class: 'btn btn-sm btn-ghost', type: 'button', title: 'End Watch together for everyone', 'aria-label': 'End Watch together for everyone', onclick: () => this.close(true) }, h('span', { svg: ICONS.x }), h('span', { class: 'lbl', text: 'End' }));
     E.min = h('button', { class: 'icon-btn', type: 'button', title: 'Minimize (keeps playing)', 'aria-label': 'Minimize', svg: ICONS.chevDown, onclick: () => Stage.minimize() });
     E.stats = h('span', { class: 'wt-stats', hidden: true });
@@ -8447,19 +8514,26 @@ const Watch = {
     // loader
     E.url = h('input', { class: 'input', type: 'text', inputmode: 'url', placeholder: 'YouTube, video link or magnet…', 'aria-label': 'Video, audio or torrent link', spellcheck: 'false', autocomplete: 'off', autocapitalize: 'off' });
     E.err = h('p', { class: 'wt-err', 'aria-live': 'polite' });
-    E.back = h('button', { class: 'btn btn-ghost', type: 'button', onclick: () => { if (this.src) this.showLoader(false); else this.teardownAll(); } }, 'Cancel');
-    const form = h('form', { class: 'wt-row', autocomplete: 'off', onsubmit: (e) => { e.preventDefault(); this.loadLink(E.url.value); } },
-      E.url, h('button', { class: 'btn btn-primary', type: 'submit' }, 'Load'));
-    const tile = (cls, ic, title, sub, fn) => h('button', { class: 'wt-tile ' + cls, type: 'button', onclick: fn }, h('span', { class: 'wt-tile-ic', svg: ic }), h('span', { class: 'wt-tile-t' }, h('b', { text: title }), h('span', { text: sub })));
+    E.back = h('button', { class: 'icon-btn wt-x', type: 'button', 'aria-label': 'Close', title: 'Close', svg: ICONS.x, onclick: () => { if (this.src) this.showLoader(false); else this.teardownAll(); } });
+    const form = h('form', { class: 'wt-link', autocomplete: 'off', onsubmit: (e) => { e.preventDefault(); this.loadLink(E.url.value); } },
+      h('span', { class: 'wt-link-ic', svg: ICONS.link }), E.url, h('button', { class: 'btn btn-primary btn-sm', type: 'submit' }, 'Play'));
+    E.dscOpen = h('button', { class: 'wt-src wt-src-mkc', type: 'button', onclick: () => Discover.open({ type: Discover.type === 'youtube' ? 'movie' : Discover.type }) },
+      h('span', { class: 'wt-src-art', 'aria-hidden': 'true' }, h('span', { class: 'mkc-chip big', text: 'MK' })),
+      h('span', { class: 'wt-src-t' }, h('b', { text: 'Movies & shows' }), E.dscSub = h('span', { text: 'Powered by MKCinema' })),
+      h('span', { class: 'wt-src-go', svg: ICONS.chevRight }));
+    E.ytBrowse = h('button', { class: 'wt-src wt-src-yt', type: 'button', onclick: () => Discover.open({ type: 'youtube', home: true }) },
+      h('span', { class: 'wt-src-art', 'aria-hidden': 'true', svg: '<svg viewBox="0 0 28 20" width="34" height="24"><rect width="28" height="20" rx="6" fill="#FF0033"/><path d="M11 6l7.5 4-7.5 4z" fill="#fff"/></svg>' }),
+      h('span', { class: 'wt-src-t' }, h('b', { text: 'YouTube' }), h('span', { text: 'Search, trending and music' })),
+      h('span', { class: 'wt-src-go', svg: ICONS.chevRight }));
+    E.mkcRow = h('div', { class: 'wt-mkcrow', hidden: true });
     const card = h('div', { class: 'wt-card' },
-      h('h3', { text: 'Watch together' }),
-      h('div', { class: 'wt-tiles' },
-        E.dscOpen = tile('wt-discover', WT_IC.tv, 'Movies & shows', 'From your Stremio add-ons', () => Discover.open({ type: Discover.type === 'youtube' ? 'movie' : Discover.type })),
-        E.ytBrowse = tile('wt-ytbtn', WT_IC.play || ICONS.play, 'YouTube', 'Search and browse', () => Discover.open({ type: 'youtube', home: true }))),
+      h('div', { class: 'wt-card-h' }, h('div', {}, h('h3', { text: 'Watch together' }), h('p', { text: 'Everyone in the call sees the same moment, in sync.' })), E.back),
+      h('div', { class: 'wt-srcs' }, E.dscOpen, E.ytBrowse),
+      E.mkcRow,
       E.hist = h('div', { class: 'wt-hist', hidden: true }),
-      h('details', { class: 'wt-paste' }, h('summary', { text: 'Paste a link instead' }), form, h('p', { class: 'wt-note', text: 'YouTube, a direct video link or a magnet link. Everyone plays it in sync.' })),
-      E.err,
-      h('div', { class: 'wt-row' }, E.back));
+      form,
+      h('p', { class: 'wt-note', text: 'Or paste a YouTube link, a direct video link or a magnet link.' }),
+      E.err);
     E.loader = h('div', { class: 'wt-loader', hidden: true }, card);
     root.append(head, E.media, bar, E.loader);
     Cinema.decorate(root);
@@ -8512,10 +8586,37 @@ const Watch = {
     E.loader.hidden = !on;
     if (on) WatchHistory.render();
     if (on) {
-      E.back.textContent = this.src ? 'Back' : 'Cancel';
+      this.renderMkcRow();
       E.err.textContent = '';
       if (!IS_TOUCH) setTimeout(() => E.url.focus(), 50);
     }
+  },
+  /* "Change": back to where this came from (YouTube results, the movie or show), not the source picker */
+  change() {
+    const f = Discover.from && Discover.from.gen === this.gen ? Discover.from : null;
+    if (f) Discover.open({ type: f.type, keep: true });
+    else if (this.src && this.src.kind === 'yt') Discover.open({ type: 'youtube', keep: true });
+    else this.showLoader(true);
+  },
+  /* picker: MKCinema's Continue watching + watchlist, one tap to the title */
+  renderMkcRow() {
+    const E = this.els, row = E.mkcRow;
+    if (!row) return;
+    const a = MKC.acct(), L = MKC.lib();
+    E.dscSub.textContent = a ? `From your MKCinema · ${Discover.streamAddons().length} add-on${Discover.streamAddons().length === 1 ? '' : 's'}` : 'Powered by MKCinema';
+    const items = [...(L.progress || []).map((x) => Object.assign({ cw: true }, x)), ...(L.watchlist || [])].filter((x, i, arr) => arr.findIndex((y) => y.id === x.id) === i).slice(0, 12);
+    row.innerHTML = '';
+    row.hidden = !items.length;
+    if (!items.length) return;
+    row.append(h('div', { class: 'wt-hist-h' }, h('span', { text: 'From MKCinema' }), h('span', { class: 'wt-hist-n', text: 'Continue watching and your watchlist' })));
+    const strip = h('div', { class: 'wt-mkc-strip' });
+    for (const x of items) {
+      strip.append(h('button', { class: 'wt-mkc-card', type: 'button', title: x.name, onclick: () => { Discover.open({ type: x.type }); Discover.item(x.type, x.id, false, x.ep ? { season: x.se, epId: x.ep } : null); } },
+        x.poster ? h('img', { src: x.poster, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' }) : h('span', { class: 'dsc-noimg', text: x.name }),
+        x.cw ? h('span', { class: 'wt-mkc-bar' }, h('i', { style: { width: (x.pct * 100).toFixed(1) + '%' } })) : null,
+        h('span', { class: 'wt-mkc-n', text: x.cw && x.se != null && x.en != null ? `S${x.se} E${x.en}` : x.name })));
+    }
+    row.append(strip);
   },
   renderBar() {
     const E = this.els;
@@ -11693,9 +11794,9 @@ const Cinema = {
 };
 
 /* =====================================================================
-   DISCOVER — Stremio's add-on system inside Vortex. Movies and shows come from
-   Cinemeta (Stremio's own catalog); streams come from the add-ons you add, by
-   pasting the same install link you'd use in Stremio. Whatever stream you pick
+   DISCOVER — movies and shows for watch parties, powered by MKCinema. Titles come
+   from the Cinemeta catalog; streams come from the add-ons in your MKCinema
+   account (or ones you paste here). Whatever stream you pick
    plays through Vortex's player, so it stays in sync for the whole squad.
    Add-on links can carry private keys (debrid accounts), so they stay on this
    device and are never sent to the squad.
@@ -11743,91 +11844,157 @@ function dscAddon(url, m, from) {
 }
 
 /* =====================================================================
-   STREMIO ACCOUNT — the same account API Stremio's own web app uses. Signing in
-   pulls the add-ons saved to the account. The password goes straight to
-   Stremio over HTTPS; only the sign-in key is kept, on this device.
+   MKCINEMA — movies and shows for watch parties come from MKCinema
+   (mkcinema.pages.dev), Drake Christopher's movie app. Signing in uses your
+   MKCinema account and only READS your synced profile: the add-ons you
+   installed there, your watchlist and what you were watching. Vortex never
+   writes to it, never reads your saved keys, and keeps the sign-in on this
+   device only (it is never sent to others in a call).
    ===================================================================== */
-const STREMIO_API = 'https://api.strem.io/api/';
-async function stremioCall(method, params, authKey) {
-  const ac = typeof AbortController !== 'undefined' ? new AbortController() : null;
-  const tm = setTimeout(() => ac && ac.abort(), 15000);
-  try {
+const MKC_APP = 'https://mkcinema.pages.dev';
+const MKC_SB = { url: 'https://wogffhgdixgrayowewnf.supabase.co', key: 'sb_publishable_ZpiFwB_oM579GwCunYpHWg_jelRazT-' };
+const MKC = {
+  token: null,
+  acct() { const a = Settings.mkc; return a && typeof a.rt === 'string' && a.rt.length >= 8 && typeof a.uid === 'string' ? a : null; },
+  lib() { const l = Settings.mkcLib; return l && typeof l === 'object' ? l : { watchlist: [], progress: [] }; },
+  async auth(grant, body) {
     let r;
     try {
-      r = await fetch(STREMIO_API + method, { method: 'POST', mode: 'cors', credentials: 'omit', cache: 'no-store', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(Object.assign({ authKey: authKey || null }, params)), signal: ac ? ac.signal : undefined });
-    } catch { throw Object.assign(new Error("Couldn't reach Stremio. Check your connection (or an ad blocker), then try again."), { net: true }); }
-    if (r.status !== 200) throw new Error(`Stremio answered with an error (${r.status}). Try again in a minute.`);
-    let j;
-    try { j = await r.json(); } catch { throw new Error('Stremio sent an answer Vortex could not read.'); }
-    if (j && j.error) throw Object.assign(new Error(cleanText(String(j.error.message || j.error), 160) || 'Stremio refused that.'), { api: true, code: j.error.code });
-    if (!j || !j.result) throw new Error('Stremio sent an empty answer.');
-    return j.result;
-  } finally { clearTimeout(tm); }
-}
-const Stremio = {
-  acct() { const s = Settings.stremio; return s && typeof s.authKey === 'string' && s.authKey.length >= 8 && s.authKey.length <= 200 ? s : null; },
+      r = await fetch(`${MKC_SB.url}/auth/v1/token?grant_type=${grant}`, { method: 'POST', mode: 'cors', credentials: 'omit', cache: 'no-store',
+        headers: { apikey: MKC_SB.key, 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    } catch { throw new Error("Couldn't reach MKCinema. Check your connection, then try again."); }
+    let j = {};
+    try { j = await r.json(); } catch { /* */ }
+    if (!r.ok) {
+      const m = String(j.error_description || j.msg || j.message || j.error || '');
+      const msg = /email not confirmed/i.test(m) ? 'Confirm your email first (check your inbox), then sign in.'
+        : /invalid|credentials|grant/i.test(m) ? (grant === 'password' ? 'Wrong email or password.' : 'Your MKCinema sign-in expired. Sign in again.')
+          : cleanText(m, 160) || `MKCinema couldn't sign you in (${r.status}).`;
+      throw Object.assign(new Error(msg), { auth: r.status === 400 || r.status === 401 });
+    }
+    if (!j.access_token || !j.refresh_token || !j.user || !j.user.id) throw new Error('MKCinema sent an answer Vortex could not read.');
+    this.token = { at: j.access_token, exp: Date.now() + Math.max(60, (j.expires_in || 3600) - 60) * 1000 };
+    return j;
+  },
   async login(email, password) {
-    const r = await stremioCall('login', { email: String(email).slice(0, 200), password: String(password).slice(0, 500), facebook: false });
-    if (!r || typeof r.authKey !== 'string') throw new Error('Stremio did not sign you in.');
-    Settings.stremio = { authKey: r.authKey.slice(0, 200), email: cleanText(String((r.user && r.user.email) || email), 120) };
+    const j = await this.auth('password', { email: String(email).trim().slice(0, 200), password: String(password).slice(0, 500) });
+    Settings.mkc = { rt: j.refresh_token, uid: j.user.id, email: cleanText(String(j.user.email || email), 120) };
     saveSettings();
     return this.sync();
   },
-  async useKey(key) {
-    key = String(key || '').trim().replace(/^"|"$/g, '');
-    if (!/^[A-Za-z0-9._\-]{8,200}$/.test(key)) throw new Error("That doesn't look like a Stremio sign-in key.");
-    const r = await this.pull(key);                               // proves the key works before keeping it
-    let email = '';
-    try { const u = await stremioCall('getUser', {}, key); email = cleanText(String((u && u.email) || ''), 120); } catch { /* optional */ }
-    Settings.stremio = { authKey: key, email };
-    saveSettings();
-    return this.importList(r);
+  async access() {
+    if (this.token && this.token.exp > Date.now()) return this.token.at;
+    const a = this.acct();
+    if (!a) throw new Error('Connect MKCinema first.');
+    try {
+      const j = await this.auth('refresh_token', { refresh_token: a.rt });
+      Settings.mkc = Object.assign({}, a, { rt: j.refresh_token });
+      saveSettings();
+    } catch (e) { if (e.auth) { this.forget(); throw new Error('Your MKCinema sign-in expired. Sign in again.'); } throw e; }
+    return this.token.at;
   },
-  async pull(key) { const r = await stremioCall('addonCollectionGet', { update: true, addFromURL: [] }, key); return Array.isArray(r && r.addons) ? r.addons : []; },
+  /* only the three fields Vortex uses: never the profile's saved keys or settings */
+  async profile() {
+    const at = await this.access(), a = this.acct();
+    let r;
+    try {
+      r = await fetch(`${MKC_SB.url}/rest/v1/mkcinema_profiles?select=addons:data->addons,disabled:data->disabled,watchlist:data->watchlist,progress:data->progress&user_id=eq.${encodeURIComponent(a.uid)}`,
+        { mode: 'cors', credentials: 'omit', cache: 'no-store', headers: { apikey: MKC_SB.key, authorization: 'Bearer ' + at } });
+    } catch { throw new Error("Couldn't reach MKCinema. Check your connection, then try again."); }
+    if (!r.ok) throw new Error(`MKCinema answered with an error (${r.status}). Try again in a minute.`);
+    const rows = await r.json().catch(() => null);
+    return (Array.isArray(rows) && rows[0]) || {};
+  },
   async sync() {
-    const a = this.acct();
-    if (!a) throw new Error('Sign in to Stremio first.');
-    let list;
-    try { list = await this.pull(a.authKey); }
-    catch (e) { if (e.api && /session|auth|key/i.test(e.message)) { Settings.stremio = null; saveSettings(); throw new Error('Your Stremio sign-in expired. Sign in again.'); } throw e; }
-    return this.importList(list);
-  },
-  /* keep add-ons you pasted yourself; replace the ones that came from the account */
-  importList(list) {
-    const mine = Discover.addons().filter((x) => x.from !== 'stremio');
-    const out = [], skipped = [];
-    for (const d of list.slice(0, 80)) {
-      const m = d && d.manifest, url = dscManifestUrl(d && d.transportUrl);
-      const name = cleanText(String((m && m.name) || 'Add-on'), 40);
-      if (!url || !/^https:\/\//i.test(url)) { skipped.push(name + ' (needs the Stremio app)'); continue; }
-      if (mine.some((x) => x.url === url) || out.some((x) => x.url === url)) continue;
-      const ad = dscAddon(url, m, 'stremio');
-      if (ad) out.push(ad); else skipped.push(name);
-    }
-    Settings.addons = [...mine, ...out].slice(0, 30);
+    const d = await this.profile();
+    const off = new Set(Array.isArray(d.disabled) ? d.disabled : []);          // add-ons turned off in MKCinema stay off here
+    const urls = (Array.isArray(d.addons) ? d.addons : []).filter((u) => typeof u === 'string' && !off.has(u)).slice(0, 60);
+    const mine = Discover.addons().filter((x) => x.from !== 'mkc' && x.from !== 'stremio');
+    const found = await Promise.all(urls.map(async (u) => {
+      const url = dscManifestUrl(u);
+      if (!url || !/^https:\/\//i.test(url) || mine.some((x) => x.url === url)) return null;
+      try { return dscAddon(url, await dscGet(url, 10000), 'mkc'); } catch { return null; }
+    }));
+    const added = found.filter(Boolean).filter((x, i, arr) => arr.findIndex((y) => y.url === x.url) === i);
+    Settings.addons = [...mine, ...added].slice(0, 30);
+    const okId = (x) => x && typeof x.id === 'string' && DSC_ID.test(x.id) && (x.type === 'movie' || x.type === 'series');
+    const wl = (Array.isArray(d.watchlist) ? d.watchlist : []).filter(okId).slice(0, 40)
+      .map((x) => ({ id: x.id, type: x.type, name: cleanText(String(x.name || ''), 80), poster: dscImg(x.poster), year: cleanText(String(x.releaseInfo || ''), 16) }));
+    const cw = Object.values(d.progress && typeof d.progress === 'object' ? d.progress : {})
+      .filter((p) => p && typeof p.metaId === 'string' && DSC_ID.test(p.metaId) && (p.type === 'movie' || p.type === 'series') && p.d > 0)
+      .sort((x, y) => (y.at || 0) - (x.at || 0)).slice(0, 20)
+      .map((p) => ({ id: p.metaId, type: p.type, name: cleanText(String(p.name || ''), 80), poster: dscImg(p.poster), bg: dscImg(p.background || p.thumb),
+        ep: p.type === 'series' && typeof p.videoId === 'string' && DSC_ID.test(p.videoId) ? p.videoId : '', se: Number.isInteger(p.season) ? p.season : null, en: Number.isInteger(p.episode) ? p.episode : null,
+        pct: Math.max(0, Math.min(1, (+p.t || 0) / (+p.d || 1))) }));
+    Settings.mkcLib = { watchlist: wl, progress: cw, at: Date.now() };
     saveSettings();
-    return { added: out, skipped };
+    Bus.emit('mkc');
+    return { addons: added.length, skipped: urls.length - added.length, watchlist: wl.length, progress: cw.length };
   },
-  async logout() {
-    const a = this.acct();
-    if (a) { try { await stremioCall('logout', {}, a.authKey); } catch { /* signing out here works even offline */ } }
-    Settings.stremio = null;
-    Settings.addons = Discover.addons().filter((x) => x.from !== 'stremio');
+  forget() {
+    this.token = null;
+    Settings.mkc = null; Settings.mkcLib = null;
+    Settings.addons = Discover.addons().filter((x) => x.from !== 'mkc');
     saveSettings();
+    Bus.emit('mkc');
+  },
+  /* the same title, opened in MKCinema itself (its #play deep link picks up there) */
+  link(type, id, videoId) {
+    const q = new URLSearchParams({ type, id });
+    if (videoId) q.set('video', videoId);
+    return `${MKC_APP}/#play?${q.toString()}`;
   },
   summary(r) {
-    const st = r.added.filter((x) => x.res.includes('stream')).length, sb = r.added.filter((x) => x.res.includes('subtitles')).length;
-    const parts = [];
-    parts.push(`${r.added.length} add-on${r.added.length === 1 ? '' : 's'} from your account (${st} for streams, ${sb} for subtitles)`);
-    if (r.skipped.length) parts.push(`skipped ${r.skipped.length} that only add catalogs or need the Stremio app`);
-    return 'Signed in. Brought in ' + parts.join('; ') + '.';
+    const bits = [`${r.addons} add-on${r.addons === 1 ? '' : 's'} for streams and subtitles`];
+    if (r.watchlist) bits.push(`${r.watchlist} on your watchlist`);
+    if (r.progress) bits.push(`${r.progress} to continue`);
+    return 'Synced ' + bits.join(', ') + '.' + (r.skipped ? ` ${r.skipped} catalog-only add-on${r.skipped === 1 ? '' : 's'} skipped.` : '');
   },
-  why(e) {
-    const m = String((e && e.message) || e || '');
-    if (e && e.api && /passphrase|password/i.test(m)) return 'Wrong password. Try again, or reset it on stremio.com.';
-    if (e && e.api && /user not found|no user/i.test(m)) return 'No Stremio account with that email. Signed up with Google, Facebook or Apple? Use a sign-in key.';
-    return m || 'Something went wrong talking to Stremio.';
+  open() { this.render(); Panels.open('modal-mkc'); },
+  render(note, err) {
+    const B = $('#mkc-body');
+    if (!B) return;
+    B.innerHTML = '';
+    const msg = h('p', { class: 'mkc-msg' + (err ? ' err' : ''), 'aria-live': 'polite', text: note || '' });
+    const a = this.acct();
+    if (a) {
+      const L = this.lib(), n = Discover.addons().filter((x) => x.from === 'mkc').length;
+      B.append(
+        h('div', { class: 'mkc-acct' },
+          h('span', { class: 'mkc-ok', svg: ICONS.check }),
+          h('div', {}, h('b', { text: 'Connected' }), h('span', { text: a.email })),
+          h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: () => { this.forget(); this.render('Disconnected. MKCinema add-ons were removed from this device.'); } }, 'Disconnect')),
+        h('div', { class: 'mkc-stats' },
+          h('div', {}, h('b', { text: String(n) }), h('span', { text: 'Add-ons' })),
+          h('div', {}, h('b', { text: String((L.watchlist || []).length) }), h('span', { text: 'Watchlist' })),
+          h('div', {}, h('b', { text: String((L.progress || []).length) }), h('span', { text: 'Continue' }))),
+        msg,
+        h('div', { class: 'mkc-acts' },
+          h('button', { class: 'btn btn-primary', type: 'button', onclick: async (e) => {
+            const b = e.currentTarget; b.disabled = true; msg.className = 'mkc-msg'; msg.textContent = 'Syncing from MKCinema…';
+            try { const r = await this.sync(); this.render(this.summary(r)); } catch (x) { this.render(x.message, true); }
+          } }, h('span', { svg: ICONS.refresh }), 'Sync now'),
+          h('a', { class: 'btn', href: MKC_APP, target: '_blank', rel: 'noopener' }, 'Open MKCinema')),
+        h('p', { class: 'mkc-fine', text: 'Add or change add-ons in MKCinema, then tap Sync. Vortex only reads your add-ons, watchlist and progress, and never shares your sign-in with people in a call.' }));
+      return;
+    }
+    const email = h('input', { class: 'input', type: 'email', name: 'email', autocomplete: 'username', placeholder: 'Email', 'aria-label': 'MKCinema email', 'data-autofocus': '' });
+    const pass = h('input', { class: 'input', type: 'password', name: 'password', autocomplete: 'current-password', placeholder: 'Password', 'aria-label': 'MKCinema password' });
+    const go = h('button', { class: 'btn btn-primary btn-lg btn-block', type: 'submit' }, 'Connect MKCinema');
+    B.append(
+      h('ul', { class: 'mkc-perks' },
+        h('li', {}, h('span', { svg: ICONS.film }), 'Your MKCinema add-ons stream in every watch party'),
+        h('li', {}, h('span', { svg: ICONS.heart }), 'Your watchlist and Continue watching, one tap away'),
+        h('li', {}, h('span', { svg: ICONS.shield }), 'Read-only: Vortex never changes your MKCinema account')),
+      h('form', { class: 'mkc-form', onsubmit: async (e) => {
+        e.preventDefault();
+        if (!email.value.trim() || !pass.value) { msg.className = 'mkc-msg err'; msg.textContent = 'Enter your MKCinema email and password.'; return; }
+        go.disabled = true; msg.className = 'mkc-msg'; msg.textContent = 'Connecting…';
+        try { const r = await this.login(email.value, pass.value); this.render(this.summary(r)); Discover.renderAcctBtn(); }
+        catch (x) { go.disabled = false; pass.value = ''; msg.className = 'mkc-msg err'; msg.textContent = x.message; }
+      } }, email, pass, go),
+      msg,
+      h('p', { class: 'mkc-fine' }, 'No account yet? ', h('a', { href: MKC_APP, target: '_blank', rel: 'noopener', text: 'Get MKCinema free' }), ', set up your add-ons there, then connect it here.'));
   },
 };
 
@@ -11968,7 +12135,7 @@ const Discover = {
     E.dsc = h('div', { class: 'dsc', hidden: true, role: 'dialog', 'aria-label': 'Discover' },
       h('div', { class: 'dsc-head' },
         E.dscBack,
-        h('span', { class: 'dsc-title' }, h('span', { svg: WT_IC.tv }), 'Discover'),
+        E.dscTitle = h('span', { class: 'dsc-title' }, 'MKCinema'),
         h('form', { class: 'dsc-search', onsubmit: (e) => { e.preventDefault(); this.q = E.dscQ.value.trim(); this.unfollow(); this.browse(); } }, E.dscQ, h('button', { class: 'btn btn-sm', type: 'submit' }, 'Search')),
         E.dscType,
         E.dscAcct = h('button', { class: 'btn btn-sm dsc-addbtn', type: 'button', onclick: () => this.showAddons() }, h('span', { svg: ICONS.user }), h('span', { class: 'lbl', text: 'Add-ons' })),
@@ -11984,7 +12151,8 @@ const Discover = {
     const was = this.open_;
     this.open_ = true;
     Watch.els.dsc.hidden = false;
-    if (o && o.type && (o.home || o.type !== this.type || this.view !== 'browse')) { if (o.home || o.type === 'youtube' || this.type === 'youtube') this.q = ''; this.type = o.type; this.unfollow(); this.browse(false, !was); }
+    if (o && o.keep && o.type === this.type && Watch.els.dscBody.childElementCount) this.renderType();
+    else if (o && o.type && (o.home || o.type !== this.type || this.view !== 'browse')) { if (o.home || o.type === 'youtube' || this.type === 'youtube') this.q = ''; this.type = o.type; this.unfollow(); this.browse(false, !was); }
     else if (this.view === 'browse' && !Watch.els.dscBody.childElementCount) this.browse(false, true);
     else this.renderType();
     if (!was) this.nav(true);
@@ -11992,16 +12160,16 @@ const Discover = {
     this.renderAcctBtn();
     Cinema.wake();
   },
-  /* header button: "Sign in" until a Stremio account is connected, then "Add-ons" */
+  /* header button: "Connect MKCinema" until it's connected, then your add-ons */
   renderAcctBtn() {
     const b = Watch.els.dscAcct;
     if (!b) return;
-    const a = Stremio.acct();
+    const a = MKC.acct();
     b.innerHTML = '';
     b.classList.toggle('signin', !a);
-    b.append(h('span', { svg: a ? ICONS.plus : ICONS.user }), h('span', { class: 'lbl', text: a ? 'Add-ons' : 'Sign in' }));
-    b.title = a ? `Stremio add-ons${a.email ? ' · signed in as ' + a.email : ''}` : 'Sign in to Stremio to bring in your add-ons';
-    b.setAttribute('aria-label', a ? 'Stremio add-ons' : 'Sign in to Stremio');
+    b.append(h('span', { class: 'mkc-chip', text: 'MK' }), h('span', { class: 'lbl', text: a ? 'Add-ons' : 'Connect MKCinema' }));
+    b.title = a ? `Add-ons · MKCinema connected as ${a.email}` : 'Connect MKCinema to bring in your add-ons and watchlist';
+    b.setAttribute('aria-label', a ? 'Add-ons' : 'Connect MKCinema');
   },
   close(remote) {
     const was = this.open_;
@@ -12018,6 +12186,7 @@ const Discover = {
     const E = Watch.els;
     for (const b of E.dscType.querySelectorAll('button')) b.setAttribute('aria-checked', String(b.dataset.v === this.type));
     const ph = this.type === 'youtube' ? 'Search YouTube' : 'Search movies and shows';
+    if (E.dscTitle) { E.dscTitle.innerHTML = ''; E.dscTitle.append(this.type === 'youtube' ? h('span', { class: 'yt-chip', 'aria-hidden': 'true' }) : h('span', { class: 'mkc-chip', text: 'MK' }), this.type === 'youtube' ? 'YouTube' : 'MKCinema'); }
     E.dscQ.placeholder = ph; E.dscQ.setAttribute('aria-label', ph);
   },
   status(text, err) { const B = Watch.els.dscBody; B.innerHTML = ''; B.append(h('p', { class: 'dsc-msg' + (err ? ' err' : ''), text })); },
@@ -12036,7 +12205,7 @@ const Discover = {
     try {
       const j = await dscGet(`${CINEMETA}/catalog/${type}/top${q ? '/search=' + encodeURIComponent(q) : ''}.json`);
       metas = Array.isArray(j && j.metas) ? j.metas : [];
-    } catch (e) { if (seq === this.seq) this.status("Couldn't reach Stremio's catalog (Cinemeta). Check your connection, then try again.", true); return; }
+    } catch (e) { if (seq === this.seq) this.status("Couldn't load movies and shows. Check your connection, then try again.", true); return; }
     if (seq !== this.seq) return;
     const grid = h('div', { class: 'dsc-grid' });
     for (const m of metas.slice(0, 60)) {
@@ -12051,10 +12220,40 @@ const Discover = {
     const B = Watch.els.dscBody;
     B.innerHTML = '';
     if (!grid.childElementCount) { this.status(q ? `Nothing found for “${q}”.` : 'Nothing to show right now.'); return; }
-    const wrap = h('div', {}, h('div', { class: 'dsc-h', text: q ? `Results for “${q}”` : type === 'movie' ? 'Popular movies' : 'Popular shows' }), grid);
+    const wrap = h('div', {});
+    if (!q) wrap.append(this.mkcShelf(type));
+    wrap.append(h('div', { class: 'dsc-h', text: q ? `Results for “${q}”` : type === 'movie' ? 'Popular movies' : 'Popular shows' }), grid);
     this.lastGrid = wrap; this.lastKey = type + '|' + q;
     B.append(wrap);
     B.scrollTop = 0;
+  },
+
+  /* MKCinema on top of the catalog: Continue watching + watchlist, or an offer to connect */
+  mkcShelf(type) {
+    const box = h('div', { class: 'dsc-mkc' });
+    if (!MKC.acct()) {
+      box.append(h('div', { class: 'dsc-mkc-offer' },
+        h('span', { class: 'mkc-chip big', text: 'MK' }),
+        h('div', {}, h('b', { text: 'Connect MKCinema' }), h('span', { text: 'Your add-ons stream here, plus your watchlist and Continue watching.' })),
+        h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => MKC.open() }, 'Connect')));
+      return box;
+    }
+    const L = MKC.lib();
+    const shelf = (title, list, cw) => {
+      if (!list.length) return;
+      const row = h('div', { class: 'dsc-shelf' });
+      for (const x of list) {
+        row.append(h('button', { class: 'dsc-card', type: 'button', title: x.name, onclick: () => { this.unfollow(); this.item(x.type, x.id, false, x.ep ? { season: x.se, epId: x.ep } : null); } },
+          x.poster ? h('img', { src: x.poster, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer', onerror: (e) => e.target.replaceWith(h('span', { class: 'dsc-noimg', text: x.name })) }) : h('span', { class: 'dsc-noimg', text: x.name }),
+          cw ? h('span', { class: 'wt-mkc-bar' }, h('i', { style: { width: (x.pct * 100).toFixed(1) + '%' } })) : null,
+          h('span', { class: 'dsc-name', text: x.name }),
+          h('span', { class: 'dsc-year', text: cw && x.se != null && x.en != null ? `S${x.se} E${x.en}` : x.year || '' })));
+      }
+      box.append(h('div', { class: 'dsc-h' }, h('span', { text: title }), h('span', { class: 'dsc-mkc-tag', text: 'MKCinema' })), row);
+    };
+    shelf('Continue watching', (L.progress || []).filter((x) => x.type === type), true);
+    shelf('Your watchlist', (L.watchlist || []).filter((x) => x.type === type), false);
+    return box;
   },
 
   /* ---------------- YouTube ---------------- */
@@ -12131,6 +12330,7 @@ const Discover = {
     else ok = Watch.loadLink('https://www.youtube.com/watch?v=' + it.id, { title: it.title, poster: ytThumb(it.id) });
     if (!ok) return;
     this.now = null;
+    this.from = { type: 'youtube', gen: Watch.gen };
     this.close(); Watch.showLoader(false);
     Subs.renderBtn();
     this.send({ ev: 'started', name: it.title });
@@ -12185,7 +12385,8 @@ const Discover = {
       h('div', { class: 'dsc-meta' },
         h('h3', { text: M.name }),
         h('div', { class: 'dsc-sub', text: [M.year, M.runtime, M.genres.join(' · ')].filter(Boolean).join('  ·  ') }),
-        M.desc ? h('p', { class: 'dsc-desc', text: M.desc }) : null));
+        M.desc ? h('p', { class: 'dsc-desc', text: M.desc }) : null,
+        h('a', { class: 'dsc-mkc-open', href: MKC.link(M.type, M.id), target: '_blank', rel: 'noopener', title: 'Open this title in MKCinema' }, h('span', { class: 'mkc-chip', text: 'MK' }), 'Open in MKCinema')));
     B.append(info);
     if (type === 'series' && M.videos.length) {
       const seasons = [...new Set(M.videos.map((v) => v.season))].sort((a, b) => (a === 0) - (b === 0) || a - b);
@@ -12265,7 +12466,7 @@ const Discover = {
     const s = x.s, bh = (s.behaviorHints && typeof s.behaviorHints === 'object') ? s.behaviorHints : {};
     if (!x.I) x.I = relInfo([s.name, s.title, s.description, bh.filename, bh.bingeGroup].filter((z) => typeof z === 'string').join('\n'), this.meta && this.meta.name);
     let kt;
-    if (x.kind === 'url') kt = bh.proxyHeaders ? ['Needs Stremio’s player', 'bad'] : bh.notWebReady ? ['May not play in a browser', 'warn'] : ['Plays for everyone', 'ok'];
+    if (x.kind === 'url') kt = bh.proxyHeaders ? ['Needs the MKCinema app', 'bad'] : bh.notWebReady ? ['May not play in a browser', 'warn'] : ['Plays for everyone', 'ok'];
     else if (x.kind === 'torrent') kt = ['Torrent · needs browser peers', 'warn'];
     else if (x.kind === 'yt') kt = ['YouTube', 'ok'];
     else kt = ['Opens outside Vortex', 'bad'];
@@ -12284,10 +12485,11 @@ const Discover = {
         return;
     }
     box.append(h('div', { class: 'dsc-empty' },
-      h('p', { text: this.streamAddons().length ? `None of your add-ons offer streams for ${M.type === 'movie' ? 'movies' : 'shows'}.` : Stremio.acct() ? 'Your Stremio account has no stream add-ons that work on the web. Add one here, or install one in Stremio and tap Sync.' : 'Sign in to Stremio to bring in your add-ons, or paste an add-on link.' }),
+      h('p', { text: this.streamAddons().length ? `None of your add-ons offer streams for ${M.type === 'movie' ? 'movies' : 'shows'}.` : MKC.acct() ? 'Your MKCinema account has no stream add-ons that work on the web yet. Add one in MKCinema and tap Sync, or paste one here.' : 'Connect MKCinema to bring in your add-ons, or paste an add-on link.' }),
       h('div', { class: 'wt-row' },
-        Stremio.acct() ? null : h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => this.showAddons() }, h('span', { svg: ICONS.user }), 'Sign in to Stremio'),
-        h('button', { class: 'btn btn-sm' + (Stremio.acct() ? ' btn-primary' : ''), type: 'button', onclick: () => this.showAddons() }, h('span', { svg: ICONS.plus }), 'Add an add-on'))));
+        MKC.acct() ? null : h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => MKC.open() }, h('span', { class: 'mkc-chip', text: 'MK' }), 'Connect MKCinema'),
+        h('button', { class: 'btn btn-sm' + (MKC.acct() ? ' btn-primary' : ''), type: 'button', onclick: () => this.showAddons() }, h('span', { svg: ICONS.plus }), 'Add an add-on'),
+        h('a', { class: 'btn btn-sm btn-ghost', href: MKC.link(M.type, M.id), target: '_blank', rel: 'noopener' }, 'Open in MKCinema'))));
   },
   kindOf(s) {
     if (!s || typeof s !== 'object') return null;
@@ -12312,7 +12514,7 @@ const Discover = {
     const poster = M.poster;
     const bh = (s.behaviorHints && typeof s.behaviorHints === 'object') ? s.behaviorHints : {};
     if (kind === 'ext') { window.open(s.externalUrl, '_blank', 'noopener,noreferrer'); return; }
-    if (kind === 'url' && bh.proxyHeaders) { toast("That stream needs special headers only Stremio's own player can send. Pick another one.", { type: 'warn', ms: 7000 }); return; }
+    if (kind === 'url' && bh.proxyHeaders) { toast("That stream only plays in the MKCinema app itself. Pick another one.", { type: 'warn', ms: 7000 }); return; }
     let ok = false;
     const rel = cleanText(String(bh.filename || String(s.title || s.description || '').split('\n')[0] || ''), 200);
     if (kind === 'url') ok = Watch.loadLink(s.url, { title, poster, rel });
@@ -12326,6 +12528,7 @@ const Discover = {
     }
     if (ok) {
       this.now = { type: M.type, id: v ? v.id : M.id, name: title, gen: Watch.gen };
+      this.from = { type: M.type, gen: Watch.gen };
       this.close(); Watch.showLoader(false);
       Subs.renderBtn();
       this.send({ ev: 'started', name: title, mtype: M.type, mid: this.now.id });
@@ -12448,15 +12651,11 @@ const Discover = {
     this.nav();
     const B = Watch.els.dscBody;
     B.innerHTML = '';
-    const input = h('input', { class: 'input mono', type: 'url', placeholder: 'https://…/manifest.json  or  stremio://…', 'aria-label': 'Add-on install link', autocomplete: 'off', spellcheck: 'false' });
+    const input = h('input', { class: 'input mono', type: 'url', placeholder: 'https://…/manifest.json', 'aria-label': 'Add-on install link', autocomplete: 'off', spellcheck: 'false' });
     const msg = h('p', { class: 'dsc-msg small', 'aria-live': 'polite' });
     const say = (text, cls) => { msg.textContent = text; msg.className = 'dsc-msg small' + (cls ? ' ' + cls : ''); };
-    const amsg = h('p', { class: 'dsc-msg small dsc-amsg', 'aria-live': 'polite' });
-    const sayA = (text, cls) => { amsg.textContent = text; amsg.className = 'dsc-msg small dsc-amsg' + (cls ? ' ' + cls : ''); amsg.hidden = !text; };
-    amsg.hidden = true;
     const list = h('div', { class: 'dsc-addons' });
     const acct = h('div', { class: 'dsc-acct' });
-    let lastEmail = (Stremio.acct() && Stremio.acct().email) || '';
     const changed = () => { renderAcct(); render(); this.renderAcctBtn(); Subs.renderBtn(); this.send({ ev: 'has', has: this.hasCount() }); };
     const render = () => {
       list.innerHTML = '';
@@ -12465,62 +12664,27 @@ const Discover = {
       for (const x of a) {
         const what = (Array.isArray(x.res) ? x.res : ['stream']).map((r) => (r === 'stream' ? 'streams' : r)).join(' · ');
         list.append(h('div', { class: 'dsc-addon' },
-          h('div', { class: 'dsc-addon-t' }, h('b', { text: x.name }), h('span', { text: what + (x.from === 'stremio' ? ' · from your Stremio account' : '') })),
+          h('div', { class: 'dsc-addon-t' }, h('b', { text: x.name }), h('span', { text: what + (x.from === 'mkc' ? ' · from MKCinema' : '') })),
           h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: () => { Settings.addons = this.addons().filter((y) => y.url !== x.url); saveSettings(); changed(); } }, 'Remove')));
       }
     };
-    const signIn = async (email, pass) => {
-      email = String(email || '').trim();
-      if (!email || !pass) { sayA('Enter your Stremio email and password.', 'err'); return; }
-      lastEmail = email;
-      sayA('Signing in to Stremio…');
-      try { const r = await Stremio.login(email, pass); sayA(Stremio.summary(r), 'ok'); changed(); }
-      catch (e) { sayA(Stremio.why(e), 'err'); if (Stremio.acct()) changed(); }    // signed in but the add-on list failed: still show the account
-    };
-    const useKey = async (key) => {
-      sayA('Checking the key…');
-      try { const r = await Stremio.useKey(key); sayA(Stremio.summary(r), 'ok'); changed(); }
-      catch (e) { sayA(Stremio.why(e), 'err'); }
-    };
-    const sync = async () => {
-      sayA('Syncing add-ons from your Stremio account…');
-      try { const r = await Stremio.sync(); sayA(Stremio.summary(r).replace(/^Signed in\. /, 'Synced. '), 'ok'); }
-      catch (e) { sayA(Stremio.why(e), 'err'); }
-      changed();
-    };
-    const signOut = async () => { await Stremio.logout(); sayA('Signed out. Add-ons from your Stremio account were removed from this device.', 'ok'); changed(); };
     const renderAcct = () => {
       acct.innerHTML = '';
-      const a = Stremio.acct();
-      if (a) {
-        acct.append(h('div', { class: 'dsc-acct-row' },
-          h('span', { class: 'dsc-acct-ic', svg: ICONS.user }),
-          h('div', { class: 'dsc-addon-t' }, h('b', { text: 'Stremio account' }), h('span', { text: a.email ? `Signed in as ${a.email}` : 'Signed in with a key' })),
-          h('button', { class: 'btn btn-sm', type: 'button', title: 'Pull your add-ons from Stremio again', onclick: sync }, h('span', { svg: ICONS.refresh }), 'Sync'),
-          h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: signOut }, 'Sign out')));
-        return;
-      }
-      const email = h('input', { class: 'input', type: 'email', name: 'email', autocomplete: 'username', placeholder: 'Stremio email', 'aria-label': 'Stremio email', value: lastEmail });
-      const pass = h('input', { class: 'input', type: 'password', name: 'password', autocomplete: 'current-password', placeholder: 'Password', 'aria-label': 'Stremio password' });
-      const keyIn = h('input', { class: 'input mono', type: 'password', placeholder: 'Stremio sign-in key', 'aria-label': 'Stremio sign-in key', autocomplete: 'off', spellcheck: 'false' });
-      const keyBox = h('div', { class: 'dsc-keybox', hidden: true },
-        h('p', { class: 'dsc-msg small', text: 'On a computer: open web.stremio.com and sign in, press F12, open the Console tab, paste the line below and press Enter. Copy the text it prints (without the quotes) and paste it here. Treat the key like a password.' }),
-        h('code', { class: 'dsc-code', text: 'JSON.parse(localStorage.getItem("profile")).auth.key' }),
-        h('form', { class: 'dsc-search', onsubmit: (ev) => { ev.preventDefault(); useKey(keyIn.value); } }, keyIn, h('button', { class: 'btn btn-sm', type: 'submit' }, 'Use key')));
-      acct.append(h('div', { class: 'dsc-acct-in' },
-        h('div', { class: 'dsc-acct-t' }, h('span', { class: 'dsc-acct-ic', svg: ICONS.user }), h('b', { text: 'Sign in to Stremio' })),
-        h('p', { class: 'dsc-msg small', text: 'Brings in the add-ons saved to your Stremio account. Your password goes straight to Stremio; Vortex keeps only the sign-in key, on this device, and never shares it with others in the call.' }),
-        h('form', { class: 'dsc-acct-form', onsubmit: (ev) => { ev.preventDefault(); signIn(email.value, pass.value); pass.value = ''; } }, email, pass, h('button', { class: 'btn btn-primary btn-sm', type: 'submit' }, 'Sign in')),
-        h('button', { class: 'link-btn', type: 'button', onclick: () => { keyBox.hidden = !keyBox.hidden; } }, 'No Stremio password (you signed up with Facebook or similar)? Use a sign-in key'),
-        keyBox));
+      const a = MKC.acct();
+      acct.append(h('div', { class: 'dsc-acct-row' },
+        h('span', { class: 'mkc-chip big', text: 'MK' }),
+        h('div', { class: 'dsc-addon-t' }, h('b', { text: 'MKCinema' }), h('span', { text: a ? `Connected as ${a.email}` : 'Bring in your add-ons, watchlist and Continue watching' })),
+        h('button', { class: 'btn btn-sm' + (a ? '' : ' btn-primary'), type: 'button', onclick: () => MKC.open() }, a ? 'Manage' : 'Connect')));
     };
+    this.offMkc && this.offMkc();
+    this.offMkc = Bus.on('mkc', () => { if (this.view === 'addons') changed(); else this.renderAcctBtn(); });
     const add = async () => {
       const url = dscManifestUrl(input.value);
-      if (!url) { say('Paste a full https:// (or stremio://) add-on link.', 'err'); return; }
+      if (!url) { say('Paste a full https:// add-on link.', 'err'); return; }
       if (this.addons().some((x) => x.url === url)) { say('That add-on is already added.'); return; }
       say('Checking the add-on…');
       let m;
-      try { m = await dscGet(url); } catch { say("Couldn't load that add-on. Check the link (it must allow web apps, like Stremio Web needs).", 'err'); return; }
+      try { m = await dscGet(url); } catch { say("Couldn't load that add-on. Check the link (it must allow web apps).", 'err'); return; }
       if (m && m.behaviorHints && m.behaviorHints.configurationRequired) { say('That add-on needs setting up first. Open its configure page, then paste the install link it gives you.', 'err'); return; }
       const ad = dscAddon(url, m, '');
       if (!ad) { say("That add-on doesn't provide streams or subtitles (it may only add catalogs).", 'err'); return; }
@@ -12531,9 +12695,9 @@ const Discover = {
       changed();
     };
     B.append(h('div', { class: 'dsc-addwrap' },
-      acct, amsg,
+      acct,
       h('h3', { text: 'Add-ons' }),
-      h('p', { class: 'dsc-msg', text: 'Or paste an add-on’s install link, the same one you’d use in Stremio. Links can include private keys (like a debrid account), so they stay on this device and are never sent to others in the call.' }),
+      h('p', { class: 'dsc-msg', text: 'Or paste an add-on’s install link. Links can include private keys (like a debrid account), so they stay on this device and are never sent to others in the call.' }),
       h('form', { class: 'dsc-search dsc-addform', onsubmit: (ev) => { ev.preventDefault(); add(); } }, input, h('button', { class: 'btn btn-primary btn-sm', type: 'submit' }, 'Add')),
       msg, list,
       h('p', { class: 'dsc-msg small', text: 'What plays: direct https streams (debrid add-ons give these) play for everyone in sync. Plain torrent streams only work if browsers can reach peers, which most torrents don’t have. Subtitle add-ons (like OpenSubtitles) show up in the CC menu. Add-ons are run by third parties: only stream what you have the rights to.' })));
@@ -12541,6 +12705,14 @@ const Discover = {
     render();
   },
 };
+
+Bus.on('mkc', () => {
+  Discover.lastGrid = null;
+  Discover.renderAcctBtn();
+  if (Discover.open_ && Discover.view === 'browse' && Discover.type !== 'youtube') Discover.browse();
+  if (Watch.els.loader && !Watch.els.loader.hidden) Watch.renderMkcRow();
+  if (Panels.isOpen('drawer-settings')) App.renderSettings();
+});
 
 /* =====================================================================
    HISTORY — what this device watched (torrents, links, YouTube) and where it
@@ -12739,39 +12911,16 @@ injectCSS('cinema', `
 .gest-hud.done .gh-ring{background:var(--mint)}
 .snap-flash{position:fixed;inset:0;z-index:9999;background:#fff;pointer-events:none;animation:snapf .55s ease-out forwards}
 .clips-pill{background:color-mix(in srgb,#FBBF24 16%,var(--surface));color:#FDE68A;border-color:color-mix(in srgb,#FBBF24 40%,transparent);cursor:pointer;font-weight:650}
-.loc-pill{background:color-mix(in srgb,var(--cyan) 14%,var(--surface));color:#A5F3FC;border-color:color-mix(in srgb,var(--cyan) 40%,transparent);cursor:pointer;font-weight:650}
-.clips-panel,.radar-panel{position:fixed;right:16px;top:70px;z-index:70;width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 170px);overflow:auto;padding:14px;border-radius:20px;background:rgba(18,14,32,.98);border:1px solid var(--hair-2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;animation:vx-pop .26s cubic-bezier(.22,1,.36,1)}
-.clips-panel[hidden],.radar-panel[hidden]{display:none}
+.clips-panel{position:fixed;right:16px;top:70px;z-index:70;width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 170px);overflow:auto;padding:14px;border-radius:20px;background:rgba(18,14,32,.98);border:1px solid var(--hair-2);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;animation:vx-pop .26s cubic-bezier(.22,1,.36,1)}
+.clips-panel[hidden]{display:none}
 .clips-list{display:flex;flex-direction:column;gap:12px}
 .clip video{width:100%;border-radius:12px;background:#000;display:block}
 .clip-row{display:flex;align-items:center;gap:8px;margin-top:6px}
 .clip-t{flex:1;min-width:0;font-size:12.5px;color:var(--muted)}
-.radar-panel{width:min(460px,calc(100vw - 24px))}
-.radar-map{position:relative;width:100%;aspect-ratio:1;border-radius:16px;overflow:hidden;background:#05140F;border:1px solid var(--hair)}
-.radar-canvas{width:100%;height:100%;display:block}
-.radar-map.has-map .radar-canvas{display:none}
-.radar-sweep{position:absolute;inset:0;pointer-events:none;z-index:500;background:conic-gradient(from 0deg,rgba(34,211,238,.18),transparent 14%,transparent);border-radius:50%;scale:1.5;animation:rsweep 4s linear infinite;mix-blend-mode:screen;display:none}
-.radar-map.has-map .radar-sweep{display:block}
-@keyframes rsweep{to{rotate:360deg}}
-.radar-icon{background:none;border:0}
-.radar-map .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.55)}
-.radar-map .leaflet-control-attribution{background:rgba(8,6,16,.75)!important;color:rgba(255,255,255,.7)!important}
-.radar-map .leaflet-control-attribution a{color:var(--cyan)!important}
-.radar-pin{position:relative;width:20px;height:20px}
 .rp-dot{position:absolute;inset:3px;border-radius:50%;background:#EC4899;box-shadow:0 0 0 3px rgba(236,72,153,.35),0 0 16px #EC4899}
-.radar-pin.me .rp-dot{background:#22D3EE;box-shadow:0 0 0 3px rgba(34,211,238,.35),0 0 16px #22D3EE}
 .rp-dot::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px solid currentColor;color:inherit;opacity:.0;animation:rping 2s ease-out infinite;border-color:rgba(255,255,255,.5)}
 @keyframes rping{from{transform:scale(.4);opacity:.8}to{transform:scale(1.6);opacity:0}}
 .rp-name{position:absolute;left:50%;top:22px;translate:-50% 0;white-space:nowrap;padding:2px 8px;border-radius:999px;background:rgba(8,6,16,.85);color:#fff;font:600 12px Inter,system-ui,sans-serif;border:1px solid rgba(255,255,255,.12)}
-.radar-list{display:flex;flex-direction:column;gap:8px}
-.radar-row{display:flex;align-items:center;gap:10px}
-.radar-av.av{width:30px;height:30px;font-size:11px;flex:none}
-.radar-rt{display:flex;flex-direction:column;min-width:0}
-.radar-rt b{font-size:13.5px}
-.radar-rt span{font-size:11.5px;color:var(--muted)}
-.radar-ctl{display:flex;gap:8px;flex-wrap:wrap}
-.radar-ask{position:fixed;left:50%;top:84px;transform:translateX(-50%);z-index:90;width:min(420px,calc(100vw - 24px));padding:16px;border-radius:18px;background:rgba(18,14,32,.98);border:1px solid color-mix(in srgb,var(--cyan) 40%,transparent);box-shadow:var(--shadow);animation:vx-pop .3s cubic-bezier(.22,1,.36,1)}
-.radar-ask p{margin:8px 0 12px;font-size:13px;color:var(--muted);line-height:1.5}
 .ra-t{display:flex;align-items:center;gap:10px}
 .ra-ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff;flex:none}
 .ra-ic svg{width:17px;height:17px}
@@ -12797,23 +12946,6 @@ injectCSS('cinema', `
 .dsc-steps{margin:6px 0 4px;padding-left:20px;color:var(--muted);font-size:12.5px;line-height:1.55}
 .dsc-steps a{color:var(--cyan)}
 .dsc-code-i{font-family:var(--mono);font-size:11.5px;padding:1px 5px;border-radius:6px;background:#0A0812;border:1px solid var(--hair);overflow-wrap:anywhere;user-select:all}
-.wt-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.wt-tile{appearance:none;display:flex;align-items:center;gap:12px;padding:16px;border-radius:18px;border:1px solid var(--hair-2);background:linear-gradient(135deg,color-mix(in srgb,var(--violet) 14%,var(--surface-2)),var(--surface-2));color:var(--text);font:inherit;text-align:left;cursor:pointer;transition:transform .2s cubic-bezier(.22,1,.36,1),border-color .2s,box-shadow .2s}
-.wt-tile:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--violet) 55%,transparent);box-shadow:0 14px 30px -16px rgba(139,92,246,.8)}
-.wt-tile:active{transform:scale(.98)}
-.wt-tile.wt-ytbtn{background:linear-gradient(135deg,color-mix(in srgb,#FF4D6D 16%,var(--surface-2)),var(--surface-2))}
-.wt-tile-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.06)}
-.wt-tile-ic svg{width:22px;height:22px}
-.wt-tile.wt-discover .wt-tile-ic svg{color:var(--magenta)}
-.wt-tile.wt-ytbtn .wt-tile-ic svg{color:#FF4D6D}
-.wt-tile-t{display:flex;flex-direction:column;gap:2px;min-width:0}
-.wt-tile-t b{font-size:15px}
-.wt-tile-t span{font-size:12px;color:var(--muted)}
-.wt-paste{border-top:1px solid var(--hair);padding-top:10px}
-.wt-paste summary{cursor:pointer;font-size:13px;color:var(--muted);font-weight:600}
-.wt-paste[open] summary{margin-bottom:10px}
-.wt-paste .wt-note{margin:8px 0 0}
-@media (max-width:420px){.wt-tiles{grid-template-columns:1fr}}
 .dsc-body{flex:1;min-height:0;overflow:auto;padding:14px;scrollbar-width:thin}
 .dsc-h{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:650;font-size:14px;margin:4px 0 10px}
 .dsc-h .select{width:auto;height:34px}
@@ -13081,6 +13213,66 @@ injectCSS('cinema', `
   .cc-ring{width:130px;height:130px}.cc-n{font-size:80px}.cc-go{font-size:44px}
 }
 @media (prefers-reduced-motion:reduce){#watch-root.cinema.curtain::before,#watch-root.cinema.curtain::after{display:none}.cine-ambi{transition:none}#watch-root.cinema.ambi-yt .wt-media::before{animation:none}}
+/* Watch together picker (2026-10-28): two big sources, MKCinema shelf, a link field always in view */
+.wt-loader{align-items:flex-start;padding:max(4vh,18px) 16px 24px;background:radial-gradient(90% 60% at 50% 0%,rgba(139,92,246,.12),transparent 70%),var(--obsidian)}
+.wt-card{width:min(560px,100%);gap:14px;margin:auto 0}
+.wt-card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.wt-card-h h3{font-size:24px;font-weight:760;letter-spacing:-.03em}
+.wt-card-h p{margin:4px 0 0}
+.wt-x{flex:none;background:rgba(255,255,255,.06)}
+.wt-srcs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wt-src{appearance:none;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:26px;min-height:150px;padding:16px;border-radius:22px;border:1px solid var(--hair-2);color:var(--text);font:inherit;text-align:left;cursor:pointer;isolation:isolate;transition:transform .3s var(--spring),border-color .25s,box-shadow .3s}
+.wt-src::before{content:'';position:absolute;inset:0;z-index:-1}
+.wt-src-mkc{border-color:rgba(217,212,199,.22);background:linear-gradient(160deg,#1A1814 0%,#0B0B0C 70%)}
+.wt-src-mkc::before{background:radial-gradient(120% 80% at 100% 0%,rgba(245,240,225,.14),transparent 60%)}
+.wt-src-yt{background:linear-gradient(160deg,#2A0F18 0%,#120B10 70%);border-color:rgba(255,0,51,.22)}
+.wt-src-yt::before{background:radial-gradient(120% 80% at 100% 0%,rgba(255,0,51,.22),transparent 60%)}
+.wt-src:hover{transform:translateY(-3px)}
+.wt-src-mkc:hover{border-color:rgba(217,212,199,.5);box-shadow:0 22px 44px -26px rgba(217,212,199,.55)}
+.wt-src-yt:hover{border-color:rgba(255,0,51,.55);box-shadow:0 22px 44px -26px rgba(255,0,51,.7)}
+.wt-src:active{transform:scale(.97)}
+.wt-src-art{display:grid;place-items:center;min-height:40px}
+.wt-src-t{display:flex;flex-direction:column;gap:3px;min-width:0}
+.wt-src-t b{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.wt-src-t span{font-size:12.5px;color:var(--muted)}
+.wt-src-mkc .wt-src-t span{color:#BDB6A5}
+.wt-src-go{position:absolute;right:14px;top:16px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);color:var(--muted);transition:transform .3s var(--spring),background .2s}
+.wt-src-go svg{width:16px;height:16px}
+.wt-src:hover .wt-src-go{transform:translateX(3px);background:rgba(255,255,255,.14);color:#fff}
+.wt-mkcrow{display:flex;flex-direction:column;gap:8px}
+.wt-mkcrow[hidden]{display:none}
+.wt-mkc-strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;scroll-snap-type:x proximity}
+.wt-mkc-strip::-webkit-scrollbar{display:none}
+.wt-mkc-card{appearance:none;border:0;background:none;color:var(--text);padding:0;flex:0 0 92px;display:flex;flex-direction:column;gap:5px;cursor:pointer;position:relative;scroll-snap-align:start;font:inherit;text-align:left}
+.wt-mkc-card img,.wt-mkc-card .dsc-noimg{width:92px;aspect-ratio:2/3;border-radius:12px;object-fit:cover;border:1px solid var(--hair);background:var(--surface-2);transition:transform .25s var(--spring)}
+.wt-mkc-card:hover img{transform:translateY(-2px)}
+.wt-mkc-n{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wt-mkc-bar{position:absolute;left:6px;right:6px;top:calc(92px * 1.5 - 9px);height:3px;border-radius:3px;background:rgba(255,255,255,.25);overflow:hidden}
+.wt-mkc-bar i{display:block;height:100%;background:#F5F0E1}
+.dsc-card{position:relative}
+.dsc-card .wt-mkc-bar{top:auto;bottom:44px}
+.wt-link{display:flex;align-items:center;gap:8px;padding:5px 5px 5px 12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--hair);transition:border-color .2s}
+.wt-link:focus-within{border-color:var(--hair-2)}
+.wt-link-ic{color:var(--faint);display:grid}
+.wt-link-ic svg{width:17px;height:17px}
+.wt-link .input{flex:1;min-width:0;border:0;background:transparent;height:40px;padding:0 2px;box-shadow:none!important}
+.wt-card .wt-note{margin:-6px 4px 0}
+@media (max-width:420px){.wt-srcs{gap:10px}.wt-src{min-height:132px;padding:14px;gap:20px}.wt-src-t b{font-size:16px}}
+.dsc-title{gap:8px}
+.dsc-title .mkc-chip,.dsc-title .yt-chip{margin-right:2px}
+.dsc-addbtn .mkc-chip{width:18px;height:18px;border-radius:6px;font-size:8px}
+.dsc-mkc{display:flex;flex-direction:column;margin-bottom:6px}
+.dsc-mkc-offer{display:flex;align-items:center;gap:12px;padding:14px;margin-bottom:16px;border-radius:18px;background:linear-gradient(135deg,#1A1814,#0E0E10);border:1px solid rgba(217,212,199,.2)}
+.dsc-mkc-offer > div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.dsc-mkc-offer b{font-size:14.5px}
+.dsc-mkc-offer span{font-size:12.5px;color:#BDB6A5}
+.dsc-mkc-offer .btn-primary{background:linear-gradient(135deg,#F5F0E1,#CFC8B6);color:#0A0A0B;box-shadow:none}
+.dsc-mkc-tag{font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#D9D4C7;padding:3px 7px;border-radius:6px;background:rgba(217,212,199,.1)}
+.dsc-shelf{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:thin}
+.dsc-shelf .dsc-card{flex:0 0 118px}
+.dsc-mkc-open{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:10px;padding:7px 12px 7px 8px;border-radius:999px;background:rgba(217,212,199,.1);border:1px solid rgba(217,212,199,.25);color:#F5F0E1;font-size:12.5px;font-weight:600;text-decoration:none;transition:background .2s}
+.dsc-mkc-open:hover{background:rgba(217,212,199,.18)}
+.dsc-acct-row .mkc-chip.big{width:36px;height:36px}
 `);
 
 /* ---- 29-calllog.js ---- */
@@ -13113,6 +13305,93 @@ const CallLog = {
   },
 };
 Bus.on('roster', () => CallLog.seen());
+
+/* =====================================================================
+   COMMAND PALETTE — Ctrl/⌘ K anywhere: call a friend, start or join a call,
+   jump to settings, or (in a call) mute, share and so on. Keyboard first.
+   ===================================================================== */
+const Cmdk = {
+  sel: 0, items: [],
+  isOpen() { return Panels.isOpen('modal-cmdk'); },
+  toggle() { if (this.isOpen()) Panels.close('modal'); else this.open(); },
+  open() {
+    if (!this.bound) this.bind();
+    $('#cmdk-q').value = '';
+    this.sel = 0;
+    this.render();
+    Panels.open('modal-cmdk');
+    setTimeout(() => $('#cmdk-q').focus(), 40);
+  },
+  bind() {
+    this.bound = true;
+    const q = $('#cmdk-q');
+    q.addEventListener('input', () => { this.sel = 0; this.render(); });
+    q.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); this.move(e.key === 'ArrowDown' ? 1 : -1); }
+      else if (e.key === 'Enter') { e.preventDefault(); this.run(this.items[this.sel]); }
+      else if (e.key === 'Escape') { e.preventDefault(); Panels.close('modal'); }
+    });
+    $('#modal-cmdk').addEventListener('click', (e) => { if (e.target.id === 'modal-cmdk') Panels.close('modal'); });
+  },
+  all() {
+    const A = App, inCall = A.inCall, signed = Account.signedIn, out = [];
+    const add = (group, label, icon, fn, o = {}) => out.push(Object.assign({ group, label, icon, fn }, o));
+    if (inCall) {
+      add('In this call', Local.micOn ? 'Mute microphone' : 'Unmute microphone', Local.micOn ? ICONS.micOff : ICONS.mic, () => Local.toggleMic(), { key: 'Ctrl D' });
+      add('In this call', Local.camOn ? 'Turn camera off' : 'Turn camera on', Local.camOn ? ICONS.camOff : ICONS.cam, () => Local.toggleCam(), { key: 'Ctrl E' });
+      add('In this call', 'Watch together', ICONS.tv, () => Watch.open(), { kw: 'movie youtube mkcinema party' });
+      if (CAN_SHARE_SCREEN) add('In this call', Share.active ? 'Stop sharing screen' : 'Share screen', ICONS.screen, () => (Share.active ? Share.stop() : Share.start()), { kw: 'present' });
+      add('In this call', 'Backgrounds and effects', ICONS.sparkles, () => Panels.open('drawer-lens'), { kw: 'blur filter' });
+      add('In this call', Captions.enabled ? 'Turn captions off' : 'Turn captions on', ICONS.cc, () => Captions.toggle(), { kw: 'subtitles' });
+      add('In this call', 'Copy invite link', ICONS.link, () => A.inviteFlow ? A.inviteFlow() : null, { kw: 'add people share' });
+      add('In this call', 'Leave call', ICONS.phoneOff, () => A.leave(), { kw: 'hang up end', danger: true });
+    } else {
+      add('Start', signed ? 'New call' : 'Sign in to start a call', ICONS.cam, () => A.newCall(), { key: 'N' });
+      add('Start', 'Join with an invite link', ICONS.link, () => A.openJoin(), { key: 'J' });
+      add('Start', 'Watch party', ICONS.film, () => $('#ha-watch').click(), { key: 'W', kw: 'movie mkcinema youtube' });
+    }
+    if (signed) {
+      for (const f of Social.friends()) add('Friends', `${inCall ? 'Add' : 'Call'} ${f.display_name}`, ICONS.phone, () => A.callFriend(f.id), { sub: (f.username ? '@' + f.username + ' · ' : '') + A.presLabel(f.presence), kw: f.username || '', person: f });
+      add('Friends', 'Add a friend', ICONS.userPlus, () => A.openAddFriend(), { key: inCall ? '' : 'A' });
+    }
+    add('Go to', 'Friends', ICONS.users, () => Panels.open('drawer-friends'));
+    add('Go to', 'Settings', ICONS.gear, () => Panels.open('drawer-settings'), { key: inCall ? '' : ',' });
+    add('Go to', MKC.acct() ? 'MKCinema account' : 'Connect MKCinema', ICONS.film, () => MKC.open(), { kw: 'movies add-ons watchlist' });
+    add('Go to', 'Get the Windows and Android apps', ICONS.upload, () => window.open('/welcome.html', '_blank', 'noopener'), { kw: 'download install' });
+    return out;
+  },
+  render() {
+    const q = $('#cmdk-q').value.trim().toLowerCase();
+    const score = (it) => {
+      if (!q) return 1;
+      const l = it.label.toLowerCase(), k = (it.kw || '').toLowerCase();
+      if (l.startsWith(q)) return 4;
+      if (l.split(/\s+/).some((w) => w.startsWith(q))) return 3;
+      if (l.includes(q)) return 2;
+      return k.includes(q) ? 1 : 0;
+    };
+    this.items = this.all().map((it) => Object.assign(it, { s: score(it) })).filter((it) => it.s > 0);
+    if (q) this.items.sort((a, b) => b.s - a.s);
+    const box = $('#cmdk-list');
+    box.innerHTML = '';
+    if (!this.items.length) { box.append(h('div', { class: 'cmdk-empty', text: `Nothing matches “${q}”.` })); return; }
+    let group = null;
+    this.items.forEach((it, i) => {
+      if (!q && it.group !== group) { group = it.group; box.append(h('div', { class: 'cmdk-g', text: group })); }
+      const icon = it.person ? avFill(h('span', { class: 'av cmdk-av' }), it.person.display_name, it.person.avatar_url) : h('span', { class: 'cmdk-ic', svg: it.icon });
+      box.append(h('button', { class: 'cmdk-it' + (i === this.sel ? ' on' : '') + (it.danger ? ' danger' : ''), type: 'button', role: 'option', 'aria-selected': String(i === this.sel), dataset: { i: String(i) },
+        onmousemove: () => { if (this.sel !== i) { this.sel = i; this.paint(); } }, onclick: () => this.run(it) },
+        icon, h('span', { class: 'cmdk-t' }, h('span', { text: it.label }), it.sub ? h('small', { text: it.sub }) : null), it.key ? h('kbd', { text: it.key }) : null));
+    });
+  },
+  paint() {
+    for (const b of $$('#cmdk-list .cmdk-it')) { const on = +b.dataset.i === this.sel; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); }
+    const cur = $(`#cmdk-list .cmdk-it[data-i="${this.sel}"]`);
+    if (cur) cur.scrollIntoView({ block: 'nearest' });
+  },
+  move(d) { if (!this.items.length) return; this.sel = (this.sel + d + this.items.length) % this.items.length; this.paint(); },
+  run(it) { if (!it) return; Haptics.tap(); Panels.close('modal'); setTimeout(() => it.fn(), 30); },
+};
 
 /* ---- 30-app.js ---- */
 /* =====================================================================
@@ -13157,7 +13436,7 @@ const App = {
     // like Meet and FaceTime, the home screen never opens the camera: only "Ready to join?" and calls do
     this.greenMode(this.invited ? 'preview' : 'home');
     this.renderHub();
-    setTimeout(() => { if (!this.inCall) Motion.enter($('#green .gr-body')); }, $('#splash') ? 1350 : 0);
+    setTimeout(() => { if (!this.inCall) Motion.enter($('#green').dataset.mode === 'home' ? $('#home') : $('#green .gr-body')); }, $('#splash') ? 3150 : 0);
   },
 
   /* camera + mic open the first time they're needed, and again after leaving a call */
@@ -13169,7 +13448,7 @@ const App = {
   /* home: New call, join with a link, friends, recent calls · preview: "Ready to join?" with your camera */
   greenMode(m) {
     const g = $('#green');
-    if (g.dataset.mode !== m) { g.dataset.mode = m; Motion.enter(g.querySelector('.gr-body')); }
+    if (g.dataset.mode !== m) { g.dataset.mode = m; Motion.enter(m === 'home' ? $('#home') : g.querySelector('.gr-body')); }
     $('#gr-back').hidden = m !== 'preview';
     if (m === 'preview') this.ensureMedia();
     this.renderStart();
@@ -13228,6 +13507,8 @@ const App = {
   },
 
   status(msg, kind) {
+    const hs = $('#home-status');
+    if (hs) { hs.textContent = msg || ''; hs.classList.toggle('err', kind === true || kind === 'err'); }
     const s = $('#gr-status');
     s.textContent = msg || '';
     s.classList.toggle('err', kind === true || kind === 'err');
@@ -13328,9 +13609,7 @@ const App = {
   accountAction() {
     if (Account.signedIn) { Panels.close(); Account.signOut(); return; }
     if (Account.configured) { Auth.open('signin'); return; }
-    Panels.open('drawer-settings');
-    const d = $('#set-supa');
-    if (d) { d.open = true; setTimeout(() => d.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 260); }
+    toast("Accounts aren't available on this copy of Vortex. Calls by invite link still work.", { ms: 6000 });
   },
 
   /* ---------------- green room ---------------- */
@@ -13362,10 +13641,111 @@ const App = {
     $('#gr-name').addEventListener('change', (e) => { if (e.target.value.trim()) { Settings.name = cleanName(e.target.value); saveSettings(); } });
     $('#gr-form').addEventListener('submit', (e) => { e.preventDefault(); this.enter(this.invited ? 'join' : 'start'); });
     const code = $('#gr-code'), go = $('#gr-code-go');
-    code.addEventListener('input', () => { go.disabled = !code.value.trim(); });
-    code.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); if (code.value.trim()) this.joinFromLink(); } });
-    go.onclick = () => this.joinFromLink();
+    code.addEventListener('input', () => { go.disabled = !code.value.trim(); $('#join-status').textContent = ''; });
+    $('#gr-join').addEventListener('submit', (e) => { e.preventDefault(); if (code.value.trim()) this.joinFromLink(); });
     $('#gr-start').addEventListener('click', (e) => { e.preventDefault(); this.enter(this.invited ? 'join' : 'start'); });
+    this.bindHome();
+  },
+
+  /* ---------------- home: app shell (rail / tab bar), quick actions, shortcuts ---------------- */
+  bindHome() {
+    for (const b of $$('#app-nav .an-item')) b.onclick = () => this.navTo(b.dataset.tab);
+    $('#ha-new').onclick = () => this.newCall();
+    $('#ha-join').onclick = () => this.openJoin();
+    $('#ha-watch').onclick = () => this.newCall(() => setTimeout(() => Watch.open(), 350));
+    $('#ha-add').onclick = () => this.openAddFriend();
+    $('#cmdk-btn').onclick = () => Cmdk.open();
+    $('#fr-add').onclick = () => this.openAddFriend();
+    $('#ffilter').addEventListener('input', () => this.renderFriends());
+    $('#gr-paste').onclick = async () => {
+      try { const t = (await navigator.clipboard.readText()).trim(); if (t) { $('#gr-code').value = t; $('#gr-code-go').disabled = false; this.joinFromLink(); } }
+      catch { $('#join-status').textContent = "Couldn't read the clipboard. Paste the link into the box instead."; }
+    };
+    $('#cmdk-kbd').textContent = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent) ? '⌘ K' : 'Ctrl K';
+    Bus.on('panel', () => this.renderNav());
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === 'k') { e.preventDefault(); Cmdk.toggle(); return; }
+      // single-key shortcuts on the home screen (never while typing)
+      if (this.inCall || e.ctrlKey || e.metaKey || e.altKey || $('#green').hidden || $('#green').dataset.mode !== 'home') return;
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) || Panels.modal) return;
+      const k = e.key.toLowerCase();
+      if (k === 'n') { e.preventDefault(); this.newCall(); }
+      else if (k === 'j') { e.preventDefault(); this.openJoin(); }
+      else if (k === 'w') { e.preventDefault(); $('#ha-watch').click(); }
+      else if (k === 'a') { e.preventDefault(); this.openAddFriend(); }
+      else if (k === ',') { e.preventDefault(); this.navTo('settings'); }
+    });
+    Clock.every(30000, () => { if (!this.inCall) this.renderHomeTop(); });
+    // the action cards light up under the pointer
+    for (const b of $$('.ha')) b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.setProperty('--mx', (e.clientX - r.left) + 'px'); b.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+  },
+  navTo(tab) {
+    Haptics.tap();
+    if (tab === 'search') { Cmdk.open(); return; }
+    if (tab === 'home') { Panels.close('drawer'); Panels.close('modal'); }
+    else if (tab === 'friends') Panels.open('drawer-friends');
+    else if (tab === 'settings') Panels.open('drawer-settings');
+    this.renderNav();
+  },
+  renderNav() {
+    const tab = Panels.drawer === 'drawer-friends' ? 'friends' : Panels.drawer === 'drawer-settings' ? 'settings' : Panels.modal === 'modal-cmdk' ? 'search' : 'home';
+    for (const b of $$('#app-nav .an-item')) {
+      const on = b.dataset.tab === tab;
+      b.classList.toggle('on', on);
+      if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    }
+  },
+  /* the big "New call": members start right away; guests are asked to sign in */
+  async newCall(then) {
+    Haptics.tap();
+    if (this.busy || this.inCall) return;
+    if (!Account.signedIn) {
+      if (!Account.ready) { this.status('Loading your account… try again in a moment.'); return; }
+      if (Account.configured && Account.sb) { Auth.open('signin'); return; }
+      this.status("Accounts are offline right now, so new calls can't start. Invite links still work.", true);
+      return;
+    }
+    const ok = await this.enter('start');
+    if (ok && then) then();
+  },
+  openJoin() {
+    Haptics.tap();
+    $('#join-status').textContent = '';
+    $('#gr-paste').hidden = !(navigator.clipboard && navigator.clipboard.readText);
+    Panels.open('modal-join');
+  },
+  openAddFriend() {
+    Haptics.tap();
+    if (!Account.signedIn) { if (Account.configured && Account.sb) Auth.open('signin'); else this.status("Accounts are offline right now, so friends aren't available.", true); return; }
+    $('#fsearch-q').value = ''; this.searchRes = null; $('#fsearch-res').innerHTML = '';
+    const me = $('#af-me');
+    me.innerHTML = '';
+    const p = Account.profile;
+    if (p && p.username) {
+      me.append(h('span', { text: 'Your username' }), h('b', { class: 'mono', text: '@' + p.username }),
+        h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: async () => { const ok = await copyText('@' + p.username); toast(ok ? 'Username copied. Send it to a friend.' : "Couldn't copy"); } }, h('span', { svg: ICONS.copy }), 'Copy'));
+    }
+    Panels.open('modal-addfriend');
+  },
+  /* greeting, your name and who's around: the top of the home screen */
+  renderHomeTop() {
+    const hr = new Date().getHours();
+    const date = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    $('#home-hello').textContent = (hr < 5 ? 'Up late' : hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening') + ' · ' + date;
+    const name = Account.signedIn ? Account.profile.display_name : (Settings.name || 'there');
+    $('#home-name').textContent = String(name).split(' ')[0];
+    const sub = $('#home-sub');
+    sub.innerHTML = '';
+    if (Account.signedIn) {
+      const fr = Social.friends(), on = fr.filter((f) => f.presence !== 'offline').length;
+      sub.append(h('span', { class: 'pdot ' + (on ? 'online' : 'offline') }), h('span', { text: fr.length ? `${on} of ${fr.length} friend${fr.length === 1 ? '' : 's'} online` : 'Add friends to call them in one tap' }));
+    } else sub.append(h('span', { text: Account.configured && Account.sb ? 'Sign in to start calls and see your friends' : 'Join a call with an invite link' }));
+    const signed = Account.signedIn;
+    $('#ha-new-t').textContent = signed ? 'New call' : 'Sign in';
+    $('#ha-new-s').textContent = signed ? 'Start one and invite people' : 'To start calls and add friends';
+    const nb = $('#nav-friends-badge'), n = signed ? Social.incoming().length : 0;
+    nb.hidden = !n; nb.textContent = String(n);
   },
 
   /* the preview toggles decide how you join, and are remembered for next time */
@@ -13436,14 +13816,11 @@ const App = {
     else if (signed) b.textContent = 'New call';
     else if (Account.configured && Account.sb) b.textContent = 'Sign in to start a call';
     else b.textContent = Account.ready ? 'Accounts offline: calls need a member invite' : 'New call';
-    // Google Meet-style home: "New call" + "join with a link"; an invite link turns it into "Ready to join?"
-    $('#gr-title').innerHTML = this.invited ? 'Ready to <span class="grad-text">join?</span>' : 'Video calls for <span class="grad-text">everyone.</span>';
-    $('#gr-lede').textContent = this.invited ? `You're invited to a call (${this.invited}). Check your camera and mic, then join.` : 'Call your friends, share your screen and watch movies together. Free, with no time limit.';
-    $('#gr-join').hidden = !!this.invited;
+    // home has its own actions; this screen is "Ready to join?" for an invite link
+    $('#gr-lede').textContent = this.invited ? `You're invited to a call (${this.invited}). Check your camera and mic, then join.` : '';
     b.disabled = !this.invited && !signed && Account.ready && !(Account.configured && Account.sb);
-    const hint = $('#gr-guest-hint');
-    if (hint) hint.hidden = !!this.invited || signed;
     $('#gr-name-field').hidden = signed || !this.invited;          // guests only need a name when they have an invite
+    this.renderHomeTop();
   },
 
   /* "Paste an invite link" on the home screen. Invites carry a key (inv=…): a bare room code isn't
@@ -13452,8 +13829,10 @@ const App = {
     const raw = $('#gr-code').value.trim();
     const code = normalizeCode(raw);
     const m = raw.match(/[?&]inv=([a-z0-9]{8,32})(?:&|#|$)/);
-    if (!code) { this.status("That isn't a Vortex invite link. Paste the whole link someone sent you.", true); return; }
-    if (!m) { this.status('A call code on its own isn\'t enough to join. Ask someone in the call to send you the invite link.', true); return; }
+    const bad = (t) => { $('#join-status').textContent = t; $('#join-status').classList.add('err'); Haptics.thud(); };
+    if (!code) { bad("That isn't a Vortex invite link. Paste the whole link someone sent you."); return; }
+    if (!m) { bad("A call code on its own isn't enough to join. Ask someone in the call to send you the invite link."); return; }
+    Panels.close('modal');
     this.invited = code; this.inviteTok = m[1];
     try { history.replaceState(null, '', location.pathname + '?room=' + encodeURIComponent(code) + '&inv=' + m[1]); } catch { /* */ }
     $('#gr-code').value = ''; $('#gr-code-go').disabled = true;
@@ -13542,7 +13921,7 @@ const App = {
   },
 
   enterCall() {
-    this.inCall = true;
+    this.inCall = true; document.body.classList.add('vx-incall');
     $('#green').hidden = true;
     $('#left').hidden = true;
     $('#call').hidden = false;
@@ -13579,11 +13958,10 @@ const App = {
   /* leave the squad; { switching: true } keeps camera + mic for the next one */
   async leave(opts = {}) {
     if (!this.inCall) return;
-    this.inCall = false;
+    this.inCall = false; document.body.classList.remove('vx-incall');
     const room = Net.room;
     Recorder.stop();                 // saves a running clip before teardown
     Moments.stop(true);
-    Radar.stop(true);
     Captions.stop();
     Watch.close(false);
     Ring.cancelOutgoing();
@@ -13803,42 +14181,44 @@ const App = {
     Panels.open('pop-pmenu', anchor);
   },
 
-  /* ⋮ More: reactions on top, then a list (a bottom sheet on phones, a menu on computers) */
+  /* ⋮ More: reactions, then the few things people actually reach for as tiles, then a short list */
   renderMore() {
-    const g = $('#more-grid'), em = $('#more-emoji');
+    const g = $('#more-grid'), em = $('#more-emoji'), tiles = $('#more-tiles');
     if (!g) return;
-    g.innerHTML = ''; em.innerHTML = '';
-    for (const e of REACTION_EMOJI.slice(0, 7)) em.append(h('button', { type: 'button', text: e, 'aria-label': `React ${e}`, onclick: () => Reactions.send(e) }));
+    g.innerHTML = ''; em.innerHTML = ''; tiles.innerHTML = '';
+    for (const e of REACTION_EMOJI.slice(0, 7)) em.append(h('button', { type: 'button', text: e, 'aria-label': `React ${e}`, onclick: () => { Haptics.tap(); Reactions.send(e); } }));
     em.append(h('button', { class: 'em-more', type: 'button', 'aria-label': 'More reactions and sounds', svg: ICONS.plus, onclick: () => { Panels.close('pop'); Panels.open('pop-react', $('#d-more')); } }));
+    const run = (o) => () => { Haptics.tap(); if (!o.keep) Panels.close('pop'); o.fn(); };
+    const tile = (o) => {
+      if (o.hide) return;
+      tiles.append(h('button', {
+        class: 'mt' + (o.on ? ' on' : '') + (o.cls ? ' ' + o.cls : ''), type: 'button', disabled: !!o.disabled,
+        title: o.title || o.label, 'aria-pressed': o.toggle ? String(!!o.on) : null, style: { '--mi': o.hue }, onclick: run(o),
+      }, h('span', { class: 'mt-ic', svg: o.icon }), h('span', { class: 'mt-l', text: o.label })));
+    };
     const item = (o) => {
       if (o.hide) return;
       g.append(h('button', {
         class: 'ml-item' + (o.on ? ' on' : '') + (o.cls ? ' ' + o.cls : ''), type: 'button', disabled: !!o.disabled,
-        title: o.title || o.label, 'aria-pressed': o.toggle ? String(!!o.on) : null, style: { '--mi': o.hue },
-        onclick: () => { if (!o.keep) Panels.close('pop'); o.fn(); },
-      }, h('span', { class: 'ml-ic', svg: o.icon }), h('span', { class: 'ml-l', text: o.label }), o.toggle ? h('span', { class: 'ml-sw', 'aria-hidden': 'true' }) : null));
+        title: o.title || o.label, 'aria-pressed': o.toggle ? String(!!o.on) : null, style: { '--mi': o.hue }, onclick: run(o),
+      }, h('span', { class: 'ml-ic', svg: o.icon }), h('span', { class: 'ml-l', text: o.label }), o.toggle ? h('span', { class: 'ml-sw', 'aria-hidden': 'true' }) : h('span', { class: 'ml-chev', svg: ICONS.chevRight })));
     };
     const noRec = typeof window.MediaRecorder === 'undefined';
-    item({ icon: ICONS.hand, hue: '#FBBF24', label: Reactions.hand ? 'Lower hand' : 'Raise hand', on: Reactions.hand, fn: () => Reactions.toggleHand() });
-    item({ icon: ICONS.userPlus, hue: '#22D3EE', label: Account.signedIn ? 'Add people' : 'Invite', fn: () => this.inviteFlow() });
+    tile({ icon: ICONS.tv, hue: '#EC4899', label: 'Watch together', on: Stage.watchOn, fn: () => Watch.open() });
     // screen sharing is desktop only: phones and tablets never show it (they still see others present)
-    item({ hide: !CAN_SHARE_SCREEN, icon: Share.active ? ICONS.screenStop : ICONS.screen, hue: '#60A5FA', label: Share.active ? 'Stop sharing screen' : 'Share screen', on: Share.active, fn: () => (Share.active ? Share.stop() : Share.start()) });
-    item({ icon: ICONS.sparkles, hue: '#8B5CF6', label: 'Backgrounds and effects', fn: () => Panels.open('drawer-lens') });
-    item({ icon: ICONS.noise, hue: '#34D399', label: 'Noise reduction', on: Settings.aiNoise !== false, toggle: true, keep: true, fn: () => { $('#ai-noise').click(); this.renderMore(); } });
-    item({ icon: ICONS.cc, hue: '#34D399', label: 'Live captions', on: Captions.enabled, toggle: true, keep: true, fn: () => { Captions.toggle(); this.renderMore(); } });
-    item({ icon: ICONS.tv, hue: '#EC4899', label: 'Watch together', on: Stage.watchOn, fn: () => Watch.open() });
-    item({ icon: ICONS.rec, hue: '#FB4F6E', label: Recorder.active ? 'Stop recording' : 'Start recording', on: Recorder.active, cls: 'rec', disabled: noRec,
+    tile({ hide: !CAN_SHARE_SCREEN, icon: Share.active ? ICONS.screenStop : ICONS.screen, hue: '#60A5FA', label: Share.active ? 'Stop sharing' : 'Share screen', on: Share.active, fn: () => (Share.active ? Share.stop() : Share.start()) });
+    tile({ icon: ICONS.sparkles, hue: '#8B5CF6', label: 'Effects', fn: () => Panels.open('drawer-lens') });
+    tile({ icon: ICONS.hand, hue: '#FBBF24', label: Reactions.hand ? 'Lower hand' : 'Raise hand', on: Reactions.hand, fn: () => Reactions.toggleHand() });
+    tile({ icon: ICONS.cc, hue: '#34D399', label: 'Captions', on: Captions.enabled, toggle: true, keep: true, fn: () => { Captions.toggle(); this.renderMore(); } });
+    tile({ icon: ICONS.rec, hue: '#FB4F6E', label: Recorder.active ? 'Stop rec' : 'Record', on: Recorder.active, cls: 'rec', disabled: noRec,
       title: noRec ? "This browser can't record" : 'Record faces and call audio to a file on this device', fn: () => Recorder.toggle() });
-    item({ icon: ICONS.bolt, hue: '#FBBF24', label: Moments.clips.length ? `Auto clips · ${Moments.clips.length}` : 'Auto clips', on: Moments.on, disabled: noRec, fn: () => Moments.menu() });
-    item({ hide: !SquadPiP.supported(), icon: ICONS.pip, hue: '#8B5CF6', label: 'Picture-in-picture', on: SquadPiP.isOpen(), toggle: true, fn: () => SquadPiP.toggle() });
-    item({ icon: ICONS.signal, hue: '#22D3EE', label: Radar.sharing ? 'Radar · sharing' : 'Radar', on: Radar.sharing, fn: () => Radar.open() });
-    const host = Net.amLeader();
-    item({ icon: Net.locked ? ICONS.lock : ICONS.unlock, hue: '#FB923C', label: Net.locked ? 'Unlock call' : 'Lock call', on: Net.locked, toggle: true, cls: 'lock',
-      disabled: !host, title: host ? 'New people wait until you admit them' : 'Only the host can lock or unlock', fn: () => Net.setLocked(!Net.locked) });
-    item({ icon: ICONS.stats, hue: '#60A5FA', label: 'Call stats', fn: () => { this.peopleStats = true; Panels.open('drawer-people'); } });
-    item({ icon: ICONS.mic, hue: '#22D3EE', label: 'Audio settings', keep: true, fn: () => Panels.open('pop-audio', $('#d-more')) });
+    // phones have no Share screen tile, so Add people takes its place in the grid
+    (CAN_SHARE_SCREEN ? item : tile)({ icon: ICONS.userPlus, hue: '#22D3EE', label: Account.signedIn ? 'Add people' : 'Invite', fn: () => this.inviteFlow() });
+    item({ hide: !SquadPiP.supported() || IS_MOBILE, icon: ICONS.pip, hue: '#8B5CF6', label: 'Picture-in-picture', on: SquadPiP.isOpen(), toggle: true, fn: () => SquadPiP.toggle() });
+    // only the host can lock, so nobody else sees a switch they can't use
+    item({ hide: !Net.amLeader(), icon: Net.locked ? ICONS.lock : ICONS.unlock, hue: '#FB923C', label: 'Lock call', on: Net.locked, toggle: true, cls: 'lock',
+      title: 'New people wait until you admit them', fn: () => Net.setLocked(!Net.locked) });
     item({ icon: ICONS.gear, hue: '#9D99B8', label: 'Settings', fn: () => Panels.open('drawer-settings') });
-    $('#more-row').hidden = true;
   },
 
 
@@ -13878,32 +14258,14 @@ const App = {
     // settings → account
     $('#set-acct-av').onclick = () => $('#acct-file').click();
     $('#set-acct-btn').onclick = () => this.accountAction();
-    $('#set-save-supa').onclick = () => this.saveSupabase();
-    $('#set-relay-test').onclick = () => this.renderRelay(true);
-    $('#set-copy-report').onclick = async () => { const ok = await copyText(NetLog.text()); toast(ok ? 'Connection report copied' : "Couldn't copy the report"); };
     // friends drawer
     $('#friends-signin').onclick = () => this.accountAction();
     $('#fsearch').addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(this.searchT); this.runSearch(); });
-    $('#fsearch-q').addEventListener('input', () => { clearTimeout(this.searchT); this.searchT = setTimeout(() => this.runSearch(), 450); });
+    $('#fsearch-q').addEventListener('input', () => { clearTimeout(this.searchT); this.searchT = setTimeout(() => this.runSearch(), 800); });
     // incoming call
     $('#ic-accept').onclick = () => Ring.answer(true);
     $('#ic-audio').onclick = () => Ring.answer(false);
     $('#ic-decline').onclick = () => Ring.decline();
-  },
-
-  saveSupabase() {
-    if (SUPABASE_URL || SUPABASE_ANON_KEY) { toast('This site sets its Supabase project in code.'); return; }
-    const url = $('#set-supa-url').value.trim().replace(/\/+$/, ''), key = $('#set-supa-key').value.trim();
-    if (isSecretKey(key)) { toast("That's a secret key. Never put it in a web page: paste the publishable key (sb_publishable_…) instead.", { type: 'error', ms: 8000 }); return; }
-    if ((url || key) && (!/^https:\/\/[^/\s]+$/.test(url) || key.length <= 20)) {
-      toast('Paste the Project URL (https://….supabase.co) and the publishable key from Supabase → Connect (or Settings → API Keys).', { type: 'error', ms: 6000 });
-      return;
-    }
-    Settings.supabase = { url, key };
-    saveSettings();
-    if (this.inCall) { toast('Saved. Accounts reconnect the next time you open the app.', { ms: 5000 }); return; }
-    toast(url ? 'Saved. Reconnecting…' : 'Accounts turned off. Reloading…');
-    setTimeout(() => location.reload(), 700);
   },
 
   presLabel(p) { return p === 'in-call' ? 'In a call' : p === 'online' ? 'Online' : 'Offline'; },
@@ -13958,8 +14320,17 @@ const App = {
     }
     const list = $('#flist');
     list.innerHTML = '';
-    if (!fr.length) list.append(h('div', { class: 'fempty', text: 'No friends yet. Search by @username or email above to add someone.' }));
-    for (const f of fr) {
+    const fq = $('#ffilter').value.trim().toLowerCase().replace(/^@/, '');
+    const rank = { 'in-call': 0, online: 1, offline: 2 };
+    const shown = fr.filter((f) => !fq || String(f.display_name).toLowerCase().includes(fq) || String(f.username || '').includes(fq))
+      .sort((x, y) => (rank[x.presence] ?? 2) - (rank[y.presence] ?? 2) || String(x.display_name).localeCompare(y.display_name));
+    $('#flist-title').textContent = fr.length ? `Friends · ${fr.length}` : 'Friends';
+    $('.fr-filter').hidden = fr.length < 2;
+    $('#flist-title').hidden = !fr.length;
+    if (!fr.length) list.append(h('div', { class: 'fempty fempty-big' }, h('span', { class: 'fe-ic', svg: ICONS.users }), h('b', { text: 'No friends yet' }), h('span', { text: 'Add someone by their username or email, then call them in one tap.' }),
+      h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => this.openAddFriend() }, h('span', { svg: ICONS.userPlus }), 'Add a friend')));
+    else if (!shown.length) list.append(h('div', { class: 'fempty', text: `None of your friends match “${fq}”.` }));
+    for (const f of shown) {
       list.append(this.friendRow(f, [
         this.callButton(f),
         h('button', { class: 'icon-btn sm', type: 'button', title: `Remove ${f.display_name}`, 'aria-label': `Remove ${f.display_name}`, svg: ICONS.x,
@@ -13970,26 +14341,29 @@ const App = {
     outEl.innerHTML = '';
     $('#fout-title').hidden = !out.length;
     for (const p of out) outEl.append(this.friendRow(p, [h('button', { class: 'btn btn-sm btn-ghost', type: 'button', onclick: () => this.act(() => Social.remove(p.row)) }, 'Cancel')]));
-    if (this.searchRes) this.renderSearch();
+    if (this.searchRes && Panels.isOpen('modal-addfriend')) this.renderSearch();
   },
   async runSearch() {
     const q = $('#fsearch-q').value.trim();
     this.searchQ = q;
-    if (q.replace(/^@/, '').length < 2) { this.searchRes = null; $('#fsearch-res').innerHTML = ''; return; }
+    if (q.replace(/^@/, '').length < 3) { this.searchRes = null; $('#fsearch-res').innerHTML = ''; return; }
     const res = $('#fsearch-res');
     res.innerHTML = '';
     res.append(h('div', { class: 'fempty', text: 'Searching…' }));
     try {
-      const list = await Social.search(q);
+      // exact matches only: a whole username or a whole email, never a browse of everyone who signed up
+      const email = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(q), u = q.toLowerCase().replace(/^@/, '');
+      if (!email && !USERNAME_RE.test(u)) { this.searchRes = []; this.renderSearch(); return; }
+      const list = await Social.search(email ? q : u);
       if (this.searchQ !== q) return;
-      this.searchRes = list;
+      this.searchRes = email ? list : list.filter((p) => p.username === u);
     } catch (e) { this.searchRes = []; toast(e.message, { type: 'error' }); }
     this.renderSearch();
   },
   renderSearch() {
     const res = $('#fsearch-res'), list = this.searchRes || [];
     res.innerHTML = '';
-    if (!list.length) { res.append(h('div', { class: 'fempty', text: /^[^@\s]+@/.test(this.searchQ) ? 'No account uses that email.' : 'No one found with that username.' })); return; }
+    if (!list.length) { res.append(h('div', { class: 'fempty', text: /^[^@\s]+@/.test(this.searchQ) ? 'No Vortex account uses that email.' : `No one has the username @${String(this.searchQ).replace(/^@/, '').toLowerCase()}. Check the spelling.` })); return; }
     for (const p of list) {
       const rel = Social.relation(p.id);
       let act;
@@ -14027,10 +14401,11 @@ const App = {
         h('span', { class: 'fn', text: f.display_name }),
         h('span', { class: 'fs', text: this.presLabel(f.presence) })));
     }
-    strip.append(h('button', { class: 'hf add', type: 'button', onclick: () => Panels.open('drawer-friends') },
+    strip.append(h('button', { class: 'hf add', type: 'button', onclick: () => this.openAddFriend() },
       h('span', { class: 'fav' }, h('span', { class: 'av', svg: ICONS.userPlus })),
-      h('span', { class: 'fn', text: 'Add friend' }), h('span', { class: 'fs', text: fr.length ? `${fr.length} total` : 'Find people' })));
+      h('span', { class: 'fn', text: 'Add friend' }), h('span', { class: 'fs', text: 'Username or email' })));
     this.renderHub();
+    this.renderHomeTop();
   },
   /* home: recent calls, newest first; friends get a call-back button */
   renderHub() {
@@ -14056,7 +14431,7 @@ const App = {
   },
   renderBadges() {
     const n = Account.signedIn ? Social.incoming().length : 0;
-    for (const id of ['#gr-friends-badge', '#call-friends-badge']) {
+    for (const id of ['#gr-friends-badge', '#call-friends-badge', '#nav-friends-badge']) {
       const b = $(id);
       if (!b) continue;
       b.hidden = !n;
@@ -14145,12 +14520,10 @@ const App = {
       this.renderAlerts();
     };
     $('#set-hint').onchange = (e) => Share.setHint(e.target.value);
-    $('#set-save-net').onclick = () => {
-      Settings.turn = { urls: $('#set-turn-urls').value.trim(), user: $('#set-turn-user').value.trim(), cred: $('#set-turn-cred').value };
-      Settings.server = { host: $('#set-srv-host').value.trim(), port: $('#set-srv-port').value.trim(), path: $('#set-srv-path').value.trim() || '/', secure: $('#set-srv-secure').checked, key: $('#set-srv-key').value.trim() };
-      saveSettings();
-      toast(this.inCall ? 'Saved. Network settings apply the next time you join.' : 'Network settings saved');
-    };
+    $('#set-noise').onchange = (e) => { NoiseAI.set('aiNoise', e.target.checked); if (this.syncDsp) this.syncDsp(); };
+    $('#set-studio').onclick = () => Panels.open('pop-audio');
+    $('#set-mkc').onclick = () => MKC.open();
+    $('#set-keys').onclick = () => { Panels.close('drawer'); Cmdk.open(); };
   },
 
   renderLens() {
@@ -14185,63 +14558,13 @@ const App = {
     $('#set-ringpreview').checked = Settings.ringPreview !== false;
     this.renderAlerts();
     $('#set-hint').value = Settings.shareHint;
-    $('#set-turn-urls').value = Settings.turn.urls || '';
-    $('#set-turn-user').value = Settings.turn.user || '';
-    $('#set-turn-cred').value = Settings.turn.cred || '';
-    $('#set-srv-host').value = Settings.server.host || '';
-    $('#set-srv-port').value = Settings.server.port || '';
-    $('#set-srv-path').value = Settings.server.path || '/';
-    $('#set-srv-key').value = Settings.server.key || '';
-    $('#set-srv-secure').checked = Settings.server.secure !== false;
-    const fixed = !!(SUPABASE_URL || SUPABASE_ANON_KEY), cfg = Account.config();
-    const su = $('#set-supa-url'), sk = $('#set-supa-key');
-    su.value = fixed ? SUPABASE_URL : (Settings.supabase && Settings.supabase.url) || '';
-    sk.value = fixed ? (SUPABASE_ANON_KEY ? SUPABASE_ANON_KEY.slice(0, 12) + '…' : '') : (Settings.supabase && Settings.supabase.key) || '';
-    su.disabled = sk.disabled = fixed;
-    $('#set-save-supa').hidden = fixed;
-    $('#set-supa-hint').textContent = fixed
-      ? 'This site sets its Supabase project in code (SUPABASE_URL / SUPABASE_ANON_KEY).'
-      : Account.configured && Account.sb ? `Connected to ${cfg.url.replace(/^https:\/\//, '')}.`
-        : Account.configured ? "Configured, but Supabase didn't load. Check the URL and your connection."
-          : 'Sign-in, friends and ringing need a Supabase project. Run the setup SQL once, then paste the Project URL and the publishable key here (Supabase → Connect). Leave blank to stay in guest mode.';
+    $('#set-noise').checked = Settings.aiNoise !== false;
+    const mk = MKC.acct();
+    $('#set-mkc-sub').textContent = mk ? `Connected as ${mk.email}` : 'Connect your account for your add-ons and watchlist';
     this.renderIdentity();
     this.fillDevices();
-    this.renderDiag();
     $('#set-present').hidden = !CAN_SHARE_SCREEN;
     $('#set-version').textContent = 'Version ' + APP_VERSION;
-    $('#set-adv').open = !!(Settings.turn.urls || Settings.server.host);
-    this.renderRelay();
-  },
-  /* the Cloudflare TURN relay is automatic: show whether it's ready, and test it for real */
-  async renderRelay(test) {
-    const dot = $('#set-relay-dot'), ti = $('#set-relay-title'), sub = $('#set-relay-sub'), btn = $('#set-relay-test');
-    const set = (st, t, d) => { dot.className = 'rl-dot ' + st; ti.textContent = t; if (d) sub.textContent = d; };
-    if (!TURN_CREDENTIALS_URL) { set('bad', 'No relay on this site', 'Calls on strict networks may not connect.'); btn.hidden = true; return; }
-    if (!test) set('wait', 'Checking the relay…');
-    await Ice.ready();
-    if (!Ice.list) { set('bad', "Relay unavailable", `Direct calls still work. (${Ice.failed || 'no answer'})`); return; }
-    if (!test) { set('ok', 'Relay ready', 'Calls connect directly when they can, and through the Vortex relay (Cloudflare) on strict networks like mobile data.'); return; }
-    btn.disabled = true;
-    set('wait', 'Testing the relay…');
-    const r = await Ice.test();
-    btn.disabled = false;
-    if (r.ok) set('ok', `Relay works · ${r.ms} ms`, `Reached the Cloudflare relay${r.proto ? ' over ' + r.proto.toUpperCase() : ''}. Calls will connect even on strict networks.`);
-    else set('bad', "The relay didn't answer", 'Your network may block it. Direct calls still work; try another network to compare.');
-  },
-  renderDiag() {
-    const d = $('#diag');
-    if (!d) return;
-    d.innerHTML = '';
-    const row = (a, b, ok) => d.append(h('div', { class: 'diag-row' }, h('span', { text: a }), h('span', { class: ok ? 'ok' : 'bad', text: b })));
-    row('Accounts', Account.signedIn ? 'signed in' : Account.configured ? (Account.sb ? 'guest' : 'offline') : 'not set up', !Account.configured || !!Account.sb);
-    if (!this.inCall) { row('Not in a call', '—', true); return; }
-    row('Signaling server', Net.sigOK ? 'connected' : 'reconnecting', Net.sigOK);
-    row('Room host', Net.beacon ? 'you' : 'another member', true);
-    if (Net.locked) row('Call', 'locked', true);
-    for (const m of Net.members.values()) {
-      const state = m.lost ? 'reconnecting' : !m.ready ? 'connecting' : `${m.ice}${m.path ? ' · ' + m.path : ''}${m.rtt != null ? ' · ' + Math.round(m.rtt) + 'ms' : ''}`;
-      row(m.name, state, m.ready && !m.lost);
-    }
   },
   fillDevices() {
     const fill = (sel, list, cur, def) => {
@@ -14287,8 +14610,8 @@ const App = {
     Bus.on('local:state', () => { Chrome.updateDock(); Tiles.updateSelf(); this.updateGreen(); SquadPiP.refresh(); Background.sync(); });
     Bus.on('local:devices', () => { this.fillDevices(); this.updateGreen(); });
     Bus.on('vad:dominant', () => { if (Settings.layout === 'stage' && !Layout.pinned && !Stage.current()) Layout.apply(); });
-    Bus.on('roster', () => { Chrome.updateDock(); Background.sync(); if (Panels.isOpen('drawer-settings')) this.renderDiag(); this.renderCallId(); if (Panels.isOpen('drawer-people')) this.renderPeople(); });
-    Bus.on('lock', () => { Chrome.updateDock(); if (Panels.isOpen('drawer-settings')) this.renderDiag(); });
+    Bus.on('roster', () => { Chrome.updateDock(); Background.sync(); this.renderCallId(); if (Panels.isOpen('drawer-people')) this.renderPeople(); });
+    Bus.on('lock', () => Chrome.updateDock());
     Bus.on('captions', () => Chrome.updateDock());
     Bus.on('net:sig', (ok) => { const p = $('#sig-pill'); if (p) p.hidden = ok || !this.inCall; });
     Bus.on('stage', () => Chrome.updateDock());
