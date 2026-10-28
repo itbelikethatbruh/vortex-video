@@ -315,9 +315,38 @@ body.drawer-open #main { right: 0; }
 #main[data-layout="grid"] #grid { display: flex; }
 #main[data-layout="speaker"] #spot, #main[data-layout="split"] #spot { display: block; }
 #main[data-layout="speaker"] #strip, #main[data-layout="split"] #strip { display: flex; }
-#grid > .tile, #grid > .invite-card { width: var(--tw, 320px); height: var(--th, 180px); }
-#strip > .tile, #strip > .invite-card { width: 100%; aspect-ratio: 16 / 9; flex: none; }
-#strip > .invite-card { aspect-ratio: auto; }
+#grid > .tile { width: var(--tw, 320px); height: var(--th, 180px); }
+/* one motion language everywhere: the same spring on every press, hover and panel */
+.btn, .icon-btn, .dock-btn, .srow, .hf, .rc, .mt, .ml-item, .an-item, .wt-src, .frow, .pill { transition: transform .22s var(--spring), background-color .2s ease, border-color .2s ease, color .2s ease, box-shadow .25s ease, opacity .2s ease; }
+.srow:active, .hf:active, .rc:active, .mt:active, .ml-item:active, .an-item:active, .wt-src:active { transform: scale(.97); }
+.dock-btn:active { transform: scale(.92); }
+.tile { transition: box-shadow .25s ease, border-color .25s ease, opacity .3s ease; }
+@media (prefers-reduced-motion: reduce) { .btn, .icon-btn, .dock-btn, .srow, .hf, .rc, .mt, .ml-item, .an-item, .wt-src, .frow, .pill, .tile { transition: none; } }
+/* only you here: your camera fills the stage, with the ringing / invite overlay on top */
+#main.alone #grid { padding: 0; }
+#main.alone #grid > .tile { width: 100%; height: 100%; border-radius: 22px; }
+.alone-ov { position: absolute; left: 16px; right: 16px; bottom: calc(102px + var(--safe-b)); z-index: 5; display: flex; justify-content: center; pointer-events: none; }
+.alone-ov[hidden] { display: none; }
+.alone-ring, .alone-inv { pointer-events: auto; display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(100%, 420px); padding: 16px 18px 14px; border-radius: 24px; background: rgba(10,8,18,.72); border: 1px solid var(--hair-2); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); box-shadow: 0 24px 60px -30px rgba(0,0,0,.8); text-align: center; animation: aloneIn .5s var(--spring) both; }
+.alone-ring[hidden], .alone-inv[hidden] { display: none; }
+@keyframes aloneIn { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+.alone-av { width: 56px; height: 56px; font-size: 20px; position: relative; }
+.alone-av::before, .alone-av::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--cyan); animation: icpulse 1.8s ease-out infinite; pointer-events: none; }
+.alone-av::after { border-color: var(--mint); animation-delay: .9s; }
+.alone-t { display: flex; align-items: baseline; gap: 2px; font-size: 18px; font-weight: 650; letter-spacing: -.01em; }
+.alone-dots { display: inline-flex; gap: 3px; margin-left: 3px; }
+.alone-dots i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; animation: adots 1.2s ease-in-out infinite; }
+.alone-dots i:nth-child(2) { animation-delay: .2s; } .alone-dots i:nth-child(3) { animation-delay: .4s; }
+@keyframes adots { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+.alone-note { margin: 0; font-size: 12px; color: var(--muted); max-width: 32ch; line-height: 1.4; display: flex; align-items: center; gap: 6px; }
+.alone-note svg { width: 14px; height: 14px; flex: none; color: var(--cyan); }
+.alone-cancel { margin-top: 4px; gap: 6px; } .alone-cancel svg { width: 15px; height: 15px; }
+.alone-sub { margin: 0; font-size: 13px; color: var(--muted); max-width: 36ch; line-height: 1.4; }
+.alone-acts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.alone-acts .btn { gap: 6px; }
+.ic-bi { display: inline-flex; } .ic-bi svg { width: 15px; height: 15px; }
+@media (max-width: 640px) { .alone-ov { left: 10px; right: 10px; bottom: calc(90px + var(--safe-b)); } .alone-ring, .alone-inv { border-radius: 20px; } }
+#strip > .tile { width: 100%; aspect-ratio: 16 / 9; flex: none; }
 #spot > .tile { position: absolute; inset: 0; }
 #spot > .screen-view { display: none; }
 #main[data-layout="split"] #spot > .screen-view.active { display: flex; }
@@ -374,24 +403,8 @@ body.drawer-open #main { right: 0; }
 #strip .tile-name { height: 22px; font-size: 10.5px; left: 6px; bottom: 6px; }
 #strip .tile-pin { width: 26px; height: 26px; top: 6px; right: 6px; }
 
-.invite-card { border-radius: var(--radius); border: 1px dashed var(--hair-2); background: linear-gradient(160deg, rgba(34,211,238,.05), rgba(52,211,153,.03) 60%, transparent), var(--obsidian); display: flex; flex-direction: column; align-items: center; justify-content: safe center; padding: 14px; text-align: center; overflow: auto; scrollbar-width: none; }
-.invite-card::-webkit-scrollbar { display: none; }
-#grid > .invite-card { container: invite / size; }
-.ic-in { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; margin: auto 0; }
-.ic-title { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
-.ic-sub { margin: -4px 0 0; color: var(--muted); font-size: 13px; max-width: 34ch; line-height: 1.45; }
-.ic-code { font-size: clamp(18px, 2.6vw, 28px); letter-spacing: 0.12em; background: var(--grad-h); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 16px rgba(139,92,246,.45)); white-space: nowrap; }
-.ic-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 100%; }
-.ic-actions .btn { gap: 6px; }
 .ic-bi { display: inline-flex; }
 .ic-bi svg { width: 15px; height: 15px; }
-@container invite (max-height: 280px) { .ic-sub { display: none; } .ic-in { gap: 8px; } }
-@container invite (max-height: 190px) { .ic-title { font-size: 14px; } .ic-code { font-size: 18px; } .ic-in { gap: 6px; } }
-@container invite (max-height: 130px) { .ic-title { display: none; } }
-@container invite (max-width: 300px) { .ic-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 220px; } .ic-code { font-size: 18px; letter-spacing: 0.08em; } }
-#strip > .invite-card { padding: 12px; gap: 6px; }
-#strip > .invite-card .ic-sub { display: none; }
-#strip > .invite-card .ic-code { font-size: 16px; }
 
 /* ---------- screen views ---------- */
 .screen-view { position: absolute; inset: 0; flex-direction: column; border-radius: var(--radius); background: #000; border: 1px solid var(--hair); overflow: hidden; }
@@ -451,6 +464,7 @@ details.more[open] summary { margin-bottom: 6px; }
 /* audio popover */
 .gate-meter { position: relative; height: 8px; border-radius: 4px; background: #221D36; overflow: hidden; }
 .gm-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: linear-gradient(90deg, var(--mint), var(--cyan)); border-radius: 4px; transition: width .05s linear; }
+.mic-meter { position: relative; height: 6px; border-radius: 4px; background: rgba(255,255,255,.08); overflow: hidden; margin: -4px 0 2px; }
 .gm-fill.closed { background: #3B3557; }
 .gm-thr { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--amber); box-shadow: 0 0 6px var(--amber); }
 
@@ -518,10 +532,6 @@ details.more[open] summary { margin-bottom: 6px; }
 #media-sink { position: fixed; left: 0; bottom: 0; width: 2px; height: 2px; overflow: hidden; opacity: 0.01; pointer-events: none; z-index: -1; }
 #media-sink video, #media-sink canvas { width: 2px; height: 2px; }
 #audio-unlock { position: fixed; left: 50%; bottom: calc(100px + var(--safe-b)); transform: translateX(-50%); z-index: 95; }
-#left { display: flex; align-items: center; justify-content: center; padding: 24px; }
-.left-card { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-.left-card h2 { margin: 18px 0 0; font-size: 28px; letter-spacing: -0.02em; }
-.left-card p { margin: 0; }
 .left-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
 
 
@@ -636,7 +646,6 @@ details.more[open] summary { margin-bottom: 6px; }
 .drawer-head::after { content: ''; position: absolute; left: 18px; right: 18px; bottom: -1px; height: 1px; background: var(--grad-h); opacity: .55; }
 .sec-title { display: flex; align-items: center; gap: 8px; }
 .sec-title::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--grad); box-shadow: 0 0 8px rgba(139,92,246,.9); flex: none; }
-.invite-card { border: 1px solid transparent; background: radial-gradient(120% 90% at 0% 0%, rgba(34,211,238,.10), transparent 55%) padding-box, radial-gradient(120% 90% at 100% 100%, rgba(236,72,153,.12), transparent 55%) padding-box, linear-gradient(var(--obsidian), var(--obsidian)) padding-box, linear-gradient(135deg, rgba(34,211,238,.45), rgba(139,92,246,.3) 50%, rgba(236,72,153,.45)) border-box; }
 .pop, .drawer, .modal-card { box-shadow: var(--shadow), 0 0 0 1px rgba(196,181,253,.06), 0 30px 80px -40px rgba(139,92,246,.45); }
 .modal-head h2 { letter-spacing: -0.03em; }
 .tile-name { border: 1px solid rgba(255,255,255,.06); }
@@ -706,7 +715,6 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
   #main { padding: 4px 8px 6px; flex-direction: column; gap: 8px; bottom: calc(80px + var(--safe-b)); }
   #strip { flex-direction: row; width: auto; height: 92px; overflow-x: auto; overflow-y: hidden; order: -1; padding: 4px; }
   #strip > .tile { width: auto; height: 100%; aspect-ratio: 4 / 3; }
-  #strip > .invite-card { width: 200px; height: 100%; flex: none; }
   #grid { gap: 8px; padding: 2px; }
   #dock { gap: 4px; padding: 6px; bottom: calc(10px + var(--safe-b)); }
   .dock-btn { height: 44px; min-width: 44px; padding: 0 10px; }
@@ -818,6 +826,8 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 @media (max-width: 520px) {
   #green[data-mode="home"] .gr-lede { font-size: 15px; }
   .hub-card { padding: 14px 12px 10px; border-radius: 22px; }
+  /* phones: a solid card animates without the blur re-rasterizing every frame */
+  .home .hub-card { backdrop-filter: none; -webkit-backdrop-filter: none; background: linear-gradient(180deg, rgba(29,25,48,.96), rgba(16,13,27,.96)); }
   .hub-friends { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .hf .av { width: 54px; height: 54px; }
 }
@@ -1001,7 +1011,7 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 .sr-input:focus { background: var(--surface-2); border-color: var(--hair-2); text-align: left; padding: 0 10px; }
 .sr-select { width: 50%; max-width: 210px; height: 38px; min-width: 0; font-size: 13px; }
 .sr-kbd, kbd { font: 600 11px var(--mono); padding: 3px 7px; border-radius: 7px; background: rgba(255,255,255,.07); border: 1px solid var(--hair); color: var(--muted); white-space: nowrap; }
-.mkc-ic { font: 800 11px var(--sans); letter-spacing: -.02em; color: #0A0A0B !important; background: linear-gradient(135deg, #F5F0E1, #D9D4C7) !important; }
+.mkc-ic { background: transparent !important; padding: 0; } .mkc-ic svg { width: 100%; height: 100%; display: block; }
 .set-foot { display: flex; align-items: center; gap: 12px; margin: 22px 6px 4px; color: var(--muted); font-size: 12px; }
 .set-foot .logo-mark { width: 38px; height: 38px; flex: none; }
 .set-foot > div { display: flex; flex-direction: column; gap: 1px; }
@@ -1153,7 +1163,8 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
 .small-card { width: min(460px, 100%); padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 14px; }
 .small-card .modal-head { margin-bottom: 0; }
 .small-card .modal-head h2 { font-size: 21px; }
-#modal-join .gr-join { display: flex; gap: 8px; }
+#modal-join .gr-join { display: flex; gap: 8px; flex: none; }
+#modal-join .paste-btn { height: 44px; }
 #modal-join .gr-join .input { height: 48px; letter-spacing: 0; text-transform: none; font-size: 14px; }
 #modal-join .gr-join .btn { flex: none; }
 .paste-btn { gap: 8px; color: var(--muted); }
@@ -1208,10 +1219,12 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
 .cmdk-empty { padding: 26px; text-align: center; color: var(--muted); }
 
 /* MKCinema */
-.mkc-chip { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 7px; font: 800 9.5px/1 var(--sans); letter-spacing: -.02em; color: #0A0A0B; background: linear-gradient(135deg, #F5F0E1, #D9D4C7); flex: none; }
-.mkc-chip.big { width: 40px; height: 40px; border-radius: 12px; font-size: 14px; box-shadow: 0 8px 24px -10px rgba(217,212,199,.6); }
-.yt-chip { display: inline-block; width: 22px; height: 16px; border-radius: 5px; background: #FF0033; position: relative; flex: none; }
-.yt-chip::after { content: ''; position: absolute; left: 8.5px; top: 4.5px; border: 3.5px solid transparent; border-left: 6px solid #fff; border-right: 0; }
+.mkc-chip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
+.mkc-chip svg { width: 100%; height: 100%; display: block; }
+.mkc-chip.big { width: 44px; height: 44px; filter: drop-shadow(0 8px 18px rgba(217,212,199,.35)); }
+.yt-chip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
+.yt-chip svg { width: 22px; height: 22px; display: block; }
+.yt-art svg { width: 40px; height: 40px; filter: drop-shadow(0 8px 18px rgba(255,0,0,.35)); }
 .mkc-brand { display: flex; align-items: center; gap: 12px; }
 .mkc-logo { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font: 800 16px var(--sans); color: #0A0A0B; background: linear-gradient(135deg, #F5F0E1, #D9D4C7); box-shadow: 0 10px 30px -10px rgba(217,212,199,.55); flex: none; }
 .mkc-card { background: linear-gradient(180deg, rgba(20,18,16,.98), rgba(10,10,11,.98)); border-color: rgba(217,212,199,.18); }
@@ -1398,35 +1411,29 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
       <button class="dock-btn end" id="d-end" type="button" aria-label="Leave call" title="Leave call"><span class="ic"></span></button>
     </nav>
     <div id="fx-layer" aria-hidden="true"></div>
-  </section>
-
-  <!-- ============ Left ============ -->
-  <section id="left" class="view" hidden>
-    <div class="left-card">
-      <div class="brand" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span></div>
-      <h2>You left the call</h2>
-      <p class="muted" id="left-sub"></p>
-      <div class="left-actions">
-        <button class="btn btn-primary btn-lg" id="left-rejoin" type="button">Rejoin</button>
-        <button class="btn btn-lg" id="left-home" type="button">Return to home screen</button>
+    <!-- while you're the only one here: ringing a friend, or inviting people -->
+    <div class="alone-ov" id="alone-ov" hidden>
+      <div class="alone-ring" id="alone-ring" hidden>
+        <span class="alone-av av" id="alone-av"></span>
+        <div class="alone-t"><b id="alone-name">Ringing…</b><span class="alone-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        <p class="alone-note" id="alone-note"></p>
+        <button class="btn btn-sm alone-cancel" id="alone-cancel" type="button"><span data-ic="x"></span>Cancel</button>
+      </div>
+      <div class="alone-inv" id="alone-inv" hidden>
+        <p class="alone-sub" id="invite-sub">Nobody here yet. Ring a friend or share your link.</p>
+        <div class="alone-acts">
+          <button class="btn btn-sm" id="invite-ring" type="button"><span class="ic-bi" data-ic="phone"></span><span>Ring a friend</span></button>
+          <button class="btn btn-primary btn-sm" id="invite-copy" type="button"><span class="ic-bi" data-ic="link"></span><span>Copy link</span></button>
+          <button class="btn btn-sm" id="invite-share" type="button" hidden><span class="ic-bi" data-ic="share"></span><span>Share</span></button>
+        </div>
       </div>
     </div>
   </section>
+
 </div>
 
 <!-- Invite card shown while alone (moved into the grid by Layout) -->
 <div id="media-sink" aria-hidden="true">
-  <div class="invite-card" id="invite-card">
-    <div class="ic-in">
-      <div class="ic-title">Your call is ready</div>
-      <p class="ic-sub" id="invite-sub">Share this link with people you want in the call, or ring a friend. Up to 8 people can join.</p>
-      <div class="ic-actions">
-        <button class="btn btn-primary btn-sm" id="invite-copy" type="button"><span class="ic-bi" data-ic="link"></span><span>Copy link</span></button>
-        <button class="btn btn-sm" id="invite-ring" type="button"><span class="ic-bi" data-ic="phone"></span><span>Ring a friend</span></button>
-        <button class="btn btn-sm" id="invite-share" type="button" hidden><span class="ic-bi" data-ic="share"></span><span>Share</span></button>
-      </div>
-    </div>
-  </div>
   <video id="lens-src" muted playsinline autoplay></video>
   <canvas id="pip-compositor" width="960" height="540"></canvas>
   <video id="pip-composite-video" muted playsinline autoplay></video>
@@ -1434,33 +1441,15 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
 </div>
 
 <!-- ============ Audio popover ============ -->
-<div class="pop" id="pop-audio" role="dialog" aria-label="Studio audio" hidden>
-  <div class="pop-head"><span>Studio audio</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
+<div class="pop" id="pop-audio" role="dialog" aria-label="Sound" hidden>
+  <div class="pop-head"><span>Sound</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
+  <div class="pop-sub">Your mic</div>
+  <label class="switch"><span><span class="sw-label">Noise reduction</span><span class="sw-sub" id="ai-status">On-device AI removes fans, keyboards, traffic and TV hum.</span></span><input type="checkbox" id="ai-noise"><span class="track"></span></label>
+  <label class="switch"><span><span class="sw-label">Voice enhancement</span><span class="sw-sub">Warmth, clarity and even volume, tuned to your room automatically.</span></span><input type="checkbox" id="dsp-on"><span class="track"></span></label>
+  <div class="mic-meter" aria-hidden="true"><div class="gm-fill" id="gm-fill"></div></div>
+  <div class="field"><label for="pop-mic-sel">Microphone</label><select class="select" id="pop-mic-sel"></select></div>
   <div class="pop-sub">Friends' voices</div>
   <div id="voice-ctl-slot"></div>
-  <div class="pop-sub">Your mic</div>
-  <label class="switch"><span><span class="sw-label">AI noise removal</span><span class="sw-sub">Removes fans, keyboards, traffic and TV hum with a small on-device AI (RNNoise).</span></span><input type="checkbox" id="ai-noise"><span class="track"></span></label>
-  <label class="switch"><span><span class="sw-label">Auto-tune to my room</span><span class="sw-sub" id="ai-status">Listening to your room…</span></span><input type="checkbox" id="ai-auto"><span class="track"></span></label>
-  <label class="switch"><span><span class="sw-label">Studio DSP</span><span class="sw-sub">Rumble filter, presence EQ, compressor, noise gate</span></span><input type="checkbox" id="dsp-on"><span class="track"></span></label>
-  <div class="field">
-    <div class="row-between"><label for="dsp-gate">Noise gate threshold</label><span class="mono small" id="dsp-gate-val"></span></div>
-    <div class="gate-meter" aria-hidden="true"><div class="gm-fill" id="gm-fill"></div><div class="gm-thr" id="gm-thr"></div></div>
-    <input type="range" id="dsp-gate" min="-80" max="-20" step="1">
-    <p class="hint">Raise it until fan hum and clicks stop lighting the bar while you're quiet.</p>
-  </div>
-  <div class="field">
-    <div class="row-between"><label for="dsp-presence">Voice presence (3.2 kHz)</label><span class="mono small" id="dsp-presence-val"></span></div>
-    <input type="range" id="dsp-presence" min="0" max="8" step="0.5">
-  </div>
-  <label class="switch"><span class="sw-label">Rumble filter (85 Hz)</span><input type="checkbox" id="dsp-hpf"><span class="track"></span></label>
-  <label class="switch"><span class="sw-label">Compressor</span><input type="checkbox" id="dsp-comp"><span class="track"></span></label>
-  <details class="more">
-    <summary>Browser processing</summary>
-    <label class="switch"><span class="sw-label">Echo cancellation</span><input type="checkbox" id="hw-ec"><span class="track"></span></label>
-    <label class="switch"><span class="sw-label">Noise suppression</span><input type="checkbox" id="hw-ns"><span class="track"></span></label>
-    <label class="switch"><span class="sw-label">Auto gain</span><input type="checkbox" id="hw-agc"><span class="track"></span></label>
-  </details>
-  <div class="field"><label for="pop-mic-sel">Microphone</label><select class="select" id="pop-mic-sel"></select></div>
 </div>
 
 <!-- ============ Reactions popover ============ -->
@@ -1557,6 +1546,7 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
     <section class="set-group">
       <label class="switch srow" id="set-alerts-wrap" hidden><span class="sr-ic" style="--c:#FBBF24" data-ic="bell"></span><span class="sr-main"><span class="sw-label">Call alerts</span><span class="sw-sub" id="set-alerts-sub">Ring this device when a friend calls, even when Vortex is closed</span></span><input type="checkbox" id="set-alerts"><span class="track"></span></label>
       <label class="switch srow"><span class="sr-ic" style="--c:#EC4899" data-ic="eye"></span><span class="sr-main"><span class="sw-label">Show my camera while ringing</span><span class="sw-sub">Video only, until they pick up</span></span><input type="checkbox" id="set-ringpreview"><span class="track"></span></label>
+      <label class="switch srow"><span class="sr-ic" style="--c:#A78BFA" data-ic="moon"></span><span class="sr-main"><span class="sw-label">Do not disturb</span><span class="sw-sub">Friends who call get "busy"; you see a missed call</span></span><input type="checkbox" id="set-dnd"><span class="track"></span></label>
     </section>
 
     <div class="set-cap">Audio and video</div>
@@ -1565,12 +1555,12 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
       <div class="srow"><span class="sr-ic" style="--c:#22D3EE" data-ic="mic"></span><label class="sr-main" for="set-mic"><span class="sr-l">Microphone</span></label><select class="select sr-select" id="set-mic"></select></div>
       <div class="srow" id="set-spk-wrap"><span class="sr-ic" style="--c:#60A5FA" data-ic="speaker"></span><label class="sr-main" for="set-spk"><span class="sr-l">Speaker</span></label><select class="select sr-select" id="set-spk"></select></div>
       <label class="switch srow"><span class="sr-ic" style="--c:#34D399" data-ic="noise"></span><span class="sr-main"><span class="sw-label">Noise reduction</span><span class="sw-sub">On-device AI removes fans, keyboards and traffic</span></span><input type="checkbox" id="set-noise"><span class="track"></span></label>
-      <button class="srow srow-btn" id="set-studio" type="button"><span class="sr-ic" style="--c:#FB923C" data-ic="sliders"></span><span class="sr-main"><span class="sr-l">Studio audio</span><span class="sw-sub">Voice EQ, noise gate and compressor</span></span><span class="sr-chev" data-ic="chevRight"></span></button>
+      <button class="srow srow-btn" id="set-studio" type="button"><span class="sr-ic" style="--c:#FB923C" data-ic="sliders"></span><span class="sr-main"><span class="sr-l">Sound</span><span class="sw-sub">Voice enhancement and friends' voices</span></span><span class="sr-chev" data-ic="chevRight"></span></button>
     </section>
 
     <div class="set-cap">Watch together</div>
     <section class="set-group">
-      <button class="srow srow-btn" id="set-mkc" type="button"><span class="sr-ic mkc-ic" aria-hidden="true">MK</span><span class="sr-main"><span class="sr-l">MKCinema</span><span class="sw-sub" id="set-mkc-sub">Connect your account</span></span><span class="sr-chev" data-ic="chevRight"></span></button>
+      <button class="srow srow-btn" id="set-mkc" type="button"><span class="sr-ic mkc-ic" aria-hidden="true"></span><span class="sr-main"><span class="sr-l">MKCinema</span><span class="sw-sub" id="set-mkc-sub">Connect your account</span></span><span class="sr-chev" data-ic="chevRight"></span></button>
     </section>
 
     <div id="set-present">
@@ -1584,7 +1574,7 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
 
     <div class="set-cap">About</div>
     <section class="set-group">
-      <a class="srow srow-btn" href="/welcome.html" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#22D3EE" data-ic="upload"></span><span class="sr-main"><span class="sr-l">Get the apps</span><span class="sw-sub">Windows and Android</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
+      <a class="srow srow-btn" href="/welcome.html" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#22D3EE" data-ic="globe"></span><span class="sr-main"><span class="sr-l">Vortex website</span><span class="sw-sub">vortex-video.pages.dev</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
       <button class="srow srow-btn desk-only" id="set-keys" type="button"><span class="sr-ic" style="--c:#8B5CF6" data-ic="keyboard"></span><span class="sr-main"><span class="sr-l">Keyboard shortcuts</span></span><kbd class="sr-kbd">Ctrl K</kbd></button>
       <a class="srow srow-btn" href="https://github.com/itbelikethatbruh/vortex-video" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#F2F0FB" data-ic="github"></span><span class="sr-main"><span class="sr-l">Source code on GitHub</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
       <a class="srow srow-btn" href="https://github.com/itbelikethatbruh/vortex-video/issues" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#FB4F6E" data-ic="info"></span><span class="sr-main"><span class="sr-l">Report a problem</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
@@ -2171,6 +2161,9 @@ const PLAYER_COLORS = ['#22D3EE', '#34D399', '#FB4F6E', '#F5B83D', '#A78BFA', '#
    Every glyph has an outline plus a soft fill layer (class "d") that the theme
    tints (--duo) and active controls paint with the aurora gradient (#vx-ig).
    Static, trusted markup. */
+/* MKCinema's own mark (from mkcinema.pages.dev) and YouTube's official icon */
+const MKC_LOGO = '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mkPlatV" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".38" stop-color="#dcd9d1"/><stop offset=".56" stop-color="#8f8c86"/><stop offset=".76" stop-color="#efebe2"/><stop offset="1" stop-color="#a9a59d"/></linearGradient><linearGradient id="mkRingV" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6f3ec"/><stop offset=".5" stop-color="#6d6a65"/><stop offset="1" stop-color="#e8e3d8"/></linearGradient></defs><circle cx="60" cy="60" r="55" fill="#050505" stroke="url(#mkRingV)" stroke-width="3"/><path fill="url(#mkPlatV)" transform="translate(60 60) scale(.8)" d="M-36.5 -28L-34.1 -28L-34.1 28L-36.5 28ZM-36.5 -28L-28 -28L-12.2 28L-15.2 28ZM-0.8 -28L1.5 -28L-12.2 28L-15.2 28ZM-0.5 -28L8.1 -28L8.1 28L-0.5 28ZM30.8 -28L33.5 -28L8.1 5.2L8.1 1.5ZM11.7 -2.4L18.3 -6.8L39.1 28L29.9 28ZM-41.9 -28L-28 -28L-28 -26.9L-41.9 -26.9ZM-41.9 26.9L-28.7 26.9L-28.7 28L-41.9 28ZM-5.3 -28L13.1 -28L13.1 -26.9L-5.3 -26.9ZM-5.3 26.9L13.1 26.9L13.1 28L-5.3 28ZM25.7 -28L38.3 -28L38.3 -26.9L25.7 -26.9ZM26.1 26.9L42.7 26.9L42.7 28L26.1 28Z"/></svg>';
+const YT_LOGO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><path fill="#fff" d="M9.545 15.568V8.432L15.818 12z"/></svg>';
 const ICONS = (() => {
   const s = (d, extra = '') => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${d}</svg>`;
   const D = (shape) => shape.replace(/^<(\w+)/, '<$1 class="d" fill="currentColor" fill-opacity=".22" stroke="none"');
@@ -2253,6 +2246,7 @@ const ICONS = (() => {
     stats: s(D('<rect x="3" y="3.5" width="18" height="17" rx="3"/>') + '<rect x="3" y="3.5" width="18" height="17" rx="3"/><path d="M7.5 16v-3M12 16V8M16.5 16v-5.5"/>'),
     info: s('<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/>'),
     shield: s(D('<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/>') + '<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.75 12l2.25 2.25 4.25-4.5"/>'),
+    moon: s('<path d="M20.25 14.4A8.5 8.5 0 0 1 9.6 3.75a8.5 8.5 0 1 0 10.65 10.65z"/>'),
     globe: s('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.9 5.5 3.9 9s-1.3 6.5-3.9 9c-2.6-2.5-3.9-5.5-3.9-9S9.4 5.5 12 3z"/>'),
     bell: s(D('<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2H4.5z"/>') + '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2H4.5zM10 21h4"/>'),
     speaker: s(D('<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>') + '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/>'),
@@ -2309,6 +2303,7 @@ const SETTINGS_DEFAULTS = {
   autoPip: true,
   pipSelf: false,                  // Squad PiP: show yourself too (off = only the others, unless you're alone)
   ringPreview: true,               // the friend I ring sees my camera (video only) before answering
+  dnd: false,                      // silence incoming rings (callers get "busy", I get a missed call)
   shareHint: 'detail',          // 'detail' (text/UI clarity) | 'motion' (games/video)
   sfxVol: 0.55,
   sfxMuteOthers: false,
@@ -5472,24 +5467,22 @@ const Layout = {
   apply() {
     const main = $('#main');
     if (!main) return;
-    const flipEls = Cinema.on ? [] : [...Tiles.map.values()].map((x) => x.el).concat($('#invite-card') || []);
+    const flipEls = Cinema.on ? [] : [...Tiles.map.values()].map((x) => x.el);
     const before = Motion.snap(flipEls);
     this.applyNow();
     Motion.play(before, flipEls, { enter: true });
   },
   applyNow() {
     const main = $('#main');
-    const mode = this.mode(), keys = this.order();
+    const keys = this.order(), mode = keys.length <= 1 && !Stage.current() ? 'grid' : this.mode();
     main.dataset.layout = mode;
+    main.classList.toggle('alone', keys.length <= 1 && !Stage.current());
     const grid = $('#grid'), strip = $('#strip'), spot = $('#spot');
     const moved = [];
     const put = (parent, el) => { if (el.parentNode !== parent || parent.lastElementChild !== el) { parent.append(el); moved.push(el); } };
-    const invite = $('#invite-card');
     if (mode === 'grid') {
       for (const k of keys) put(grid, Tiles.map.get(k).el);
-      if (keys.length === 1) put(grid, invite); else if (invite.parentNode === grid) $('#media-sink').append(invite);
     } else {
-      if (invite.parentNode === grid) $('#media-sink').append(invite);
       let spotKey = null;
       if (mode === 'speaker') {
         spotKey = (this.pinned && Tiles.map.has(this.pinned)) ? this.pinned
@@ -5502,7 +5495,6 @@ const Layout = {
         if (k === spotKey) put(spot, el); else put(strip, el);
         el.classList.toggle('spot', k === spotKey);
       }
-      if (keys.length === 1 && mode === 'speaker') put(strip, invite);
     }
     if (mode !== 'speaker') for (const t of Tiles.map.values()) t.el.classList.remove('spot');
     for (const t of Tiles.map.values()) t.el.classList.toggle('pinned', this.pinned === t.key);
@@ -5664,13 +5656,15 @@ const Motion = {
     let i = 0;
     for (const c of el.children) {
       if (c.hidden || !c.getClientRects().length) continue;
-      c.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 560, delay: 70 * i++, easing: this.EASE, fill: 'backwards' });
+      for (const a of c.getAnimations()) a.cancel();        // a second pass never fights the first
+      c.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: Math.min(40 * i++, 240), easing: this.EASE, fill: 'backwards' });
     }
   },
   /* a whole view changes (home → call → left): soft zoom and fade */
   view(el) {
     if (!el || !this.ok()) return;
-    el.animate([{ opacity: 0, transform: 'scale(1.03)' }, { opacity: 1, transform: 'none' }], { duration: 460, easing: this.EASE });
+    for (const a of el.getAnimations()) a.cancel();
+    el.animate([{ opacity: 0, transform: 'scale(.985)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: this.EASE });
   },
   /* fade + slide out, then hide */
   hide(el, then) {
@@ -6882,7 +6876,9 @@ const Ring = {
     const f = Social.people.get(friendId);
     const name = f ? f.display_name : 'your friend';
     if (!App.inCall) {
-      const ok = await App.enter('start');
+      this.pending = { to: friendId, name, avatar: f ? Avatars.clean(f.avatar_url) : '' };
+      const ok = await App.enter('start', { ring: name });
+      this.pending = null;
       if (!ok) return;
     }
     const id = rid(10), tok = Net.makeInvite();
@@ -6892,19 +6888,20 @@ const Ring = {
     Push.send(friendId, { kind: 'ring', id, room: Net.room, tok });   // their closed apps and locked phones
     const stopTone = Sound.loop('ringback', 4000, 0.8);
     // long enough for a friend to unlock a phone from the call alert
-    const kill = toast(`Ringing ${name}…`, { action: { label: 'Cancel', fn: () => this.cancelOutgoing() }, ms: 41000 });
-    const timer = setTimeout(() => { if (this.out && this.out.id === id) { this.cancelOutgoing(); toast(`${name} didn't answer`); } }, 40000);
-    this.out = { id, to: friendId, name, stopTone, timer, kill };
+    const timer = setTimeout(() => { if (this.out && this.out.id === id) { this.cancelOutgoing(); toast(`${name} didn't answer`, { action: { label: 'Call again', fn: () => this.call(friendId) }, ms: 8000 }); } }, 40000);
+    this.out = { id, to: friendId, name, avatar: f ? Avatars.clean(f.avatar_url) : '', stopTone, timer };
     CallLog.friend(friendId);
+    App.renderAlone();
   },
   cancelOutgoing(silent) {
     const o = this.out;
     if (!o) return;
     this.out = null;
-    o.stopTone(); clearTimeout(o.timer); if (o.kill) o.kill();
+    o.stopTone(); clearTimeout(o.timer);
     this.endPreview(o);
     Push.send(o.to, { kind: 'end', id: o.id, reason: 'missed' });
     if (!silent) Social.sendTo(o.to, 'ring-cancel', { id: o.id }).catch(() => {});
+    App.renderAlone();
   },
   onReply(p) {
     const o = this.out;
@@ -6912,11 +6909,12 @@ const Ring = {
     if (p && p.late && this.joining && p.id === this.joining.id && p.from === this.joining.to) { toast(`${this.joining.name} changed their mind`); this.joining = null; return; }
     if (!p || !o || p.id !== o.id || p.from !== o.to) return;
     this.out = null;
-    o.stopTone(); clearTimeout(o.timer); if (o.kill) o.kill();
+    o.stopTone(); clearTimeout(o.timer);
     this.endPreview(o);
     Push.send(o.to, { kind: 'end', id: o.id, reason: p.ok ? 'answered' : p.busy ? 'missed' : 'declined' });   // clears their other devices
     if (p.ok) { toast(`${o.name} is joining…`); this.joining = { id: o.id, to: o.to, name: o.name }; }
     else toast(p.busy ? `${o.name} is busy` : `${o.name} declined`);
+    App.renderAlone();
   },
 
   onRing(p) {
@@ -6928,6 +6926,13 @@ const Ring = {
     if (this.seen.has(p.id)) return;                           // repeats of one ring
     this.seen.set(p.id, t);
     if (App.inCall && Net.room === room) return;               // already there
+    if (Settings.dnd) {                                        // do not disturb: they get busy, I get a missed call
+      const fq = Social.people.get(p.from) || {};
+      Social.sendTo(p.from, 'ring-reply', { id: p.id, ok: false, busy: true }).catch(() => {});
+      CallLog.missed(cleanName(fq.display_name || p.name), p.from);
+      App.renderHub();
+      return;
+    }
     if (this.inc) {
       if (this.inc.from === p.from) return;                    // same caller again
       if (t - (this.busyAt.get(p.from) || 0) > 10000) {        // at most one busy reply per caller per 10s
@@ -6941,7 +6946,7 @@ const Ring = {
     const tok = typeof p.tok === 'string' && /^[a-z0-9]{8,32}$/.test(p.tok) ? p.tok : '';
     AudioEngine.resume();
     const stopTone = Sound.loop('ringtone', 2600, 0.9);
-    const timer = setTimeout(() => { if (this.inc && this.inc.id === p.id) { this.dismissIncoming(); toast(`Missed call from ${name}`); CallLog.missed(name, p.from); } }, 40000);
+    const timer = setTimeout(() => { if (this.inc && this.inc.id === p.id) { this.dismissIncoming(); toast(`Missed call from ${name}`, { action: { label: 'Call back', fn: () => this.call(p.from) }, ms: 8000 }); CallLog.missed(name, p.from); } }, 40000);
     this.inc = { id: p.id, from: p.from, name, avatar: Avatars.clean(f.avatar_url), room, tok, stopTone, timer };
     IncomingCall.show(this.inc);
     if (window.vortexDesktop) window.vortexDesktop.ring(name);     // Windows app: notification + flashing taskbar
@@ -6956,7 +6961,7 @@ const Ring = {
     const i = this.inc;
     if (!p || !i || p.id !== i.id || p.from !== i.from) return;
     this.dismissIncoming();
-    toast(`Missed call from ${i.name}`);
+    toast(`Missed call from ${i.name}`, { action: { label: 'Call back', fn: () => this.call(i.from) }, ms: 8000 });
     CallLog.missed(i.name, i.from);
   },
   dismissIncoming() {
@@ -8518,11 +8523,11 @@ const Watch = {
     const form = h('form', { class: 'wt-link', autocomplete: 'off', onsubmit: (e) => { e.preventDefault(); this.loadLink(E.url.value); } },
       h('span', { class: 'wt-link-ic', svg: ICONS.link }), E.url, h('button', { class: 'btn btn-primary btn-sm', type: 'submit' }, 'Play'));
     E.dscOpen = h('button', { class: 'wt-src wt-src-mkc', type: 'button', onclick: () => Discover.open({ type: Discover.type === 'youtube' ? 'movie' : Discover.type }) },
-      h('span', { class: 'wt-src-art', 'aria-hidden': 'true' }, h('span', { class: 'mkc-chip big', text: 'MK' })),
+      h('span', { class: 'wt-src-art', 'aria-hidden': 'true' }, h('span', { class: 'mkc-chip big', svg: MKC_LOGO })),
       h('span', { class: 'wt-src-t' }, h('b', { text: 'Movies & shows' }), E.dscSub = h('span', { text: 'Powered by MKCinema' })),
       h('span', { class: 'wt-src-go', svg: ICONS.chevRight }));
     E.ytBrowse = h('button', { class: 'wt-src wt-src-yt', type: 'button', onclick: () => Discover.open({ type: 'youtube', home: true }) },
-      h('span', { class: 'wt-src-art', 'aria-hidden': 'true', svg: '<svg viewBox="0 0 28 20" width="34" height="24"><rect width="28" height="20" rx="6" fill="#FF0033"/><path d="M11 6l7.5 4-7.5 4z" fill="#fff"/></svg>' }),
+      h('span', { class: 'wt-src-art yt-art', 'aria-hidden': 'true', svg: YT_LOGO }),
       h('span', { class: 'wt-src-t' }, h('b', { text: 'YouTube' }), h('span', { text: 'Search, trending and music' })),
       h('span', { class: 'wt-src-go', svg: ICONS.chevRight }));
     E.mkcRow = h('div', { class: 'wt-mkcrow', hidden: true });
@@ -12167,7 +12172,7 @@ const Discover = {
     const a = MKC.acct();
     b.innerHTML = '';
     b.classList.toggle('signin', !a);
-    b.append(h('span', { class: 'mkc-chip', text: 'MK' }), h('span', { class: 'lbl', text: a ? 'Add-ons' : 'Connect MKCinema' }));
+    b.append(h('span', { class: 'mkc-chip', svg: MKC_LOGO }), h('span', { class: 'lbl', text: a ? 'Add-ons' : 'Connect MKCinema' }));
     b.title = a ? `Add-ons · MKCinema connected as ${a.email}` : 'Connect MKCinema to bring in your add-ons and watchlist';
     b.setAttribute('aria-label', a ? 'Add-ons' : 'Connect MKCinema');
   },
@@ -12186,7 +12191,7 @@ const Discover = {
     const E = Watch.els;
     for (const b of E.dscType.querySelectorAll('button')) b.setAttribute('aria-checked', String(b.dataset.v === this.type));
     const ph = this.type === 'youtube' ? 'Search YouTube' : 'Search movies and shows';
-    if (E.dscTitle) { E.dscTitle.innerHTML = ''; E.dscTitle.append(this.type === 'youtube' ? h('span', { class: 'yt-chip', 'aria-hidden': 'true' }) : h('span', { class: 'mkc-chip', text: 'MK' }), this.type === 'youtube' ? 'YouTube' : 'MKCinema'); }
+    if (E.dscTitle) { E.dscTitle.innerHTML = ''; E.dscTitle.append(this.type === 'youtube' ? h('span', { class: 'yt-chip', 'aria-hidden': 'true', svg: YT_LOGO }) : h('span', { class: 'mkc-chip', svg: MKC_LOGO }), this.type === 'youtube' ? 'YouTube' : 'MKCinema'); }
     E.dscQ.placeholder = ph; E.dscQ.setAttribute('aria-label', ph);
   },
   status(text, err) { const B = Watch.els.dscBody; B.innerHTML = ''; B.append(h('p', { class: 'dsc-msg' + (err ? ' err' : ''), text })); },
@@ -12233,7 +12238,7 @@ const Discover = {
     const box = h('div', { class: 'dsc-mkc' });
     if (!MKC.acct()) {
       box.append(h('div', { class: 'dsc-mkc-offer' },
-        h('span', { class: 'mkc-chip big', text: 'MK' }),
+        h('span', { class: 'mkc-chip big', svg: MKC_LOGO }),
         h('div', {}, h('b', { text: 'Connect MKCinema' }), h('span', { text: 'Your add-ons stream here, plus your watchlist and Continue watching.' })),
         h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => MKC.open() }, 'Connect')));
       return box;
@@ -12386,7 +12391,7 @@ const Discover = {
         h('h3', { text: M.name }),
         h('div', { class: 'dsc-sub', text: [M.year, M.runtime, M.genres.join(' · ')].filter(Boolean).join('  ·  ') }),
         M.desc ? h('p', { class: 'dsc-desc', text: M.desc }) : null,
-        h('a', { class: 'dsc-mkc-open', href: MKC.link(M.type, M.id), target: '_blank', rel: 'noopener', title: 'Open this title in MKCinema' }, h('span', { class: 'mkc-chip', text: 'MK' }), 'Open in MKCinema')));
+        h('a', { class: 'dsc-mkc-open', href: MKC.link(M.type, M.id), target: '_blank', rel: 'noopener', title: 'Open this title in MKCinema' }, h('span', { class: 'mkc-chip', svg: MKC_LOGO }), 'Open in MKCinema')));
     B.append(info);
     if (type === 'series' && M.videos.length) {
       const seasons = [...new Set(M.videos.map((v) => v.season))].sort((a, b) => (a === 0) - (b === 0) || a - b);
@@ -12487,7 +12492,7 @@ const Discover = {
     box.append(h('div', { class: 'dsc-empty' },
       h('p', { text: this.streamAddons().length ? `None of your add-ons offer streams for ${M.type === 'movie' ? 'movies' : 'shows'}.` : MKC.acct() ? 'Your MKCinema account has no stream add-ons that work on the web yet. Add one in MKCinema and tap Sync, or paste one here.' : 'Connect MKCinema to bring in your add-ons, or paste an add-on link.' }),
       h('div', { class: 'wt-row' },
-        MKC.acct() ? null : h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => MKC.open() }, h('span', { class: 'mkc-chip', text: 'MK' }), 'Connect MKCinema'),
+        MKC.acct() ? null : h('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => MKC.open() }, h('span', { class: 'mkc-chip', svg: MKC_LOGO }), 'Connect MKCinema'),
         h('button', { class: 'btn btn-sm' + (MKC.acct() ? ' btn-primary' : ''), type: 'button', onclick: () => this.showAddons() }, h('span', { svg: ICONS.plus }), 'Add an add-on'),
         h('a', { class: 'btn btn-sm btn-ghost', href: MKC.link(M.type, M.id), target: '_blank', rel: 'noopener' }, 'Open in MKCinema'))));
   },
@@ -12672,7 +12677,7 @@ const Discover = {
       acct.innerHTML = '';
       const a = MKC.acct();
       acct.append(h('div', { class: 'dsc-acct-row' },
-        h('span', { class: 'mkc-chip big', text: 'MK' }),
+        h('span', { class: 'mkc-chip big', svg: MKC_LOGO }),
         h('div', { class: 'dsc-addon-t' }, h('b', { text: 'MKCinema' }), h('span', { text: a ? `Connected as ${a.email}` : 'Bring in your add-ons, watchlist and Continue watching' })),
         h('button', { class: 'btn btn-sm' + (a ? '' : ' btn-primary'), type: 'button', onclick: () => MKC.open() }, a ? 'Manage' : 'Connect')));
     };
@@ -13351,7 +13356,7 @@ const Cmdk = {
       add('Start', 'Watch party', ICONS.film, () => $('#ha-watch').click(), { key: 'W', kw: 'movie mkcinema youtube' });
     }
     if (signed) {
-      for (const f of Social.friends()) add('Friends', `${inCall ? 'Add' : 'Call'} ${f.display_name}`, ICONS.phone, () => A.callFriend(f.id), { sub: (f.username ? '@' + f.username + ' · ' : '') + A.presLabel(f.presence), kw: f.username || '', person: f });
+      for (const f of Social.friends()) add('Friends', `${inCall ? 'Add' : 'Call'} ${f.display_name}`, ICONS.phone, () => A.callFriend(f.id), { sub: (f.username ? '@' + f.username : '') + (f.presence === 'in-call' ? ' · In a call' : ''), kw: f.username || '', person: f });
       add('Friends', 'Add a friend', ICONS.userPlus, () => A.openAddFriend(), { key: inCall ? '' : 'A' });
     }
     add('Go to', 'Friends', ICONS.users, () => Panels.open('drawer-friends'));
@@ -13491,6 +13496,7 @@ const App = {
     set('#hand-btn .hb-ic', ICONS.hand); set('#lens-flip .ic-flip', ICONS.flip);
     for (const el of $$('.logo-mark')) el.innerHTML = LOGO();
     for (const el of $$('[data-ic]')) if (ICONS[el.dataset.ic]) el.innerHTML = ICONS[el.dataset.ic];
+    for (const el of $$('.mkc-ic')) el.innerHTML = MKC_LOGO;
     set('#ic-decline', ICONS.phoneOff); set('#ic-audio', ICONS.phone); set('#ic-accept', ICONS.cam);
     for (const b of $$('[data-close]')) b.innerHTML = ICONS.x;
     if (!CAN_SHARE_SCREEN) $('#d-share').hidden = true;
@@ -13738,8 +13744,9 @@ const App = {
     const sub = $('#home-sub');
     sub.innerHTML = '';
     if (Account.signedIn) {
-      const fr = Social.friends(), on = fr.filter((f) => f.presence !== 'offline').length;
-      sub.append(h('span', { class: 'pdot ' + (on ? 'online' : 'offline') }), h('span', { text: fr.length ? `${on} of ${fr.length} friend${fr.length === 1 ? '' : 's'} online` : 'Add friends to call them in one tap' }));
+      const fr = Social.friends(), busy = fr.filter((f) => f.presence === 'in-call');
+      sub.append(h('span', { text: !fr.length ? 'Add friends to call them in one tap'
+        : busy.length === 1 ? `${busy[0].display_name} is in a call` : busy.length ? `${busy.length} friends are in calls` : `${fr.length} friend${fr.length === 1 ? '' : 's'} · tap one to call` }));
     } else sub.append(h('span', { text: Account.configured && Account.sb ? 'Sign in to start calls and see your friends' : 'Join a call with an invite link' }));
     const signed = Account.signedIn;
     $('#ha-new-t').textContent = signed ? 'New call' : 'Sign in';
@@ -13876,8 +13883,8 @@ const App = {
     AudioEngine.resume();
     this.enterMode = mode;
     const say = (m) => { this.status(m); JoinSheet.status(m); };
-    JoinSheet.open(mode === 'start' ? 'Starting your call…' : opts.label ? `Joining ${opts.label}…` : 'Joining the call…', () => this.enter(mode, opts));
-    say(mode === 'start' ? 'Starting your call…' : 'Joining the call…');
+    JoinSheet.open(opts.ring ? `Calling ${opts.ring}…` : mode === 'start' ? 'Starting your call…' : opts.label ? `Joining ${opts.label}…` : 'Joining the call…', () => this.enter(mode, opts));
+    say(opts.ring ? `Calling ${opts.ring}…` : mode === 'start' ? 'Starting your call…' : 'Joining the call…');
     try {
       await this.ensureMedia();
       if (mode === 'start') await Net.startNew(name);
@@ -13909,7 +13916,6 @@ const App = {
       await this.leave({ switching: true });
     }
     $('#call').hidden = true;
-    $('#left').hidden = true;
     $('#green').hidden = false;
     this.invited = room;
     this.greenMode('preview');
@@ -13923,7 +13929,6 @@ const App = {
   enterCall() {
     this.inCall = true; document.body.classList.add('vx-incall');
     $('#green').hidden = true;
-    $('#left').hidden = true;
     $('#call').hidden = false;
     $('#gr-video').srcObject = null;
     Panels.close();
@@ -13985,12 +13990,13 @@ const App = {
     Local.stopAll();
     $('#call').hidden = true;
     $('#toasts').innerHTML = '';
-    $('#left').hidden = false;
-    Motion.view($('#left .left-card'));
-    $('#left-sub').textContent = 'Rejoin with the same link, or go back to start a new call.';
-    const back = Account.signedIn ? Net.myLink : this.inviteTok;
-    $('#left-rejoin').onclick = () => { location.href = location.pathname + '?room=' + encodeURIComponent(room) + (back ? '&inv=' + back : ''); };   // not in a call any more: no leave prompt
-    $('#left-home').onclick = () => { location.href = location.pathname; };
+    // straight back to the home screen, in place (no reload, no "you left" stop)
+    this.invited = null; this.inviteTok = '';
+    $('#green').hidden = false;
+    this.greenMode('home');
+    this.renderStrip();
+    Motion.view($('#green'));
+    Sound.play('leave', 0.5);
     document.title = 'Vortex Video';
   },
   /* wipe per-squad UI so another squad can start in this page */
@@ -14011,6 +14017,29 @@ const App = {
     return tok ? location.href.split(/[?#]/)[0] + '?room=' + encodeURIComponent(Net.room || '') + '&inv=' + tok : '';
   },
   /* only signed-in members can hand out invites */
+  /* only you in the call: your camera fills the stage; on top, who you're ringing (with the
+     "they can see you" note) or the ways to bring people in */
+  renderAlone() {
+    const ov = $('#alone-ov');
+    if (!ov) return;
+    const alone = this.inCall && !Net.readyMembers().length;
+    ov.hidden = !alone;
+    if (!alone) return;
+    const o = Ring.out;
+    $('#alone-ring').hidden = !o;
+    $('#alone-inv').hidden = !!o;
+    if (o) {
+      if (this.aloneFor !== o.id) {
+        this.aloneFor = o.id;
+        Avatars.fill($('#alone-av'), o.name, o.avatar);
+        $('#alone-name').textContent = `Ringing ${o.name}`;
+        const note = $('#alone-note');
+        note.innerHTML = '';
+        const showing = Settings.ringPreview !== false && Local.camOn;
+        note.append(h('span', { svg: showing ? ICONS.eye : ICONS.camOff }), h('span', { text: showing ? `${o.name} can see your camera while it rings (no sound).` : `${o.name} will see you once they answer.` }));
+      }
+    } else this.aloneFor = null;
+  },
   renderInvite() {
     const m = Account.signedIn;
     $('#room-pill').hidden = !m;
@@ -14018,7 +14047,8 @@ const App = {
     $('#invite-copy').hidden = !m;
     $('#invite-ring').hidden = !m;
     $('#invite-share').hidden = !m || !navigator.share;
-    $('#invite-sub').textContent = m ? 'Share this link with people you want in the call, or ring a friend. Up to 8 people can join.' : 'Only signed-in members can invite people. Ask whoever invited you.';
+    $('#invite-sub').textContent = m ? 'Nobody here yet. Ring a friend or share your link. Up to 8 people can join.' : 'Waiting for others. Only signed-in members can invite people.';
+    this.renderAlone();
   },
   async copyInvite() {
     if (!Account.signedIn) { toast('Only signed-in members can invite people.'); return; }
@@ -14065,6 +14095,7 @@ const App = {
     $('#invite-copy').onclick = () => this.copyInvite();
     $('#invite-share').onclick = () => this.shareInvite();
     $('#invite-ring').onclick = () => { if (Account.signedIn) Panels.open('drawer-friends'); else this.accountAction(); };
+    $('#alone-cancel').onclick = () => Ring.cancelOutgoing();
     $('#lock-pill').onclick = () => { if (Net.amLeader()) Net.setLocked(false); };
     $('#tb-layout').onclick = (e) => { this.renderLayoutMenu(); Panels.toggle('pop-layout', e.currentTarget); };
     $('#tb-chat').onclick = () => Panels.toggle('drawer-chat');
@@ -14109,7 +14140,8 @@ const App = {
   renderCallId() {
     if (!this.inCall) return;
     const ms = Net.readyMembers();
-    const t = !ms.length ? (Ring.out ? `Calling ${Ring.out.name}…` : 'Waiting for others')
+    this.renderAlone();
+    const t = !ms.length ? (Ring.out ? `Ringing ${Ring.out.name}` : 'Your call')
       : ms.length === 1 ? ms[0].name : ms.length === 2 ? `${ms[0].name} & ${ms[1].name}` : `${ms[0].name}, ${ms[1].name} +${ms.length - 2}`;
     const ti = $('#call-title');
     if (ti.textContent !== t) ti.textContent = t;
@@ -14268,7 +14300,7 @@ const App = {
     $('#ic-decline').onclick = () => Ring.decline();
   },
 
-  presLabel(p) { return p === 'in-call' ? 'In a call' : p === 'online' ? 'Online' : 'Offline'; },
+  presLabel(p) { return p === 'in-call' ? 'In a call' : ''; },
   callFriend(id) {
     if (IS_NARROW() && Panels.drawer === 'drawer-friends') Panels.close('drawer');
     Ring.call(id).catch((e) => toast(e.message || 'Call failed', { type: 'error' }));
@@ -14284,11 +14316,11 @@ const App = {
   friendRow(p, actions, presence) {
     const av = avFill(h('span', { class: 'av' }), p.display_name, p.avatar_url);
     return h('div', { class: 'frow' },
-      h('span', { class: 'fav' }, av, presence ? h('span', { class: 'pdot ' + presence, title: this.presLabel(presence) }) : null),
+      h('span', { class: 'fav' }, av, presence === 'in-call' ? h('span', { class: 'pdot in-call', title: 'In a call' }) : null),
       h('div', { class: 'frow-main' },
         h('div', { class: 'frow-name', text: p.display_name }),
         h('div', { class: 'frow-sub' }, p.username ? h('span', { class: 'mono', text: '@' + p.username }) : null,
-          presence ? h('span', { class: 'pres-' + presence, text: '· ' + this.presLabel(presence) }) : null)),
+          presence === 'in-call' ? h('span', { class: 'pres-in-call', text: '· In a call' }) : null)),
       h('div', { class: 'frow-act' }, actions));
   },
   async act(fn, okMsg) {
@@ -14321,7 +14353,7 @@ const App = {
     const list = $('#flist');
     list.innerHTML = '';
     const fq = $('#ffilter').value.trim().toLowerCase().replace(/^@/, '');
-    const rank = { 'in-call': 0, online: 1, offline: 2 };
+    const rank = { 'in-call': 0 };
     const shown = fr.filter((f) => !fq || String(f.display_name).toLowerCase().includes(fq) || String(f.username || '').includes(fq))
       .sort((x, y) => (rank[x.presence] ?? 2) - (rank[y.presence] ?? 2) || String(x.display_name).localeCompare(y.display_name));
     $('#flist-title').textContent = fr.length ? `Friends · ${fr.length}` : 'Friends';
@@ -14391,15 +14423,14 @@ const App = {
       this.renderHub();
       return;
     }
-    const rank = { 'in-call': 0, online: 1, offline: 2 };
-    const fr = Social.friends().slice().sort((x, y) => (rank[x.presence] ?? 2) - (rank[y.presence] ?? 2) || String(x.display_name).localeCompare(y.display_name));
-    const on = fr.filter((f) => f.presence !== 'offline').length;
-    lab.textContent = on ? `Friends · ${on} online` : 'Friends';
+    const fr = Social.friends().slice().sort((x, y) => (x.presence === 'in-call' ? 0 : 1) - (y.presence === 'in-call' ? 0 : 1) || String(x.display_name).localeCompare(y.display_name));
+    lab.textContent = 'Friends';
     for (const f of fr.slice(0, 11)) {
-      strip.append(h('button', { class: 'hf' + (f.presence === 'offline' ? ' away' : ''), type: 'button', title: `Call ${f.display_name} (${this.presLabel(f.presence)})`, 'aria-label': `Call ${f.display_name}, ${this.presLabel(f.presence)}`, onclick: () => this.callFriend(f.id) },
-        h('span', { class: 'fav' }, avFill(h('span', { class: 'av' }), f.display_name, f.avatar_url), h('span', { class: 'pdot ' + f.presence }), h('span', { class: 'hf-call', svg: ICONS.cam })),
+      const busy = f.presence === 'in-call';
+      strip.append(h('button', { class: 'hf', type: 'button', title: `Call ${f.display_name}`, 'aria-label': `Call ${f.display_name}${busy ? ', in a call' : ''}`, onclick: () => this.callFriend(f.id) },
+        h('span', { class: 'fav' }, avFill(h('span', { class: 'av' }), f.display_name, f.avatar_url), busy ? h('span', { class: 'pdot in-call' }) : null, h('span', { class: 'hf-call', svg: ICONS.cam })),
         h('span', { class: 'fn', text: f.display_name }),
-        h('span', { class: 'fs', text: this.presLabel(f.presence) })));
+        h('span', { class: 'fs', text: busy ? 'In a call' : f.username ? '@' + f.username : '' })));
     }
     strip.append(h('button', { class: 'hf add', type: 'button', onclick: () => this.openAddFriend() },
       h('span', { class: 'fav' }, h('span', { class: 'av', svg: ICONS.userPlus })),
@@ -14450,41 +14481,18 @@ const App = {
       if (el.contains(e.target) || (Panels.anchor && Panels.anchor.contains(e.target))) return;
       Panels.close('pop');
     }, true);
-    // audio popover
-    const on = $('#dsp-on'), gate = $('#dsp-gate'), pres = $('#dsp-presence');
+    // sound popover: noise reduction + voice enhancement (everything else tunes itself)
+    const on = $('#dsp-on');
     const sync = () => {
-      const d = Settings.dsp;
-      on.checked = d.on; gate.value = d.gate; pres.value = d.presence;
-      $('#dsp-hpf').checked = d.hpf; $('#dsp-comp').checked = d.comp;
-      $('#hw-ec').checked = d.ec; $('#hw-ns').checked = d.ns; $('#hw-agc').checked = d.agc;
-      const autoGate = NoiseAI.auto() && NoiseAI.gate != null;
-      $('#dsp-gate-val').textContent = autoGate ? `Auto · ${NoiseAI.gate} dB` : `${d.gate} dB`;
+      on.checked = Settings.dsp.on;
       $('#ai-noise').checked = Settings.aiNoise !== false;
-      $('#ai-auto').checked = Settings.aiAuto !== false;
-      $('#ai-auto').disabled = Settings.aiNoise === false || NoiseAI.state === 'failed';
-      $('#ai-status').textContent = Settings.aiNoise === false ? 'Turn on AI noise removal to use this.' : NoiseAI.label();
-      $('#dsp-presence-val').textContent = `+${d.presence} dB`;
-      gate.style.setProperty('--p', ((d.gate + 80) / 60) * 100 + '%');
-      pres.style.setProperty('--p', (d.presence / 8) * 100 + '%');
-      $('#gm-thr').style.left = ((d.gate + 80) / 70) * 100 + '%';
-      for (const el of [gate, pres, $('#dsp-hpf'), $('#dsp-comp')]) el.disabled = !d.on;
-      gate.disabled = !d.on || autoGate;
+      $('#ai-status').textContent = Settings.aiNoise === false ? 'On-device AI removes fans, keyboards, traffic and TV hum.' : NoiseAI.label();
     };
     this.syncDsp = sync;
     on.onchange = () => { Settings.dsp.on = on.checked; AudioEngine.applySettings(); AudioEngine.rewire(); saveSettings(); sync(); Chrome.updateDock(); };
-    gate.oninput = () => { Settings.dsp.gate = +gate.value; AudioEngine.applySettings(); sync(); };
-    gate.onchange = saveSettings;
-    pres.oninput = () => { Settings.dsp.presence = +pres.value; AudioEngine.applySettings(); sync(); };
-    pres.onchange = saveSettings;
-    $('#dsp-hpf').onchange = (e) => { Settings.dsp.hpf = e.target.checked; AudioEngine.applySettings(); saveSettings(); };
-    $('#dsp-comp').onchange = (e) => { Settings.dsp.comp = e.target.checked; AudioEngine.applySettings(); saveSettings(); };
-    for (const [id, k] of [['hw-ec', 'ec'], ['hw-ns', 'ns'], ['hw-agc', 'agc']]) {
-      $('#' + id).onchange = (e) => { Settings.dsp[k] = e.target.checked; saveSettings(); Local.switchMic(null); };
-    }
     $('#pop-mic-sel').onchange = (e) => Local.switchMic(e.target.value);
     $('#voice-ctl-slot').append(VoiceMix.controls('studio'));
     $('#ai-noise').onchange = (e) => { NoiseAI.set('aiNoise', e.target.checked); sync(); };
-    $('#ai-auto').onchange = (e) => { NoiseAI.set('aiAuto', e.target.checked); sync(); };
     Bus.on('noise:state', () => { if (Panels.isOpen('pop-audio')) sync(); Chrome.updateDock(); });
     sync();
     // lens drawer
@@ -14511,6 +14519,7 @@ const App = {
     $('#set-autopip').onchange = (e) => { Settings.autoPip = e.target.checked; saveSettings(); this.setAutoPip(); };
     $('#set-pipself').onchange = (e) => { Settings.pipSelf = e.target.checked; saveSettings(); SquadPiP.refresh(); };
     $('#set-ringpreview').onchange = (e) => { Settings.ringPreview = e.target.checked; saveSettings(); };
+    $('#set-dnd').onchange = (e) => { Settings.dnd = e.target.checked; saveSettings(); toast(Settings.dnd ? 'Do not disturb is on: calls show up as missed.' : 'Do not disturb is off.'); };
     $('#set-alerts').onchange = async (e) => {
       const want = e.target.checked;
       try {
@@ -14556,6 +14565,7 @@ const App = {
     $('#set-autopip').checked = Settings.autoPip;
     $('#set-pipself').checked = Settings.pipSelf === true;
     $('#set-ringpreview').checked = Settings.ringPreview !== false;
+    $('#set-dnd').checked = !!Settings.dnd;
     this.renderAlerts();
     $('#set-hint').value = Settings.shareHint;
     $('#set-noise').checked = Settings.aiNoise !== false;
@@ -14610,7 +14620,7 @@ const App = {
     Bus.on('local:state', () => { Chrome.updateDock(); Tiles.updateSelf(); this.updateGreen(); SquadPiP.refresh(); Background.sync(); });
     Bus.on('local:devices', () => { this.fillDevices(); this.updateGreen(); });
     Bus.on('vad:dominant', () => { if (Settings.layout === 'stage' && !Layout.pinned && !Stage.current()) Layout.apply(); });
-    Bus.on('roster', () => { Chrome.updateDock(); Background.sync(); this.renderCallId(); if (Panels.isOpen('drawer-people')) this.renderPeople(); });
+    Bus.on('roster', () => { Chrome.updateDock(); Background.sync(); this.renderCallId(); this.renderAlone(); if (Panels.isOpen('drawer-people')) this.renderPeople(); });
     Bus.on('lock', () => Chrome.updateDock());
     Bus.on('captions', () => Chrome.updateDock());
     Bus.on('net:sig', (ok) => { const p = $('#sig-pill'); if (p) p.hidden = ok || !this.inCall; });
@@ -14669,8 +14679,7 @@ const App = {
     if (Panels.isOpen('pop-audio')) {
       const lvl = clamp((AudioEngine.levelDb + 80) / 70, 0, 1);
       const f = $('#gm-fill');
-      f.style.width = (lvl * 100).toFixed(1) + '%';
-      f.classList.toggle('closed', Settings.dsp.on && !AudioEngine.gateOpen);
+      if (f) { f.style.width = (lvl * 100).toFixed(1) + '%'; f.classList.toggle('closed', Settings.dsp.on && !AudioEngine.gateOpen); }
     }
     // "you're muted" nudge
     if (this.inCall && !Local.micOn && Local.micStream && AudioEngine.levelDb > Settings.dsp.gate + 8 && !PTT.engaged) {
