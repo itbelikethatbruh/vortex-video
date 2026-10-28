@@ -9,3 +9,5 @@ android/keystore.properties
 # misc
 node_modules/
 .DS_Store
+desktop/node_modules/
+desktop/dist/

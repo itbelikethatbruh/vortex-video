@@ -1,0 +1,66 @@
+name: Windows app
+
+# Builds the Windows installer (Electron, desktop/) and publishes it as a GitHub release.
+# Run it from the Actions tab, or push a tag like desktop-v2.0.0-beta.1.
+# Optional: add a VT_API_KEY repository secret (free VirusTotal account → API key) and the
+# installer is also uploaded to VirusTotal for a public scan report.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['desktop-v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build installer
+        working-directory: desktop
+        run: |
+          npm install --no-audit --no-fund
+          npx electron-builder --win nsis --publish never
+      - name: Checksums
+        id: sum
+        shell: bash
+        run: |
+          cd desktop/dist
+          ls -la
+          SHA=$(sha256sum Vortex-Video-Setup.exe | cut -d' ' -f1)
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "$SHA  Vortex-Video-Setup.exe" > SHA256SUMS.txt
+          VER=$(node -p "require('../package.json').version")
+          echo "ver=$VER" >> "$GITHUB_OUTPUT"
+      - name: Upload to VirusTotal (only when the VT_API_KEY secret exists)
+        id: vt
+        shell: bash
+        env:
+          VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        run: |
+          if [ -z "$VT_API_KEY" ]; then echo "No VT_API_KEY secret; skipping."; exit 0; fi
+          URL=$(curl -s -H "x-apikey: $VT_API_KEY" https://www.virustotal.com/api/v3/files/upload_url | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>console.log(JSON.parse(d).data))")
+          curl -s -H "x-apikey: $VT_API_KEY" -F "file=@desktop/dist/Vortex-Video-Setup.exe" "$URL" > /dev/null
+          echo "VirusTotal: https://www.virustotal.com/gui/file/${{ steps.sum.outputs.sha }}"
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('desktop-v{0}', steps.sum.outputs.ver) }}
+          name: Vortex Video for Windows ${{ steps.sum.outputs.ver }}
+          make_latest: true
+          files: |
+            desktop/dist/Vortex-Video-Setup.exe
+            desktop/dist/SHA256SUMS.txt
+          body: |
+            **Download:** `Vortex-Video-Setup.exe` below (Windows 10 and 11, 64-bit).
+
+            The installer isn't code-signed yet, so Windows SmartScreen may say "Windows protected your PC". Click **More info → Run anyway**.
+
+            SHA-256: `${{ steps.sum.outputs.sha }}`
+            VirusTotal: https://www.virustotal.com/gui/file/${{ steps.sum.outputs.sha }}
+
+            Android app: https://vortex-video.pages.dev/download/android

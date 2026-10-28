@@ -1,0 +1,36 @@
+{
+  "name": "vortex-video-desktop",
+  "productName": "Vortex Video",
+  "version": "2.0.0-beta.1",
+  "description": "Vortex Video for Windows: HD video calls with your friends.",
+  "homepage": "https://vortex-video.pages.dev",
+  "author": "Vortex Video",
+  "license": "MIT",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --publish never"
+  },
+  "devDependencies": {
+    "electron": "44.7.1",
+    "electron-builder": "26.17.0"
+  },
+  "build": {
+    "appId": "dev.pages.vortex_video.desktop",
+    "productName": "Vortex Video",
+    "copyright": "Vortex Video",
+    "files": ["main.js", "preload.js", "build/icon.png"],
+    "directories": { "output": "dist", "buildResources": "build" },
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "icon": "build/icon.png" },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Vortex Video",
+      "artifactName": "Vortex-Video-Setup.exe"
+    }
+  }
+}

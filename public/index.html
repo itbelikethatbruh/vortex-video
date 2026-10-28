@@ -6877,6 +6877,7 @@ const Ring = {
     const timer = setTimeout(() => { if (this.inc && this.inc.id === p.id) { this.dismissIncoming(); toast(`Missed call from ${name}`); CallLog.missed(name, p.from); } }, 40000);
     this.inc = { id: p.id, from: p.from, name, avatar: Avatars.clean(f.avatar_url), room, tok, stopTone, timer };
     IncomingCall.show(this.inc);
+    if (window.vortexDesktop) window.vortexDesktop.ring(name);     // Windows app: notification + flashing taskbar
     BackGuard.sync();
     RingPreview.start(this.inc);
     if (navigator.vibrate) {                              // phones: buzz along with the ringtone
@@ -6899,6 +6900,7 @@ const Ring = {
     if (i.vib) { clearInterval(i.vib); try { navigator.vibrate(0); } catch { /* */ } }
     RingPreview.stop();
     IncomingCall.hide();
+    if (window.vortexDesktop) window.vortexDesktop.stopRing();
   },
   /* A call alert was tapped (the app may have just been opened by it): show the ringing card,
      with the caller's live camera, or go straight to "Ready to join?" when Answer was tapped. */
