@@ -636,10 +636,6 @@ details.more[open] summary { margin-bottom: 6px; }
 .knock-sub { font-size: 12px; color: var(--amber); }
 
 /* ---------- premium accents ---------- */
-.gr-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
-.gr-feat { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 6px 12px; border-radius: 18px; font-size: 12px; font-weight: 600; color: var(--muted); text-align: center; background: radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--fc) 14%, transparent), transparent 70%), var(--surface-2); border: 1px solid color-mix(in srgb, var(--fc) 22%, transparent); }
-.gf-ic { width: 38px; height: 38px; border-radius: 13px; display: grid; place-items: center; color: var(--fc); background: color-mix(in srgb, var(--fc) 16%, transparent); box-shadow: 0 0 22px -8px var(--fc); }
-.gf-ic svg { width: 20px; height: 20px; }
 .drawer-head { position: relative; }
 .drawer-head::after { content: ''; position: absolute; left: 18px; right: 18px; bottom: -1px; height: 1px; background: var(--grad-h); opacity: .55; }
 .sec-title { display: flex; align-items: center; gap: 8px; }
@@ -755,6 +751,267 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
   .more-item { font-size: 11px; padding: 10px 2px 8px; }
 }
 
+/* =====================================================================
+   2026-10 redesign: Meet × Zoom × FaceTime, same Aurora Prism colors
+   ===================================================================== */
+.beta-badge { align-self: flex-start; margin: -4px 0 0 -3px; padding: 2px 6px 1.5px; border-radius: 6px; font: 750 9px/1.25 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #0B0814; background: var(--grad); box-shadow: 0 0 16px -3px rgba(139,92,246,.9); -webkit-text-fill-color: #0B0814; }
+.brand.small .beta-badge { font-size: 8px; padding: 1px 5px; margin-left: 3px; }
+
+/* home: no camera, a hero plus your people */
+#green { isolation: isolate; }
+#green::before { content: ''; position: fixed; inset: -20% -10% auto; height: 90vh; z-index: -1; pointer-events: none; opacity: .9;
+  background: radial-gradient(40% 50% at 18% 30%, rgba(34,211,238,.16), transparent 70%), radial-gradient(38% 46% at 62% 18%, rgba(139,92,246,.18), transparent 70%), radial-gradient(34% 40% at 88% 46%, rgba(236,72,153,.13), transparent 70%);
+  filter: blur(10px); animation: aurora 18s ease-in-out infinite alternate; }
+@keyframes aurora { to { transform: translate3d(-3%, 4%, 0) rotate(4deg) scale(1.06); } }
+#green[data-mode="home"] .gr-preview { display: none; }
+#green[data-mode="preview"] .gr-hub { display: none; }
+#green[data-mode="home"] .gr-body { grid-template-columns: minmax(0, 1.05fr) minmax(320px, 1fr); gap: 56px; }
+#green[data-mode="home"] .gr-title { font-size: clamp(36px, 5vw, 64px); line-height: 1.02; letter-spacing: -0.045em; }
+#green[data-mode="home"] .gr-lede { font-size: 16.5px; max-width: 40ch; }
+#green[data-mode="home"] .gr-joinas { display: none; }
+.gr-perks { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 13px; }
+.gr-perks li { display: inline-flex; align-items: center; gap: 7px; }
+.gr-perks span, .gr-perks svg { width: 16px; height: 16px; display: block; color: var(--cyan); }
+.gr-perks li:nth-child(2) span { color: var(--magenta); } .gr-perks li:nth-child(3) span { color: var(--amber); } .gr-perks li:nth-child(4) span { color: var(--mint); }
+#green[data-mode="preview"] .gr-perks { display: none; }
+.gr-back { appearance: none; border: 0; background: transparent; color: var(--muted); display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px 6px 4px; margin: -6px 0 -4px -4px; border-radius: var(--pill); font: 600 13px var(--sans); cursor: pointer; align-self: flex-start; transition: color .2s, background .2s; }
+.gr-back:hover { color: var(--text); background: rgba(255,255,255,.05); }
+.gr-back[hidden] { display: none; }
+.gb-ic, .gb-ic svg { width: 18px; height: 18px; display: block; }
+.gr-hub { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.hub-card { border-radius: 24px; padding: 16px 16px 12px; background: linear-gradient(180deg, rgba(29,25,48,.78), rgba(16,13,27,.78)); border: 1px solid var(--hair); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); box-shadow: 0 30px 70px -40px rgba(139,92,246,.45); }
+.hub-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 2px 10px; }
+.hub-h .label { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.hub-h .link-btn[hidden] { display: none; }
+.hub-friends { display: grid; grid-template-columns: repeat(auto-fill, minmax(82px, 1fr)); gap: 4px; }
+.hf { appearance: none; border: 0; background: transparent; color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 8px; border-radius: 18px; cursor: pointer; min-width: 0; transition: background .25s, transform .3s var(--spring); }
+.hf:hover { background: rgba(255,255,255,.045); transform: translateY(-2px); }
+.hf:active { transform: scale(.96); }
+.hf .fav { position: relative; margin-bottom: 4px; }
+.hf .av { width: 58px; height: 58px; font-size: 20px; border-width: 1.5px; transition: border-color .25s, box-shadow .25s; }
+.hf:hover .av { border-color: var(--cyan); box-shadow: 0 0 22px -6px var(--cyan); }
+.hf.away .av { border-color: rgba(255,255,255,.14); }
+.hf.add .av { color: var(--cyan); border-style: dashed; background: transparent; }
+.hf.add .av svg { width: 22px; height: 22px; }
+.hf .pdot { border-color: #141120; }
+.hf-call { position: absolute; left: -3px; top: -3px; width: 22px; height: 22px; border-radius: 50%; background: var(--grad); color: #fff; display: grid; place-items: center; opacity: 0; transform: scale(.6); transition: opacity .2s, transform .3s var(--spring); box-shadow: 0 4px 12px -2px rgba(139,92,246,.8); }
+.hf-call svg { width: 12px; height: 12px; }
+.hf:hover .hf-call, .hf:focus-visible .hf-call { opacity: 1; transform: none; }
+@media (hover: none) { .hf-call { display: none; } }
+.hf .fn { font-size: 12.5px; font-weight: 600; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hf .fs { font-size: 11px; color: var(--faint); }
+.hub-empty { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 2px 4px 8px; color: var(--muted); font-size: 13.5px; }
+.hub-recents { display: flex; flex-direction: column; }
+.rc { display: flex; align-items: center; gap: 12px; padding: 9px 4px; }
+.rc + .rc { border-top: 1px solid var(--hair); }
+.rc .av { width: 42px; height: 42px; font-size: 15px; border-width: 1px; flex: none; }
+.rc-main { flex: 1; min-width: 0; }
+.rc-name { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rc-sub { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; }
+.rc-sub > span:first-child, .rc-sub svg { width: 14px; height: 14px; flex: none; display: block; }
+.rc-sub > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.rc.missed .rc-name, .rc.missed .rc-sub > span:first-child { color: var(--coral); }
+.rc-btn { appearance: none; border: 0; width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgba(34,211,238,.1); color: var(--cyan); cursor: pointer; box-shadow: inset 0 0 0 1px rgba(34,211,238,.28); transition: background .2s, transform .2s var(--spring); }
+.rc-btn:hover { background: rgba(34,211,238,.2); }
+.rc-btn:active { transform: scale(.92); }
+.rc-btn svg { width: 18px; height: 18px; }
+@media (max-width: 900px) {
+  #green[data-mode="home"] .gr-body { grid-template-columns: 1fr; gap: 22px; }
+  #green[data-mode="home"] .gr-title { font-size: clamp(34px, 9vw, 46px); }
+}
+@media (max-width: 520px) {
+  #green[data-mode="home"] .gr-lede { font-size: 15px; }
+  .hub-card { padding: 14px 12px 10px; border-radius: 22px; }
+  .hub-friends { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .hf .av { width: 54px; height: 54px; }
+}
+
+/* call: top bar like Meet/Zoom mobile — who + timer, then people · chat · layout */
+.call-id { display: flex; flex-direction: column; justify-content: center; min-width: 0; line-height: 1.2; padding: 0 6px; }
+.ci-title { font-weight: 650; font-size: 15px; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: min(32vw, 320px); }
+.ci-sub { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.ci-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); animation: cidot 2.4s ease-in-out infinite; }
+@keyframes cidot { 50% { opacity: .35; } }
+.ci-q { color: var(--amber); font-weight: 600; }
+.ci-q[hidden] { display: none; }
+#call-id:has(.ci-q:not([hidden])) .ci-dot { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+.tb-btn { appearance: none; position: relative; height: 40px; min-width: 40px; padding: 0 10px; border-radius: var(--pill); border: 0; background: rgba(255,255,255,.06); color: var(--text); display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; flex: none; transition: background .2s, transform .25s var(--spring); }
+.tb-btn:hover { background: rgba(255,255,255,.11); }
+.tb-btn:active { transform: scale(.92); }
+.tb-btn svg { width: 20px; height: 20px; display: block; }
+.tb-btn > span:not(.badge) { display: inline-flex; }
+.tb-btn[aria-expanded="true"] { background: var(--grad-soft); box-shadow: inset 0 0 0 1px rgba(196,181,253,.35); }
+.tb-count { font-size: 13px; font-weight: 600; }
+.tb-btn .badge { position: absolute; top: -3px; right: -3px; background: var(--coral); color: #fff; }
+@media (min-width: 721px) { #tb-chat { display: none; } }
+#main.spotlight #strip { display: none !important; }
+
+/* layout menu */
+.pop-layout { width: 320px; gap: 8px; }
+.lay-list { display: flex; flex-direction: column; gap: 4px; }
+.lay-opt { appearance: none; border: 0; background: transparent; color: var(--text); display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 16px; cursor: pointer; text-align: left; font: inherit; transition: background .2s; }
+.lay-opt:hover { background: rgba(255,255,255,.05); }
+.lay-opt.on { background: var(--grad-soft); box-shadow: inset 0 0 0 1px rgba(196,181,253,.3); }
+.lo-ic { width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; background: var(--surface-3); flex: none; color: var(--cyan); }
+.lay-opt.on .lo-ic { background: var(--grad); color: #fff; }
+.lo-ic svg { width: 22px; height: 22px; }
+.lo-t { flex: 1; display: flex; flex-direction: column; min-width: 0; gap: 1px; }
+.lo-t b { font-size: 14px; font-weight: 650; }
+.lo-t span { font-size: 12px; color: var(--muted); }
+.lo-check { width: 18px; height: 18px; color: var(--cyan); opacity: 0; transition: opacity .2s; flex: none; }
+.lo-check svg { width: 18px; height: 18px; }
+.lay-opt.on .lo-check { opacity: 1; }
+
+/* ⋮ more: emoji row + list */
+.pop-more { width: 360px; padding: 10px; gap: 8px; }
+.sheet-grip { display: none; }
+.pop.sheet .sheet-grip { display: block; width: 40px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.22); margin: 2px auto 2px; }
+.more-emoji { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 2px; padding: 4px; border-radius: 18px; background: rgba(255,255,255,.045); }
+.more-emoji button { appearance: none; border: 0; background: transparent; aspect-ratio: 1; min-width: 0; border-radius: 12px; font-size: 24px; line-height: 1; cursor: pointer; display: grid; place-items: center; color: var(--muted); transition: transform .25s var(--spring), background .2s; }
+.more-emoji button:hover { background: rgba(255,255,255,.08); transform: translateY(-2px) scale(1.14); }
+.more-emoji button:active { transform: scale(.9); }
+.more-emoji .em-more svg { width: 20px; height: 20px; }
+.more-list { display: flex; flex-direction: column; }
+.ml-item { appearance: none; border: 0; background: transparent; color: var(--text); display: flex; align-items: center; gap: 14px; padding: 9px 10px; border-radius: 14px; font: 500 14.5px var(--sans); text-align: left; cursor: pointer; transition: background .15s; }
+.ml-item:hover:not(:disabled) { background: rgba(255,255,255,.055); }
+.ml-item:disabled { opacity: .42; cursor: not-allowed; }
+.ml-ic { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; flex: none; color: var(--mi, #A78BFA); background: color-mix(in srgb, var(--mi, #8B5CF6) 15%, transparent); transition: background .2s, color .2s; }
+.ml-ic svg { width: 19px; height: 19px; }
+.ml-l { flex: 1; min-width: 0; }
+.ml-item.on .ml-ic { background: var(--grad); color: #fff; }
+.ml-item.rec.on .ml-ic { background: var(--coral); }
+.ml-sw { width: 36px; height: 21px; border-radius: 999px; background: rgba(255,255,255,.14); position: relative; flex: none; transition: background .2s; }
+.ml-sw::after { content: ''; position: absolute; top: 2.5px; left: 2.5px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .3s var(--spring); }
+.ml-item.on .ml-sw { background: var(--grad); }
+.ml-item.on .ml-sw::after { transform: translateX(15px); }
+.pop.sheet { left: 0 !important; right: 0; bottom: 0 !important; top: auto !important; width: auto; max-height: 80vh; border-radius: 26px 26px 0 0; padding: 8px 12px calc(14px + var(--safe-b)); transform: translateY(48px); }
+.pop.sheet.open { transform: none; }
+
+/* people */
+.people-body { gap: 10px; }
+.people-search { position: relative; }
+.ps-ic { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+.ps-ic svg { width: 18px; height: 18px; display: block; }
+.people-search .input { padding-left: 42px; border-radius: var(--pill); }
+.people-invite { gap: 8px; }
+.people-invite[hidden] { display: none; }
+.people-invite span, .people-invite svg { width: 18px; height: 18px; display: block; }
+.people-sub { display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: .08em; font-weight: 650; font-size: 11px; margin-top: 4px; }
+.people-sub .link-btn { text-transform: none; letter-spacing: 0; }
+.people-list { display: flex; flex-direction: column; gap: 2px; }
+.prow { display: flex; align-items: center; gap: 12px; padding: 8px 2px 8px 4px; border-radius: 14px; }
+.prow .av { width: 42px; height: 42px; font-size: 15px; border-width: 1px; flex: none; }
+.pr-main { flex: 1; min-width: 0; }
+.pr-name { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; min-width: 0; }
+.pr-name > span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-tag { flex: none; font-size: 10.5px; font-weight: 650; padding: 1px 7px; border-radius: var(--pill); background: rgba(139,92,246,.2); color: #C4B5FD; }
+.pr-sub { font-size: 12px; color: var(--muted); }
+.prow.poor .pr-sub { color: var(--amber); }
+.pr-stats { font-size: 11px; color: var(--faint); margin-top: 2px; }
+.sig { display: inline-flex; align-items: flex-end; gap: 2px; height: 16px; flex: none; }
+.sig i { width: 3.5px; border-radius: 1.5px; background: rgba(255,255,255,.18); }
+.sig i:nth-child(1) { height: 5px; } .sig i:nth-child(2) { height: 8px; } .sig i:nth-child(3) { height: 12px; } .sig i:nth-child(4) { height: 16px; }
+.sig.l4 i { background: var(--mint); }
+.sig.l3 i:nth-child(-n+3) { background: var(--mint); }
+.sig.l2 i:nth-child(-n+2) { background: var(--amber); }
+.sig.l1 i:nth-child(1) { background: var(--coral); }
+.pr-mic { width: 20px; height: 20px; color: var(--muted); flex: none; }
+.pr-mic svg { width: 20px; height: 20px; display: block; }
+.pr-mic.off { color: var(--coral); }
+.pr-more { appearance: none; border: 0; background: transparent; color: var(--muted); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; flex: none; }
+.pr-more:hover { background: rgba(255,255,255,.07); color: var(--text); }
+.pr-more svg { width: 18px; height: 18px; }
+.pop-pmenu { width: 260px; padding: 6px; }
+
+/* bad connection */
+.tile.poor .tile-net { display: inline-flex; color: var(--amber); }
+.tile.poor .tile-net::after { content: 'weak'; font-family: var(--mono); font-size: 10px; }
+.netq-banner { position: absolute; left: 12px; right: 12px; margin: 0 auto; top: calc(66px + var(--safe-t)); z-index: 40; max-width: 580px; display: flex; align-items: center; gap: 12px; padding: 10px 10px 10px 14px; border-radius: 18px; background: rgba(36,24,8,.94); border: 1px solid rgba(251,191,36,.45); box-shadow: var(--shadow); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); }
+.netq-banner[hidden] { display: none; }
+.nq-ic { color: var(--amber); width: 22px; height: 22px; flex: none; }
+.nq-ic svg { width: 22px; height: 22px; display: block; }
+.nq-text { flex: 1; min-width: 0; display: flex; flex-direction: column; font-size: 12.5px; color: var(--muted); }
+.nq-text b { color: var(--text); font-size: 14px; }
+.netq-banner .btn[hidden] { display: none; }
+
+@media (max-width: 720px) {
+  .tb-brand, #topbar .tele, #topbar .dsp-pill, #topbar .room-pill, #topbar .tb-desk, #room-share, .dock-chat { display: none !important; }
+  #topbar { gap: 6px; padding: var(--safe-t) 10px 0 12px; }
+  .ci-title { max-width: 44vw; font-size: 16px; }
+  #dock { left: 0; right: 0; bottom: 0; transform: none; border-radius: 26px 26px 0 0; justify-content: space-evenly; padding: 12px 14px calc(12px + var(--safe-b)); gap: 6px; border-left: 0; border-right: 0; border-bottom: 0; }
+  #dock .dock-btn { height: 54px; min-width: 54px; }
+  #dock .dock-btn.end { min-width: 72px; }
+  #main { bottom: calc(80px + var(--safe-b)); padding: 4px 8px 8px; }
+  #drawer-chat, #drawer-people { top: 0; height: auto; max-height: none; border-radius: 0; padding-top: var(--safe-t); transform: translateX(24px); }
+  #drawer-chat.open, #drawer-people.open { transform: none; }
+  .netq-banner { top: calc(62px + var(--safe-t)); }
+  .netq-banner .nq-text span { display: none; }
+}
+
+/* chat bubbles */
+.msg-body { display: inline-block; max-width: 88%; padding: 8px 13px; border-radius: 6px 18px 18px 18px; background: var(--surface-3); box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); }
+.msg.grouped .msg-body { border-radius: 18px; }
+.msg.mine { padding-left: 0; display: flex; flex-direction: column; align-items: flex-end; }
+.msg.mine .msg-av { display: none; }
+.msg.mine .msg-head { flex-direction: row-reverse; }
+.msg.mine .msg-body { background: linear-gradient(135deg, #0E9FC0, #7148E0 60%, #B9337F); color: #fff; border-radius: 18px 6px 18px 18px; box-shadow: 0 8px 22px -14px rgba(139,92,246,.9); }
+.msg.mine.grouped .msg-body { border-radius: 18px; }
+.msg { animation: msgin .35s var(--spring); }
+@keyframes msgin { from { opacity: 0; transform: translateY(8px); } }
+.netq-banner { top: auto; bottom: calc(96px + var(--safe-b)); }
+@media (max-width: 720px) { .netq-banner { top: auto; bottom: calc(92px + var(--safe-b)); } }
+
+/* settings: grouped cards */
+.drawer-set { width: 420px; }
+.set-body { gap: 14px; background: radial-gradient(120% 40% at 50% 0%, rgba(139,92,246,.08), transparent 70%); }
+.set-hero { padding: 14px; border-radius: 20px; background: linear-gradient(135deg, rgba(34,211,238,.12), rgba(139,92,246,.14) 55%, rgba(236,72,153,.12)); border: 1px solid rgba(196,181,253,.2); }
+.set-hero .av { width: 52px; height: 52px; font-size: 18px; border-width: 1.5px; }
+.set-hero .acct-name { font-size: 16px; font-weight: 650; }
+.set-group { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 10px; border-radius: 20px; background: rgba(255,255,255,.03); border: 1px solid var(--hair); }
+.set-group[hidden] { display: none; }
+.set-gh { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; font-size: 14px; font-weight: 650; letter-spacing: -0.01em; }
+.sg-ic { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; color: var(--sc); background: color-mix(in srgb, var(--sc) 16%, transparent); flex: none; }
+.sg-ic svg { width: 17px; height: 17px; }
+.set-group .switch { padding: 8px 0; }
+.set-group .switch + .switch { border-top: 1px solid var(--hair); }
+.relay-card { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; background: var(--surface-2); border: 1px solid var(--hair); }
+.rl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--faint); flex: none; }
+.rl-dot.ok { background: var(--mint); box-shadow: 0 0 10px var(--mint); }
+.rl-dot.bad { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+.rl-dot.wait { background: var(--cyan); animation: cidot 1s ease-in-out infinite; }
+.rl-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--muted); }
+.rl-text b { color: var(--text); font-size: 14px; }
+.set-about { gap: 10px; }
+.about-row { display: flex; align-items: center; gap: 12px; }
+.about-row > div { display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--muted); }
+.about-row b { color: var(--text); font-size: 15px; display: inline-flex; align-items: center; }
+.about-row .beta-badge { align-self: center; margin: 0 0 0 6px; }
+.about-links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; }
+.about-links a { color: var(--cyan); text-decoration: none; }
+.about-links a:hover { text-decoration: underline; }
+
+/* 3D splash (once per session, about 1.6 s) */
+#splash { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; background: radial-gradient(55% 45% at 50% 44%, #1A1433, #07070C 72%); perspective: 900px; animation: spOut .55s 1.35s cubic-bezier(.7,0,.3,1) forwards; pointer-events: none; }
+.sp-stage { position: relative; width: 168px; height: 168px; transform-style: preserve-3d; animation: spTilt 1.9s cubic-bezier(.22,1,.36,1) both; }
+.sp-ring { position: absolute; inset: 0; border-radius: 50%; padding: 3px; background: conic-gradient(from 0deg, #22D3EE, #8B5CF6, #EC4899, rgba(236,72,153,0) 70%, #22D3EE); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); filter: drop-shadow(0 0 14px rgba(139,92,246,.85)); transform-style: preserve-3d; }
+.sp-ring.r1 { animation: spR1 1.6s linear infinite; }
+.sp-ring.r2 { inset: 14px; animation: spR2 1.3s linear infinite; }
+.sp-ring.r3 { inset: -18px; opacity: .55; animation: spR3 2.2s linear infinite; }
+.sp-orb { position: absolute; inset: 44px; border-radius: 50%; background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 28%), conic-gradient(from 90deg, #22D3EE, #8B5CF6, #EC4899, #22D3EE); box-shadow: 0 0 60px rgba(139,92,246,.75), inset -10px -14px 30px rgba(7,7,12,.55); animation: spOrb 1.6s cubic-bezier(.22,1.4,.36,1) both, spSwirl 1.2s linear infinite; }
+.sp-logo { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; opacity: 0; animation: spLogo .7s .55s cubic-bezier(.22,1.4,.36,1) forwards; filter: drop-shadow(0 6px 18px rgba(0,0,0,.5)); }
+.sp-word { display: flex; align-items: center; gap: 6px; font-size: 28px; font-weight: 750; letter-spacing: -0.03em; color: var(--text); opacity: 0; animation: spWord .7s .45s cubic-bezier(.22,1,.36,1) forwards; }
+.sp-word .brand-sub { margin-left: 0; }
+.sp-word .beta-badge { align-self: flex-start; margin-left: 2px; }
+@keyframes spTilt { from { transform: rotateX(62deg) rotateZ(-40deg) scale(.4); opacity: 0; } 60% { opacity: 1; } to { transform: rotateX(18deg) rotateZ(0) scale(1); } }
+@keyframes spR1 { from { transform: rotateX(68deg) rotateZ(0); } to { transform: rotateX(68deg) rotateZ(360deg); } }
+@keyframes spR2 { from { transform: rotateY(64deg) rotateZ(0); } to { transform: rotateY(64deg) rotateZ(-360deg); } }
+@keyframes spR3 { from { transform: rotate3d(1, 1, 0, 58deg) rotateZ(0); } to { transform: rotate3d(1, 1, 0, 58deg) rotateZ(360deg); } }
+@keyframes spOrb { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes spSwirl { to { filter: hue-rotate(360deg); } }
+@keyframes spLogo { from { opacity: 0; transform: scale(.3) translateZ(40px); } to { opacity: 1; transform: none; } }
+@keyframes spWord { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes spOut { to { opacity: 0; transform: scale(1.12); visibility: hidden; } }
+
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -768,12 +1025,21 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 <svg class="vx-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
   <linearGradient id="vx-ig" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5EEAF8"/><stop offset=".5" stop-color="#B69CFF"/><stop offset="1" stop-color="#F472B6"/></linearGradient>
 </defs></svg>
+<div id="splash" aria-hidden="true">
+  <div class="sp-stage">
+    <div class="sp-ring r1"></div><div class="sp-ring r2"></div><div class="sp-ring r3"></div>
+    <div class="sp-orb"></div>
+    <span class="logo-mark sp-logo"></span>
+  </div>
+  <div class="sp-word"><span class="brand-word">Vortex</span> <span class="brand-sub">Video</span><span class="beta-badge">Beta</span></div>
+</div>
+<script>(function(){var s=document.getElementById('splash');function rm(){if(s&&s.parentNode)s.parentNode.removeChild(s);}try{if(sessionStorage.getItem('vx-splash')||/[?&]ring=/.test(location.search)||matchMedia('(prefers-reduced-motion: reduce)').matches){rm();return;}sessionStorage.setItem('vx-splash','1');}catch(e){}setTimeout(rm,2000);})();</script>
 <div id="app">
 
   <!-- ============ Green room ============ -->
-  <section id="green" class="view">
+  <section id="green" class="view" data-mode="home">
     <header class="gr-head">
-      <div class="brand" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span></div>
+      <div class="brand" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span><span class="beta-badge">Beta</span></div>
       <div class="gr-head-actions">
         <button class="profile-pill" id="me-pill" type="button" aria-haspopup="dialog">
           <span class="av pp-av" id="me-av"></span>
@@ -803,6 +1069,7 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
       </div>
 
       <div class="gr-side">
+        <button class="gr-back" id="gr-back" type="button" hidden><span class="gb-ic"></span>Back</button>
         <h1 class="gr-title" id="gr-title">Video calls for <span class="grad-text">everyone.</span></h1>
         <p class="gr-lede" id="gr-lede">Call your friends, share your screen and watch movies together. Free, with no time limit.</p>
         <form id="gr-form" class="gr-form" autocomplete="off" novalidate>
@@ -817,17 +1084,23 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
               <button class="btn btn-lg btn-ghost" id="gr-code-go" type="button" disabled>Join</button>
             </div>
           </div>
-          <div class="gr-friends" id="gr-friends-strip" hidden>
-            <div class="row-between"><span class="label">Call a friend</span><button class="link-btn" id="gr-friends-all" type="button">All friends</button></div>
-            <div class="fstrip" id="fstrip"></div>
-          </div>
           <p class="gr-guest-hint" id="gr-guest-hint" hidden>No account? Paste the invite link someone sent you to join as a guest.</p>
         </form>
+        <ul class="gr-perks" aria-label="What you get">
+          <li><span data-ic="cam"></span>HD video</li><li><span data-ic="tv"></span>Watch together</li><li><span data-ic="bell"></span>Call alerts</li><li><span data-ic="shield"></span>Peer-to-peer</li>
+        </ul>
         <p class="gr-joinas" id="gr-joinas"></p>
         <p class="gr-status" id="gr-status" aria-live="polite"></p>
-        <div class="gr-feats" aria-hidden="true">
-          <div class="gr-feat" style="--fc:#EC4899"><span class="gf-ic" data-ic="tv"></span><span>Watch parties</span></div>
-          <div class="gr-feat" style="--fc:#22D3EE"><span class="gf-ic" data-ic="sun"></span><span>Studio looks</span></div>
+      </div>
+
+      <div class="gr-hub" id="gr-hub">
+        <div class="hub-card" id="gr-friends-strip">
+          <div class="hub-h"><span class="label">Friends</span><button class="link-btn" id="gr-friends-all" type="button">All friends</button></div>
+          <div class="hub-friends" id="fstrip"></div>
+        </div>
+        <div class="hub-card" id="hub-recent-card">
+          <div class="hub-h"><span class="label">Recent calls</span><button class="link-btn" id="hub-clear" type="button" hidden>Clear</button></div>
+          <div class="hub-recents" id="hub-recents"></div>
         </div>
       </div>
     </div>
@@ -836,7 +1109,11 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
   <!-- ============ Call ============ -->
   <section id="call" class="view" hidden>
     <header id="topbar">
-      <div class="brand small" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span></div>
+      <div class="brand small tb-brand" role="img" aria-label="Vortex Video"><span class="logo-mark" aria-hidden="true"></span><span class="brand-word">Vortex</span><span class="brand-sub">Video</span><span class="beta-badge">Beta</span></div>
+      <div class="call-id" id="call-id">
+        <div class="ci-title" id="call-title">Your call</div>
+        <div class="ci-sub"><span class="ci-dot" aria-hidden="true"></span><span class="mono" id="call-timer">00:00</span><span class="ci-q" id="call-q" hidden></span></div>
+      </div>
       <button class="pill room-pill" id="room-pill" type="button" title="Copy invite link"><span class="pill-ic" id="room-copy-ic"></span><span id="room-code">Invite</span></button>
       <button class="icon-btn" id="room-share" type="button" aria-label="Share invite" title="Share invite" hidden></button>
       <span class="pill lock-pill" id="lock-pill" hidden title="Call locked: new people wait for the host"></span>
@@ -844,13 +1121,11 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
       <div class="pill dsp-pill" id="dsp-pill">HD · Noise gate active</div>
       <div class="spacer"></div>
       <div class="pill warn" id="sig-pill" hidden>Reconnecting to signaling…</div>
-      <div class="pill ppl-pill" title="People in this call"><span id="ppl-ic"></span><span id="ppl-count">1</span></div>
-      <div class="seg" role="group" aria-label="Layout">
-        <button type="button" id="lay-grid" aria-pressed="true" aria-label="Bento grid" title="Bento grid"></button>
-        <button type="button" id="lay-stage" aria-pressed="false" aria-label="Stage and filmstrip" title="Stage and filmstrip"></button>
-      </div>
-      <button class="icon-btn hd-btn" id="btn-friends" type="button" aria-label="Friends" title="Friends"><span class="badge" id="call-friends-badge" hidden>0</span></button>
-      <button class="icon-btn" id="btn-settings" type="button" aria-label="Settings" title="Settings"></button>
+      <button class="tb-btn" id="tb-people" type="button" aria-label="People in this call" title="People"><span id="ppl-ic"></span><span class="tb-count mono" id="ppl-count">1</span></button>
+      <button class="tb-btn" id="tb-chat" type="button" aria-label="In-call messages" title="In-call messages"><span class="ic"></span><span class="badge" id="tb-chat-badge" hidden>0</span></button>
+      <button class="tb-btn" id="tb-layout" type="button" aria-label="Change layout" title="Change layout" aria-haspopup="dialog" aria-expanded="false"></button>
+      <button class="tb-btn tb-desk" id="btn-friends" type="button" aria-label="Friends" title="Friends"><span class="badge" id="call-friends-badge" hidden>0</span></button>
+      <button class="tb-btn tb-desk" id="btn-settings" type="button" aria-label="Settings" title="Settings"></button>
     </header>
 
     <main id="main" data-layout="grid">
@@ -871,7 +1146,7 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
       </div>
       <button class="dock-btn desk-only" id="d-share" type="button" aria-label="Share screen" title="Share screen"><span class="ic"></span></button>
       <button class="dock-btn desk-only" id="d-pip" type="button" aria-label="Picture-in-picture" title="Picture-in-picture: pop everyone out"><span class="ic"></span></button>
-      <button class="dock-btn" id="d-chat" type="button" aria-label="In-call messages" title="In-call messages"><span class="ic"></span><span class="badge" id="chat-badge" hidden>0</span></button>
+      <button class="dock-btn dock-chat" id="d-chat" type="button" aria-label="In-call messages" title="In-call messages"><span class="ic"></span><span class="badge" id="chat-badge" hidden>0</span></button>
       <button class="dock-btn" id="d-more" type="button" aria-label="More" title="More" aria-haspopup="dialog" aria-expanded="false"><span class="ic"></span></button>
       <button class="dock-btn end" id="d-end" type="button" aria-label="Leave call" title="Leave call"><span class="ic"></span></button>
     </nav>
@@ -1017,69 +1292,112 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 </aside>
 
 <!-- ============ Settings drawer ============ -->
-<aside class="drawer" id="drawer-settings" role="dialog" aria-label="Settings" hidden>
+<aside class="drawer drawer-set" id="drawer-settings" role="dialog" aria-label="Settings" hidden>
   <div class="drawer-head"><span>Settings</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
-  <div class="drawer-body">
-    <div class="sec-title">You</div>
-    <div class="field"><label for="set-name">Display name</label><input class="input" id="set-name" maxlength="24"></div>
-    <div class="sec-title">Account</div>
-    <div class="acct-row" id="set-acct-row">
+  <div class="drawer-body set-body">
+    <div class="acct-row set-hero" id="set-acct-row">
       <button class="av" id="set-acct-av" type="button" aria-label="Change profile picture" title="Change profile picture"></button>
       <div class="acct-id"><div class="acct-name" id="set-acct-name"></div><div class="acct-handle mono" id="set-acct-handle"></div></div>
       <button class="btn btn-sm" id="set-acct-btn" type="button"></button>
     </div>
-    <label class="switch" id="set-alerts-wrap" hidden><span><span class="sw-label">Call alerts</span><span class="sw-sub" id="set-alerts-sub">Ring this device when a friend calls, even when Vortex is closed</span></span><input type="checkbox" id="set-alerts"><span class="track"></span></label>
-    <details class="more" id="set-supa">
-      <summary>Accounts server (Supabase)</summary>
-      <p class="hint" id="set-supa-hint">Sign-in, friends and ringing need a Supabase project. Run the setup SQL once, then paste the Project URL and the publishable key here (Supabase → Connect). Leave blank to stay in guest mode.</p>
-      <div class="field"><label for="set-supa-url">Project URL</label><input class="input mono" id="set-supa-url" placeholder="https://xxxx.supabase.co" autocapitalize="none" spellcheck="false"></div>
-      <div class="field"><label for="set-supa-key">Publishable key</label><input class="input mono" id="set-supa-key" placeholder="sb_publishable_… (or legacy anon key)" autocapitalize="none" spellcheck="false"></div>
-      <button class="btn btn-block" id="set-save-supa" type="button">Save and reconnect</button>
-    </details>
-    <div class="sec-title">Devices</div>
-    <div class="field"><label for="set-cam">Camera</label><select class="select" id="set-cam"></select></div>
-    <div class="field"><label for="set-mic">Microphone</label><select class="select" id="set-mic"></select></div>
-    <div class="field" id="set-spk-wrap"><label for="set-spk">Speaker</label><select class="select" id="set-spk"></select></div>
-    <div class="sec-title">Presenting</div>
-    <label class="switch"><span><span class="sw-label">Auto-PiP on screen share</span><span class="sw-sub">Pop everyone into a floating window when you present or switch tabs</span></span><input type="checkbox" id="set-autopip"><span class="track"></span></label>
-    <label class="switch"><span><span class="sw-label">Show me in picture-in-picture</span><span class="sw-sub">Off: the floating window shows only the others. You still appear when you're alone.</span></span><input type="checkbox" id="set-pipself"><span class="track"></span></label>
-    <label class="switch"><span><span class="sw-label">Show my camera while ringing</span><span class="sw-sub">The friend you call sees your live video (no sound) before they answer, until they pick up.</span></span><input type="checkbox" id="set-ringpreview"><span class="track"></span></label>
-    <div class="field"><label for="set-hint">Optimize shared screen for</label>
-      <select class="select" id="set-hint"><option value="detail">Text and detail</option><option value="motion">Motion and games</option></select></div>
-    <div class="sec-title">Network</div>
-    <p class="hint">Peers connect directly using public STUN servers. Strict networks (many mobile carriers, some offices) also need a TURN relay. Everyone should use the same settings. Changes apply the next time you join.</p>
-    <div class="field"><label for="set-turn-urls">TURN server URLs</label><input class="input mono" id="set-turn-urls" placeholder="turn:turn.example.com:3478"></div>
-    <div class="two">
-      <div class="field"><label for="set-turn-user">Username</label><input class="input" id="set-turn-user"></div>
-      <div class="field"><label for="set-turn-cred">Credential</label><input class="input" id="set-turn-cred" type="password"></div>
-    </div>
-    <details class="more">
-      <summary>Custom PeerJS signaling server</summary>
-      <p class="hint">Leave blank to use the free PeerJS cloud (no uptime guarantee).</p>
-      <div class="two">
-        <div class="field"><label for="set-srv-host">Host</label><input class="input mono" id="set-srv-host" placeholder="peer.example.com"></div>
-        <div class="field"><label for="set-srv-port">Port</label><input class="input mono" id="set-srv-port" placeholder="443"></div>
+
+    <section class="set-group" style="--sc:#22D3EE">
+      <h3 class="set-gh"><span class="sg-ic" data-ic="user"></span>Profile</h3>
+      <div class="field"><label for="set-name">Display name</label><input class="input" id="set-name" maxlength="24"></div>
+    </section>
+
+    <section class="set-group" style="--sc:#FBBF24">
+      <h3 class="set-gh"><span class="sg-ic" data-ic="bell"></span>Calls</h3>
+      <label class="switch" id="set-alerts-wrap" hidden><span><span class="sw-label">Call alerts</span><span class="sw-sub" id="set-alerts-sub">Ring this device when a friend calls, even when Vortex is closed</span></span><input type="checkbox" id="set-alerts"><span class="track"></span></label>
+      <label class="switch"><span><span class="sw-label">Show my camera while ringing</span><span class="sw-sub">The friend you call sees your live video (no sound) until they pick up.</span></span><input type="checkbox" id="set-ringpreview"><span class="track"></span></label>
+    </section>
+
+    <section class="set-group" style="--sc:#EC4899">
+      <h3 class="set-gh"><span class="sg-ic" data-ic="cam"></span>Camera and sound</h3>
+      <div class="field"><label for="set-cam">Camera</label><select class="select" id="set-cam"></select></div>
+      <div class="field"><label for="set-mic">Microphone</label><select class="select" id="set-mic"></select></div>
+      <div class="field" id="set-spk-wrap"><label for="set-spk">Speaker</label><select class="select" id="set-spk"></select></div>
+    </section>
+
+    <section class="set-group" id="set-present" style="--sc:#60A5FA">
+      <h3 class="set-gh"><span class="sg-ic" data-ic="screen"></span>Presenting</h3>
+      <label class="switch"><span><span class="sw-label">Auto picture-in-picture</span><span class="sw-sub">Pop everyone into a floating window when you present or switch tabs</span></span><input type="checkbox" id="set-autopip"><span class="track"></span></label>
+      <label class="switch"><span><span class="sw-label">Show me in picture-in-picture</span><span class="sw-sub">Off: the floating window shows only the others</span></span><input type="checkbox" id="set-pipself"><span class="track"></span></label>
+      <div class="field"><label for="set-hint">Optimize shared screen for</label>
+        <select class="select" id="set-hint"><option value="detail">Text and detail</option><option value="motion">Motion and games</option></select></div>
+    </section>
+
+    <section class="set-group" style="--sc:#34D399">
+      <h3 class="set-gh"><span class="sg-ic" data-ic="globe"></span>Connection</h3>
+      <div class="relay-card" id="set-relay">
+        <span class="rl-dot" id="set-relay-dot"></span>
+        <div class="rl-text"><b id="set-relay-title">Checking the relay…</b><span id="set-relay-sub">Calls connect directly when they can, and through the Vortex relay on strict networks (mobile data, offices).</span></div>
+        <button class="btn btn-sm" id="set-relay-test" type="button">Test</button>
       </div>
-      <div class="two">
-        <div class="field"><label for="set-srv-path">Path</label><input class="input mono" id="set-srv-path" placeholder="/"></div>
-        <div class="field"><label for="set-srv-key">Key</label><input class="input mono" id="set-srv-key" placeholder="peerjs"></div>
-      </div>
-      <label class="switch"><span class="sw-label">Use TLS (wss)</span><input type="checkbox" id="set-srv-secure"><span class="track"></span></label>
-    </details>
-    <button class="btn btn-block" id="set-save-net" type="button">Save network settings</button>
-    <div class="sec-title">Connections</div>
-    <div class="diag" id="diag"></div>
-    <button class="btn btn-block" id="set-copy-report" type="button">Copy connection report</button>
-    <p class="hint">If calls won't connect, copy this report and send it to whoever runs this site.</p>
+      <div class="diag" id="diag"></div>
+      <button class="btn btn-block" id="set-copy-report" type="button">Copy connection report</button>
+      <details class="more" id="set-adv">
+        <summary>Advanced network settings</summary>
+        <p class="hint">You don't need these: the relay above is set up automatically. Only add your own TURN server if someone asked you to. Everyone in a call should use the same settings; changes apply the next time you join.</p>
+        <div class="field"><label for="set-turn-urls">Extra TURN server URLs</label><input class="input mono" id="set-turn-urls" placeholder="turn:turn.example.com:3478"></div>
+        <div class="two">
+          <div class="field"><label for="set-turn-user">Username</label><input class="input" id="set-turn-user"></div>
+          <div class="field"><label for="set-turn-cred">Credential</label><input class="input" id="set-turn-cred" type="password"></div>
+        </div>
+        <p class="hint">Signaling server (leave blank for the free PeerJS cloud).</p>
+        <div class="two">
+          <div class="field"><label for="set-srv-host">Host</label><input class="input mono" id="set-srv-host" placeholder="peer.example.com"></div>
+          <div class="field"><label for="set-srv-port">Port</label><input class="input mono" id="set-srv-port" placeholder="443"></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="set-srv-path">Path</label><input class="input mono" id="set-srv-path" placeholder="/"></div>
+          <div class="field"><label for="set-srv-key">Key</label><input class="input mono" id="set-srv-key" placeholder="peerjs"></div>
+        </div>
+        <label class="switch"><span class="sw-label">Use TLS (wss)</span><input type="checkbox" id="set-srv-secure"><span class="track"></span></label>
+        <button class="btn btn-block" id="set-save-net" type="button">Save network settings</button>
+        <details class="more" id="set-supa">
+          <summary>Accounts server (Supabase)</summary>
+          <p class="hint" id="set-supa-hint"></p>
+          <div class="field"><label for="set-supa-url">Project URL</label><input class="input mono" id="set-supa-url" placeholder="https://xxxx.supabase.co" autocapitalize="none" spellcheck="false"></div>
+          <div class="field"><label for="set-supa-key">Publishable key</label><input class="input mono" id="set-supa-key" placeholder="sb_publishable_… (or legacy anon key)" autocapitalize="none" spellcheck="false"></div>
+          <button class="btn btn-block" id="set-save-supa" type="button">Save and reconnect</button>
+        </details>
+      </details>
+    </section>
+
+    <section class="set-group set-about" style="--sc:#8B5CF6">
+      <div class="about-row"><span class="logo-mark" aria-hidden="true"></span><div><b>Vortex Video <span class="beta-badge">Beta</span></b><span class="mono" id="set-version"></span></div></div>
+      <div class="about-links"><a href="/welcome" target="_blank" rel="noopener">Download the apps</a><a href="https://github.com/itbelikethatbruh/vortex-video" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/itbelikethatbruh/vortex-video/issues" target="_blank" rel="noopener">Report a problem</a></div>
+    </section>
   </div>
 </aside>
 
 
 <!-- ============ More (quick actions) popover ============ -->
 <div class="pop pop-more" id="pop-more" role="dialog" aria-label="More actions" hidden>
-  <div class="more-grid" id="more-grid"></div>
+  <div class="sheet-grip" aria-hidden="true"></div>
+  <div class="more-emoji" id="more-emoji"></div>
+  <div class="more-list" id="more-grid"></div>
   <div class="more-row" id="more-row" hidden></div>
 </div>
+
+<!-- ============ Layout menu ============ -->
+<div class="pop pop-layout" id="pop-layout" role="dialog" aria-label="Layout" hidden>
+  <div class="pop-sub">Layout</div>
+  <div class="lay-list" id="lay-list"></div>
+</div>
+
+<!-- ============ People drawer ============ -->
+<aside class="drawer" id="drawer-people" role="dialog" aria-label="People" hidden>
+  <div class="drawer-head"><span id="people-title">People</span><button class="icon-btn" data-close type="button" aria-label="Close"></button></div>
+  <div class="drawer-body people-body">
+    <div class="people-search"><span class="ps-ic" data-ic="search"></span><input class="input" id="people-q" placeholder="Search for people" aria-label="Search for people" autocomplete="off"></div>
+    <button class="btn btn-block people-invite" id="people-invite" type="button"><span data-ic="userPlus"></span>Add people</button>
+    <div class="pop-sub people-sub"><span>In the call</span><button class="link-btn" id="people-stats" type="button" aria-pressed="false">Show call stats</button></div>
+    <div class="people-list" id="people-list"></div>
+  </div>
+</aside>
+<div class="pop pop-pmenu" id="pop-pmenu" role="dialog" aria-label="Person options" hidden><div class="more-list" id="pmenu-list"></div></div>
 
 <!-- ============ Account popover ============ -->
 <div class="pop pop-account" id="pop-account" role="dialog" aria-label="Your profile" hidden>
@@ -1222,6 +1540,7 @@ const SUPABASE_URL = 'https://uyroxbozyyroxzlkrvun.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_1i5R1YQUaxuBBgy2UioXIA_csNcsoCg';   // publishable key (or legacy anon key)
 /* Call alerts (Web Push): the site's public VAPID key. Its private half is the VAPID_PRIVATE_JWK
    secret of the site worker (/api/ring). Empty = call alerts off. */
+const APP_VERSION = '2.0.0-beta';
 const VAPID_PUBLIC = 'BL7xtSCqVxMWu-6ylVBuyfFP5wfQWMmeVujqiEiFuuEcjq6xJ--wgVozqEh4Lgef6iND-3FH79u-72qgR0Aiifw';
 
 /* Relay (TURN) for networks where two devices can't connect directly: some
@@ -1640,6 +1959,22 @@ const ICONS = (() => {
     portrait: s(D('<circle cx="12" cy="9" r="3.4"/>') + '<circle cx="12" cy="9" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="3.5" cy="6" r=".95" fill="currentColor" stroke="none"/><circle cx="20.5" cy="6" r=".95" fill="currentColor" stroke="none"/><circle cx="2.5" cy="12" r=".95" fill="currentColor" stroke="none"/><circle cx="21.5" cy="12" r=".95" fill="currentColor" stroke="none"/>'),
     search: s(D('<circle cx="11" cy="11" r="6.5"/>') + '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>'),
     bot: s(D('<rect x="4.5" y="8" width="15" height="11" rx="3"/>') + '<rect x="4.5" y="8" width="15" height="11" rx="3"/><path d="M12 4.5V8M9.5 16h5"/><circle cx="9" cy="12.75" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12.75" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="4" r="1"/>', 'width="16" height="16"'),
+    chevLeft: s('<path d="M15 5l-7 7 7 7"/>'),
+    callIn: s('<path d="M20 4l-6.5 6.5M13.5 5.5v5h5"/><path d="M5.2 3.5h2.6l1.4 3.6-1.9 1.3a11 11 0 0 0 5.3 5.3l1.3-1.9 3.6 1.4v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.2 5.7a2 2 0 0 1 2-2.2z"/>', 'width="16" height="16"'),
+    callOut: s('<path d="M14 10l6.5-6.5M15 3.5h5.5V9"/><path d="M5.2 3.5h2.6l1.4 3.6-1.9 1.3a11 11 0 0 0 5.3 5.3l1.3-1.9 3.6 1.4v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.2 5.7a2 2 0 0 1 2-2.2z"/>', 'width="16" height="16"'),
+    callMiss: s('<path d="M14 4l6 6M20 4l-6 6"/><path d="M5.2 3.5h2.6l1.4 3.6-1.9 1.3a11 11 0 0 0 5.3 5.3l1.3-1.9 3.6 1.4v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.2 5.7a2 2 0 0 1 2-2.2z"/>', 'width="16" height="16"'),
+    tiled: s(D('<rect x="3" y="3.5" width="18" height="17" rx="3"/>') + '<rect x="3" y="3.5" width="7.75" height="7.5" rx="2"/><rect x="13.25" y="3.5" width="7.75" height="7.5" rx="2"/><rect x="3" y="13" width="7.75" height="7.5" rx="2"/><rect x="13.25" y="13" width="7.75" height="7.5" rx="2"/>'),
+    sidebar: s(D('<rect x="3" y="4" width="12.5" height="16" rx="2.5"/>') + '<rect x="3" y="4" width="12.5" height="16" rx="2.5"/><rect x="17.5" y="4" width="3.5" height="4.5" rx="1"/><rect x="17.5" y="9.75" width="3.5" height="4.5" rx="1"/><rect x="17.5" y="15.5" width="3.5" height="4.5" rx="1"/>'),
+    spotlight: s(D('<rect x="3" y="4" width="18" height="16" rx="3"/>') + '<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="12" cy="10.5" r="2.6"/><path d="M7.5 17a4.6 4.6 0 0 1 9 0"/>'),
+    moreV: s('<circle cx="12" cy="5.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="18.5" r="1.4" fill="currentColor" stroke="none"/>'),
+    sparkles: s(D('<path d="M10 3.5l1.7 4.8 4.8 1.7-4.8 1.7L10 16.5l-1.7-4.8L3.5 10l4.8-1.7z"/>') + '<path d="M10 3.5l1.7 4.8 4.8 1.7-4.8 1.7L10 16.5l-1.7-4.8L3.5 10l4.8-1.7zM18 14.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>'),
+    noise: s('<path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 10.5v3M21 12h0"/>'),
+    stats: s(D('<rect x="3" y="3.5" width="18" height="17" rx="3"/>') + '<rect x="3" y="3.5" width="18" height="17" rx="3"/><path d="M7.5 16v-3M12 16V8M16.5 16v-5.5"/>'),
+    info: s('<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/>'),
+    shield: s(D('<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/>') + '<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.75 12l2.25 2.25 4.25-4.5"/>'),
+    globe: s('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.9 5.5 3.9 9s-1.3 6.5-3.9 9c-2.6-2.5-3.9-5.5-3.9-9S9.4 5.5 12 3z"/>'),
+    bell: s(D('<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2H4.5z"/>') + '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2H4.5zM10 21h4"/>'),
+    speaker: s(D('<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>') + '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/>'),
   };
 })();
 
@@ -1785,6 +2120,26 @@ const Ice = {
       })();
     }
     await this.pending;
+  },
+  /* real check: gather candidates through the relay only, and see whether it hands us a relayed address */
+  async test() {
+    await this.ready();
+    if (!this.list || typeof RTCPeerConnection === 'undefined') return { ok: false };
+    const t0 = now();
+    let pc;
+    try { pc = new RTCPeerConnection({ iceServers: this.list, iceTransportPolicy: 'relay' }); } catch { return { ok: false }; }
+    return new Promise((res) => {
+      let done = false;
+      const end = (r) => { if (done) return; done = true; clearTimeout(timer); try { pc.close(); } catch { /* */ } NetLog.add('relay', r.ok ? `test ok in ${r.ms} ms (${r.proto || '?'})` : 'test: no relay candidate'); res(r); };
+      const timer = setTimeout(() => end({ ok: false }), 9000);
+      pc.onicecandidate = (e) => {
+        const c = e.candidate;
+        if (!c) { end({ ok: false }); return; }
+        if (/ typ relay /.test(c.candidate) || c.type === 'relay') end({ ok: true, ms: Math.round(now() - t0), proto: c.relayProtocol || '' });
+      };
+      pc.createDataChannel('t');
+      pc.createOffer().then((o) => pc.setLocalDescription(o)).catch(() => end({ ok: false }));
+    });
   },
 };
 function iceServers() {
@@ -4629,6 +4984,7 @@ const Net = {
         this.electionCheck();
         break;
       }
+      case 'NETQ': mem.saysMeBad = msg.bad === true; NetQ.selfCheck(); break;
       case 'STATE': {
         const was = mem.st;
         mem.st = sanitizeState(msg.st);
@@ -5003,6 +5359,7 @@ const Tiles = {
     const net = $('.tile-net', el);
     net.title = `${mem.rtt != null ? Math.round(mem.rtt) + ' ms' : '—'}${mem.path ? ' · ' + mem.path : ''}`;
     net.classList.toggle('relay', !!mem.relay);
+    el.classList.toggle('poor', !!mem.poor);
     el.style.setProperty('--pc', PLAYER_COLORS[Math.abs(hashStr(mem.id)) % PLAYER_COLORS.length]);
   },
   updateSelf() {
@@ -5039,7 +5396,7 @@ function hashStr(s) { let x = 0; for (let i = 0; i < s.length; i++) x = (x * 31 
 const Layout = {
   pinned: null, spotKey: null, pinStage: false,
   /* alone there's nobody to spotlight: always the grid, so you and the invite card get real room */
-  mode() { if (Stage.current()) return 'split'; return Settings.layout === 'stage' && Tiles.map.size > 1 ? 'speaker' : 'grid'; },
+  mode() { if (Stage.current()) return 'split'; return (Settings.layout === 'stage' || Settings.layout === 'spot') && Tiles.map.size > 1 ? 'speaker' : 'grid'; },
   order() {
     const ms = [...Net.members.values()].sort((a, b) => (a.seq ?? 1e9) - (b.seq ?? 1e9) || (a.id < b.id ? -1 : 1)).map((m) => m.id);
     return ['self', ...ms].filter((k) => Tiles.map.has(k));
@@ -5091,8 +5448,10 @@ const Layout = {
     for (const t of Tiles.map.values()) t.el.classList.toggle('pinned', this.pinned === t.key);
     for (const el of moved) { const v = el.querySelector('video'); if (v && v.srcObject) playEl(v); }
     this.fit();
-    $('#lay-grid') && $('#lay-grid').setAttribute('aria-pressed', String(Settings.layout === 'grid'));
-    $('#lay-stage') && $('#lay-stage').setAttribute('aria-pressed', String(Settings.layout === 'stage'));
+    main.classList.toggle('spotlight', mode === 'speaker' && Settings.layout === 'spot');
+    const lb = $('#tb-layout');
+    if (lb) lb.innerHTML = Settings.layout === 'spot' ? ICONS.spotlight : Settings.layout === 'stage' ? ICONS.sidebar : ICONS.tiled;
+    if (Panels.isOpen('pop-layout') && typeof App !== 'undefined') App.renderLayoutMenu();
   },
   fit() {
     const g = $('#grid');
@@ -5239,6 +5598,20 @@ const Motion = {
       el.animate([{ transformOrigin: '0 0', transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})` }, { transformOrigin: '0 0', transform: 'none' }], { duration: o.ms || 440, easing: this.EASE });
     }
   },
+  /* a screen arriving: its parts rise in one after another */
+  enter(el) {
+    if (!el || !this.ok()) return;
+    let i = 0;
+    for (const c of el.children) {
+      if (c.hidden || !c.getClientRects().length) continue;
+      c.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 560, delay: 70 * i++, easing: this.EASE, fill: 'backwards' });
+    }
+  },
+  /* a whole view changes (home → call → left): soft zoom and fade */
+  view(el) {
+    if (!el || !this.ok()) return;
+    el.animate([{ opacity: 0, transform: 'scale(1.03)' }, { opacity: 1, transform: 'none' }], { duration: 460, easing: this.EASE });
+  },
   /* fade + slide out, then hide */
   hide(el, then) {
     if (!el || el.hidden) { if (then) then(); return; }
@@ -5352,6 +5725,80 @@ const Chrome = {
 };
 
 /* Gather telemetry every 2s: avg data-channel RTT + outbound video stats */
+/* Connection quality, measured from WebRTC stats every 2 s. What I receive from each person tells me
+   whether THEIR connection is struggling: their tile says so, I get a one-time alert, and I tell
+   them. When most people tell me I'm breaking up (or everything I receive is bad), I see a banner
+   with a fix. */
+const NetQ = {
+  prev: new Map(), warned: new Map(), selfBad: false,
+  reset() { this.prev.clear(); this.selfBad = false; this.banner(false); },
+  level(m) {
+    if (!m || !m.ready) return 0;
+    const rtt = m.qRtt ?? m.rtt, loss = m.qIn || 0;
+    if (m.ice === 'disconnected' || m.lost || loss > 0.15 || rtt > 900) return 1;
+    if (loss > 0.06 || rtt > 450) return 2;
+    if (loss > 0.02 || rtt > 220) return 3;
+    return 4;
+  },
+  async sample(ms) {
+    for (const m of ms) {
+      const pc = m.call && m.call.peerConnection;
+      if (!pc) continue;
+      let st;
+      try { st = await pc.getStats(); } catch { continue; }
+      let recv = 0, lost = 0, rtt = null;
+      st.forEach((r) => {
+        if (r.type === 'inbound-rtp') { recv += r.packetsReceived || 0; lost += Math.max(0, r.packetsLost || 0); }
+        else if (r.type === 'candidate-pair' && r.nominated && r.state === 'succeeded' && r.currentRoundTripTime != null) rtt = r.currentRoundTripTime * 1000;
+      });
+      const p = this.prev.get(m.id);
+      this.prev.set(m.id, { recv, lost });
+      if (rtt != null) m.qRtt = rtt;
+      if (!p) continue;
+      const dr = recv - p.recv, dl = lost - p.lost;
+      m.qIn = dr + dl >= 30 ? Math.max(0, dl) / (dr + dl) : 0;
+      const bad = this.level(m) <= 1 || (m.qIn > 0.08);
+      m.qBadN = bad ? (m.qBadN || 0) + 1 : 0;
+      m.qGoodN = bad ? 0 : (m.qGoodN || 0) + 1;
+      if (!m.poor && m.qBadN >= 3) this.mark(m, true);          // 6 s of trouble
+      else if (m.poor && m.qGoodN >= 4) this.mark(m, false);    // 8 s of good
+    }
+    this.selfCheck();
+  },
+  mark(m, poor) {
+    m.poor = poor; m.qBadN = 0; m.qGoodN = 0;
+    Net.send(m.id, { t: 'NETQ', bad: poor });
+    Tiles.update(m);
+    if (poor && now() - (this.warned.get(m.id) || -1e9) > 90000) {
+      this.warned.set(m.id, now());
+      toast(`${m.name}'s connection is unstable. Their video may freeze or their voice may break up.`, { type: 'warn', ms: 6000 });
+    }
+  },
+  selfCheck() {
+    const ms = Net.readyMembers();
+    const says = ms.filter((m) => m.saysMeBad).length, poorIn = ms.filter((m) => m.poor).length;
+    const bad = !navigator.onLine || (ms.length > 0 && (says * 2 >= ms.length + (ms.length > 2 ? 1 : 0) || (ms.length > 1 && poorIn === ms.length)));
+    if (bad !== this.selfBad) { this.selfBad = bad; this.banner(bad); }
+    const q = $('#call-q');
+    if (q) { q.hidden = !bad; q.textContent = bad ? 'Unstable connection' : ''; }
+  },
+  banner(on) {
+    let b = $('#netq-banner');
+    if (!on) { if (b) Motion.hide(b); return; }
+    if (!b) {
+      b = h('div', { id: 'netq-banner', class: 'netq-banner', role: 'status' },
+        h('span', { class: 'nq-ic', svg: ICONS.signal }),
+        h('div', { class: 'nq-text' }, h('b', { text: 'Your connection is unstable' }), h('span', { text: 'Others may not see or hear you well.' })),
+        h('button', { class: 'btn btn-sm', type: 'button', id: 'netq-cam', onclick: () => { if (Local.camOn) Local.toggleCam(); Motion.hide($('#netq-banner')); } }, 'Turn off camera'),
+        h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Dismiss', svg: ICONS.x, onclick: () => Motion.hide($('#netq-banner')) }));
+      $('#call').append(b);
+    }
+    $('#netq-cam').hidden = !Local.camOn;
+    b.hidden = false;
+    Motion.view(b);
+  },
+};
+
 async function collectTelemetry() {
   const ms = Net.readyMembers();
   const rtts = ms.map((m) => m.rtt).filter((x) => x != null);
@@ -5369,7 +5816,9 @@ async function collectTelemetry() {
     out.h = s.height || Lens.H; out.fps = s.frameRate || 30;
   }
   Chrome.telemetry(out);
+  await NetQ.sample(ms);
   for (const mem of ms) Tiles.update(mem);
+  if (Panels.isOpen('drawer-people')) App.renderPeople();
 }
 
 /* ---- 09-pip.js ---- */
@@ -5783,10 +6232,11 @@ const Chat = {
     if (stick || m.self) list.scrollTop = list.scrollHeight;
   },
   badge() {
-    const b = $('#chat-badge');
-    if (!b) return;
-    b.hidden = this.unread === 0;
-    b.textContent = this.unread > 9 ? '9+' : String(this.unread);
+    for (const b of [$('#chat-badge'), $('#tb-chat-badge')]) {
+      if (!b) continue;
+      b.hidden = this.unread === 0;
+      b.textContent = this.unread > 9 ? '9+' : String(this.unread);
+    }
   },
   opened() {
     this.unread = 0; this.badge();
@@ -6378,6 +6828,7 @@ const Ring = {
     const kill = toast(`Ringing ${name}…`, { action: { label: 'Cancel', fn: () => this.cancelOutgoing() }, ms: 41000 });
     const timer = setTimeout(() => { if (this.out && this.out.id === id) { this.cancelOutgoing(); toast(`${name} didn't answer`); } }, 40000);
     this.out = { id, to: friendId, name, stopTone, timer, kill };
+    CallLog.friend(friendId);
   },
   cancelOutgoing(silent) {
     const o = this.out;
@@ -6423,7 +6874,7 @@ const Ring = {
     const tok = typeof p.tok === 'string' && /^[a-z0-9]{8,32}$/.test(p.tok) ? p.tok : '';
     AudioEngine.resume();
     const stopTone = Sound.loop('ringtone', 2600, 0.9);
-    const timer = setTimeout(() => { if (this.inc && this.inc.id === p.id) { this.dismissIncoming(); toast(`Missed call from ${name}`); } }, 40000);
+    const timer = setTimeout(() => { if (this.inc && this.inc.id === p.id) { this.dismissIncoming(); toast(`Missed call from ${name}`); CallLog.missed(name, p.from); } }, 40000);
     this.inc = { id: p.id, from: p.from, name, avatar: Avatars.clean(f.avatar_url), room, tok, stopTone, timer };
     IncomingCall.show(this.inc);
     BackGuard.sync();
@@ -6438,6 +6889,7 @@ const Ring = {
     if (!p || !i || p.id !== i.id || p.from !== i.from) return;
     this.dismissIncoming();
     toast(`Missed call from ${i.name}`);
+    CallLog.missed(i.name, i.from);
   },
   dismissIncoming() {
     const i = this.inc;
@@ -6483,6 +6935,7 @@ const Ring = {
     if (!i) return;
     this.dismissIncoming();
     Social.sendTo(i.from, 'ring-reply', { id: i.id, ok: true }).catch(() => {});
+    CallLog.nextFid = i.from;
     if (!video && Local.camOn) await Local.setCam(false);
     await App.prejoin({
       room: i.room, tok: i.tok, label: `${i.name}'s call`,
@@ -8789,68 +9242,28 @@ function faceSynthLandmarks(params, W, H) {
 }
 
 const Sample = {
+  /* a softly lit, out-of-focus room: the neutral base for effect thumbnails when the camera is off */
   room(g, w, h) {
-    let gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#34405F'); gr.addColorStop(1, '#171B28');
+    let gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#232842'); gr.addColorStop(0.65, '#131626'); gr.addColorStop(1, '#0B0C16');
     g.fillStyle = gr; g.fillRect(0, 0, w, h);
-    gr = g.createLinearGradient(0, h * 0.1, 0, h * 0.62); gr.addColorStop(0, '#CFEFFF'); gr.addColorStop(1, '#6D9EE0');
-    g.fillStyle = gr; g.fillRect(w * 0.06, h * 0.1, w * 0.3, h * 0.52);
-    g.fillStyle = '#121624'; g.fillRect(w * 0.205, h * 0.1, w * 0.012, h * 0.52); g.fillRect(w * 0.06, h * 0.355, w * 0.3, h * 0.014);
-    gr = g.createRadialGradient(w * 0.86, h * 0.26, 0, w * 0.86, h * 0.26, w * 0.24); gr.addColorStop(0, 'rgba(255,214,150,0.65)'); gr.addColorStop(1, 'rgba(255,214,150,0)');
-    g.fillStyle = gr; g.fillRect(0, 0, w, h);
-    g.fillStyle = '#FFE2B0'; g.beginPath(); g.arc(w * 0.86, h * 0.26, w * 0.025, 0, Math.PI * 2); g.fill();
-    g.fillStyle = '#26304A'; g.fillRect(w * 0.66, h * 0.62, w * 0.34, h * 0.03);
-    ['#F472B6', '#22D3EE', '#FACC15', '#A78BFA', '#34D399'].forEach((c, i) => { g.fillStyle = c; g.fillRect(w * (0.69 + i * 0.045), h * (0.47 + (i % 2) * 0.03), w * 0.035, h * (0.15 - (i % 2) * 0.03)); });
-    g.fillStyle = '#8B5E3C'; g.fillRect(w * 0.06, h * 0.78, w * 0.07, h * 0.14);
-    g.fillStyle = '#2FB37A';
-    for (let i = 0; i < 6; i++) { g.beginPath(); g.ellipse(w * (0.095 + Math.cos(i) * 0.03), h * (0.72 - (i % 3) * 0.05), w * 0.022, h * 0.05, i * 0.6 - 1.5, 0, Math.PI * 2); g.fill(); }
-    g.fillStyle = '#0E111A'; g.fillRect(0, h * 0.9, w, h * 0.1);
-  },
-  /* draws a friendly cartoon person; returns the landmark accessor for overlays */
-  person(g, p, opts = {}) {
-    const arr = faceSynth(p), P = faceAccessor(arr), F = p.F;
-    const q = facePose(P);
-    // torso
-    g.save();
-    g.translate(p.cx, p.cy); g.rotate((p.roll || 0) * 0.4);
-    const tg = g.createLinearGradient(-F * 1.4, 0, F * 1.4, 0); tg.addColorStop(0, '#7C3AED'); tg.addColorStop(1, '#0EA5E9');
-    g.fillStyle = tg;
-    g.beginPath(); g.moveTo(-F * 1.45, F * 2.6); g.quadraticCurveTo(-F * 1.35, F * 1.05, -F * 0.42, F * 0.92); g.lineTo(F * 0.42, F * 0.92); g.quadraticCurveTo(F * 1.35, F * 1.05, F * 1.45, F * 2.6); g.closePath(); g.fill();
-    g.fillStyle = '#D9A47E'; g.fillRect(-F * 0.17, F * 0.55, F * 0.34, F * 0.45);
-    g.restore();
-    // hair back + ears
-    g.save(); g.translate(q.top.x, q.top.y); g.rotate(q.roll);
-    g.fillStyle = '#2D1B3D'; g.beginPath(); g.ellipse(0, F * 0.5, F * 0.58, F * 0.66, 0, Math.PI, Math.PI * 2); g.fill();
-    g.restore();
-    for (const i of [234, 454]) { const e = P(i); g.fillStyle = '#E8B48E'; g.beginPath(); g.ellipse(e.x, e.y + F * 0.04, F * 0.07, F * 0.12, q.roll, 0, Math.PI * 2); g.fill(); }
-    // face
-    g.beginPath(); FM_OVAL.forEach((i, k) => { const pt = P(i); if (k) g.lineTo(pt.x, pt.y); else g.moveTo(pt.x, pt.y); }); g.closePath();
-    const sg = g.createRadialGradient(q.ec.x, q.ec.y, F * 0.1, q.ec.x, q.ec.y, F * 0.9); sg.addColorStop(0, opts.lit ? '#FFDCC2' : '#F4C9A6'); sg.addColorStop(1, opts.lit ? '#E9B48F' : '#D9A47E');
-    g.fillStyle = sg; g.fill();
-    // fringe
-    g.save(); g.clip();
-    g.translate(q.top.x, q.top.y); g.rotate(q.roll);
-    g.fillStyle = '#2D1B3D'; g.beginPath(); g.ellipse(F * 0.08, F * 0.02, F * 0.62, F * 0.26, -0.12, 0, Math.PI * 2); g.fill();
-    g.restore();
-    // eyes
-    for (const list of [FM_EYE_A, FM_EYE_B]) {
-      g.beginPath(); list.forEach((i, k) => { const pt = P(i); if (k) g.lineTo(pt.x, pt.y); else g.moveTo(pt.x, pt.y); }); g.closePath();
-      g.fillStyle = '#FFFFFF'; g.fill();
+    const glow = (x, y, r, c) => { const q = g.createRadialGradient(x, y, 0, x, y, r); q.addColorStop(0, c); q.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = q; g.fillRect(0, 0, w, h); };
+    glow(w * 0.18, h * 0.3, w * 0.55, 'rgba(255,196,140,0.42)');      // warm window
+    glow(w * 0.92, h * 0.2, w * 0.5, 'rgba(110,150,255,0.30)');       // cool screen light
+    glow(w * 0.6, h * 1.05, w * 0.7, 'rgba(139,92,246,0.22)');
+    let seed = 7;
+    const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    for (let i = 0; i < 16; i++) {
+      const x = rnd() * w, y = rnd() * h * 0.75, r = (0.03 + rnd() * 0.08) * w;
+      const warm = rnd() > 0.45;
+      const q = g.createRadialGradient(x, y, r * 0.2, x, y, r);
+      q.addColorStop(0, warm ? 'rgba(255,214,160,0.28)' : 'rgba(150,200,255,0.24)');
+      q.addColorStop(0.8, warm ? 'rgba(255,190,130,0.12)' : 'rgba(120,170,255,0.10)');
+      q.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = q; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
     }
-    for (const i of [468, 473]) { const c = P(i); g.fillStyle = '#3B2A20'; g.beginPath(); g.arc(c.x, c.y, F * 0.045, 0, Math.PI * 2); g.fill(); g.fillStyle = '#FFFFFF'; g.beginPath(); g.arc(c.x - F * 0.012, c.y - F * 0.014, F * 0.012, 0, Math.PI * 2); g.fill(); }
-    // brows
-    g.lineCap = 'round'; g.lineWidth = Math.max(1, F * 0.04); g.strokeStyle = '#2D1B3D';
-    for (const list of [FM_BROW_A, FM_BROW_B]) { g.beginPath(); list.forEach((i, k) => { const pt = P(i); if (k) g.lineTo(pt.x, pt.y); else g.moveTo(pt.x, pt.y); }); g.stroke(); }
-    // nose
-    const n = P(1); g.strokeStyle = 'rgba(150,90,60,0.65)'; g.lineWidth = Math.max(1, F * 0.025);
-    g.beginPath(); g.arc(n.x, n.y - F * 0.02, F * 0.05, 0.2, Math.PI - 0.2); g.stroke();
-    // mouth
-    g.beginPath(); FM_LIPS.forEach((i, k) => { const pt = P(i); if (k) g.lineTo(pt.x, pt.y); else g.moveTo(pt.x, pt.y); }); g.closePath();
-    g.fillStyle = '#D9657A'; g.fill();
-    const l = P(61), r = P(291); g.strokeStyle = '#8E2F45'; g.lineWidth = Math.max(1, F * 0.018);
-    g.beginPath(); g.moveTo(l.x, l.y); g.quadraticCurveTo(P(14).x, P(14).y, r.x, r.y); g.stroke();
-    return P;
+    gr = g.createLinearGradient(0, h * 0.7, 0, h); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.5)');
+    g.fillStyle = gr; g.fillRect(0, 0, w, h);
   },
-  personPose(w, h, close) { return close ? { cx: w * 0.5, cy: h * 0.52, F: h * 0.4, roll: -0.08, yaw: 0.1 } : { cx: w * 0.5, cy: h * 0.5, F: h * 0.26, roll: 0, yaw: 0.05 }; },
 };
 
 /* ---------------- engine ---------------- */
@@ -9025,7 +9438,7 @@ function mkScratch() {
 injectCSS('lens-drawer', `
 #drawer-lens .drawer-body{gap:12px}
 .lens-preview .lens-face-chip{position:absolute;right:8px;top:8px;left:auto}
-.lens-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:4px;border-radius:16px;background:var(--surface-2);border:1px solid var(--hair);flex:none}
+.lens-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;padding:4px;border-radius:16px;background:var(--surface-2);border:1px solid var(--hair);flex:none}
 .lens-tab{appearance:none;border:0;position:relative;min-width:0;height:54px;padding:6px 0 5px;border-radius:12px;background:transparent;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:background .2s,color .2s;--duo:#A78BFA}
 .lens-tab svg{width:20px;height:20px;flex:none}
 .lens-tab:hover{color:var(--text)}
@@ -9063,7 +9476,7 @@ const LensDrawer = {
   bind() {
     if (this.bound) return;
     this.bound = true;
-    const TAB = { ai: ['bolt', 'AI', 'AI camera'], bg: ['image', 'Background', 'Backgrounds'], blur: ['portrait', 'Blur', 'Blur & studio light'], face: ['smile', 'Filters', 'Face filters'], look: ['palette', 'Looks', 'Color looks'], cam: ['cam', 'Camera', 'Camera settings'] };
+    const TAB = { ai: ['bolt', 'AI', 'AI camera'], bg: ['image', 'Scenes', 'Backgrounds'], blur: ['portrait', 'Blur', 'Blur & studio light'], face: ['smile', 'Filters', 'Face filters'], look: ['palette', 'Looks', 'Color looks'], cam: ['cam', 'Camera', 'Camera settings'] };
     for (const b of $$('#drawer-lens .lens-tab')) {
       const d = TAB[b.dataset.tab];
       if (d) { b.innerHTML = ICONS[d[0]] + `<span>${d[1]}</span>`; b.setAttribute('aria-label', d[2]); b.title = d[2]; }
@@ -9107,27 +9520,69 @@ const LensDrawer = {
     out.getContext('2d').drawImage(c, 0, 0);
     return out;
   },
-  scene(g, w, h, mode) {
-    const pp = Sample.personPose(w, h, false);
-    if (mode === 'blur-light' || mode === 'blur-heavy' || mode === 'studio-light') {
-      const k = mode === 'blur-heavy' ? 0.05 : 0.11, sw = Math.max(6, Math.round(w * k)), sh = Math.max(4, Math.round(h * k));
+  /* a still of your own camera (mirrored like your preview), or null when it's off */
+  snap(w, h) {
+    const v = Lens.video;
+    if (!Local.camOn || !v || !(v.videoWidth > 0)) return null;
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'), k = Math.max(w / v.videoWidth, h / v.videoHeight);
+    if (Settings.facing === 'user') { g.translate(w, 0); g.scale(-1, 1); }
+    try { g.drawImage(v, (w - v.videoWidth * k) / 2, (h - v.videoHeight * k) / 2, v.videoWidth * k, v.videoHeight * k); } catch { return null; }
+    return c;
+  },
+  /* Thumbnails show the effect itself: backgrounds as clean art, blur and looks on your own camera
+     (or a soft-focus room when the camera is off). No drawn people. */
+  scene(g, w, h, mode, me) {
+    let src = me;
+    if (!src) { src = document.createElement('canvas'); src.width = w; src.height = h; Sample.room(src.getContext('2d'), w, h); }
+    if (mode === 'blur-light' || mode === 'blur-heavy') {
+      const k = mode === 'blur-heavy' ? 0.06 : 0.12, sw = Math.max(6, Math.round(w * k)), sh = Math.max(4, Math.round(h * k));
       const sc = document.createElement('canvas'); sc.width = sw; sc.height = sh;
-      const sg = sc.getContext('2d'); sg.imageSmoothingQuality = 'high';
-      const big = document.createElement('canvas'); big.width = w; big.height = h; Sample.room(big.getContext('2d'), w, h);
-      if (mode === 'studio-light') { g.drawImage(big, 0, 0); g.fillStyle = 'rgba(0,0,0,0.42)'; g.fillRect(0, 0, w, h); }
-      else { sg.drawImage(big, 0, 0, sw, sh); g.imageSmoothingQuality = 'high'; g.drawImage(sc, 0, 0, w, h); }
-      Sample.person(g, pp, { lit: mode === 'studio-light' });
-      if (mode === 'studio-light') {
-        const gr = g.createRadialGradient(pp.cx, pp.cy - pp.F * 0.3, 0, pp.cx, pp.cy, pp.F * 1.6);
-        gr.addColorStop(0, 'rgba(255,240,225,0.22)'); gr.addColorStop(1, 'rgba(255,240,225,0)');
-        g.fillStyle = gr; g.fillRect(0, 0, w, h);
+      const sg = sc.getContext('2d'); sg.imageSmoothingQuality = 'high'; sg.drawImage(src, 0, 0, sw, sh);
+      g.imageSmoothingQuality = 'high'; g.drawImage(sc, 0, 0, w, h);
+      if (me) {                                       // you stay sharp in the middle, like the real effect
+        const fc = document.createElement('canvas'); fc.width = w; fc.height = h;
+        const fg = fc.getContext('2d'); fg.drawImage(me, 0, 0);
+        const m = fg.createRadialGradient(w / 2, h * 0.5, h * 0.18, w / 2, h * 0.5, h * 0.62);
+        m.addColorStop(0, 'rgba(0,0,0,1)'); m.addColorStop(1, 'rgba(0,0,0,0)');
+        fg.globalCompositeOperation = 'destination-in'; fg.fillStyle = m; fg.fillRect(0, 0, w, h);
+        g.drawImage(fc, 0, 0);
       }
       return;
     }
-    if (BG_ART[mode]) { const b = Lens.thumb(mode, w, h); g.drawImage(b, 0, 0); }
-    else if (mode === 'custom' && Lens.customImg) { const im = Lens.customImg, s = Math.max(w / im.naturalWidth, h / im.naturalHeight); g.drawImage(im, (w - im.naturalWidth * s) / 2, (h - im.naturalHeight * s) / 2, im.naturalWidth * s, im.naturalHeight * s); }
-    else Sample.room(g, w, h);
-    Sample.person(g, pp, {});
+    if (mode === 'studio-light') {
+      g.drawImage(src, 0, 0, w, h);
+      let q = g.createRadialGradient(w * 0.5, h * 0.4, 0, w * 0.5, h * 0.45, w * 0.55);
+      q.addColorStop(0, 'rgba(255,236,214,0.30)'); q.addColorStop(1, 'rgba(255,236,214,0)');
+      g.globalCompositeOperation = 'screen'; g.fillStyle = q; g.fillRect(0, 0, w, h);
+      g.globalCompositeOperation = 'source-over';
+      q = g.createRadialGradient(w * 0.5, h * 0.5, h * 0.35, w * 0.5, h * 0.5, w * 0.62);
+      q.addColorStop(0, 'rgba(0,0,0,0)'); q.addColorStop(1, 'rgba(0,0,0,0.6)');
+      g.fillStyle = q; g.fillRect(0, 0, w, h);
+      return;
+    }
+    if (BG_ART[mode]) { g.drawImage(Lens.thumb(mode, w, h), 0, 0); return; }
+    if (mode === 'custom' && Lens.customImg) { const im = Lens.customImg, s = Math.max(w / im.naturalWidth, h / im.naturalHeight); g.drawImage(im, (w - im.naturalWidth * s) / 2, (h - im.naturalHeight * s) / 2, im.naturalWidth * s, im.naturalHeight * s); return; }
+    g.drawImage(src, 0, 0, w, h);
+  },
+  /* a face filter on its own, like a product shot */
+  faceArt(g, w, h, id) {
+    const gr = g.createLinearGradient(0, 0, w, h); gr.addColorStop(0, '#1A1730'); gr.addColorStop(1, '#0E0C1A'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    const q = g.createRadialGradient(w / 2, h * 0.45, 0, w / 2, h * 0.45, w * 0.5);
+    q.addColorStop(0, 'rgba(139,92,246,0.35)'); q.addColorStop(0.6, 'rgba(34,211,238,0.10)'); q.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = q; g.fillRect(0, 0, w, h);
+    // draw the accessory on a big transparent canvas, find what it covers, then fit that in the middle
+    const S = 360, c = document.createElement('canvas'); c.width = c.height = S;
+    const cg = c.getContext('2d', { willReadFrequently: true });
+    try { FaceFX.paint(cg, id, faceAccessor(faceSynth({ cx: S / 2, cy: S * 0.55, F: S * 0.22, roll: -0.05, yaw: 0.08 }))); } catch { return; }
+    const d = cg.getImageData(0, 0, S, S).data;
+    let x0 = S, y0 = S, x1 = -1, y1 = -1;
+    for (let y = 0; y < S; y += 2) for (let x = 0; x < S; x += 2) if (d[(y * S + x) * 4 + 3] > 24) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    if (x1 < 0) return;
+    const bw = x1 - x0 + 2, bh = y1 - y0 + 2, k = Math.min((w * 0.7) / bw, (h * 0.6) / bh, 3);
+    g.save(); g.shadowColor = 'rgba(0,0,0,0.45)'; g.shadowBlur = 12; g.shadowOffsetY = 4;
+    g.drawImage(c, x0, y0, bw, bh, (w - bw * k) / 2, (h - bh * k) / 2 - h * 0.06, bw * k, bh * k);
+    g.restore();
   },
   opt({ label, pressed, onclick, art, glyph, disabled, cls, title }) {
     const b = h('button', { class: 'fx-opt' + (cls ? ' ' + cls : ''), type: 'button', 'aria-pressed': String(!!pressed), 'aria-label': label, title: title || label, disabled: !!disabled, onclick });
@@ -9147,16 +9602,19 @@ const LensDrawer = {
     for (const b of $$('#drawer-lens .lens-tab')) { let d = $('.on-dot', b); if (used[b.dataset.tab] && !d) b.append(h('span', { class: 'on-dot', 'aria-hidden': 'true' })); else if (!used[b.dataset.tab] && d) d.remove(); }
 
     const blurOn = LENS_BLURS.includes(st.bg) && st.bg !== 'none';
+    const me = this.snap(192, 132);
+    const live = (mode) => { const c = document.createElement('canvas'); c.width = 192; c.height = 132; this.scene(c.getContext('2d'), 192, 132, mode, me); return c; };
+    const art = (key, mode) => (me ? live(mode) : this.thumb(key, 192, 132, (g, w, hh) => this.scene(g, w, hh, mode)));
     // backgrounds (a background and a blur share one slot: picking one replaces the other)
     const bgGrid = $('#bg-grid');
     bgGrid.innerHTML = '';
     for (const b of LENS_BGS.filter((x) => !LENS_BLURS.includes(x.id) || x.id === 'none')) {
       const isNone = b.id === 'none', isCustom = b.id === 'custom';
       const label = isNone ? 'No background' : b.label;
-      let art = null, glyph = null;
+      let glyph = null;
       if (isCustom && !Lens.customImg) glyph = ICONS.upload;
-      else art = isCustom ? (() => { const c = document.createElement('canvas'); c.width = 192; c.height = 132; this.scene(c.getContext('2d'), 192, 132, 'custom'); return c; })() : this.thumb('bg:' + b.id, 192, 132, (g, w, hh) => this.scene(g, w, hh, isNone ? 'room' : b.id));
-      bgGrid.append(this.opt({ label, art, glyph, pressed: isNone ? st.bg === 'none' || blurOn : st.bg === b.id, onclick: () => {
+      const a = isCustom && !Lens.customImg ? null : isCustom ? live('custom') : isNone ? art('bg:none', 'room') : this.thumb('bg:' + b.id, 192, 132, (g, w, hh) => this.scene(g, w, hh, b.id));
+      bgGrid.append(this.opt({ label, art: a, glyph, pressed: isNone ? st.bg === 'none' || blurOn : st.bg === b.id, onclick: () => {
         if (isCustom && (!Lens.customImg || st.bg === 'custom')) { $('#bg-file').click(); return; }
         if (isNone && blurOn) return;                 // "no background" keeps an active blur
         Lens.set(b.id, null);
@@ -9169,7 +9627,7 @@ const LensDrawer = {
       const def = LENS_BGS.find((x) => x.id === id);
       const label = id === 'none' ? 'Off' : def ? def.label : id;
       blurGrid.append(this.opt({ label, pressed: id === 'none' ? !blurOn : st.bg === id,
-        art: this.thumb('blur:' + id, 192, 132, (g, w, hh) => this.scene(g, w, hh, id === 'none' ? 'room' : id)),
+        art: art('blur:' + id, id === 'none' ? 'room' : id),
         onclick: () => { if (id === 'none' && !blurOn) return; Lens.set(id, null); } }));
     }
     // face filters
@@ -9188,11 +9646,8 @@ const LensDrawer = {
       fGrid.append(this.opt({
         label: f.id === 'none' ? 'No filter' : f.label, pressed: FaceFX.filter() === f.id, disabled: failed && f.id !== 'none',
         title: failed && f.id !== 'none' ? 'Face tracking could not load' : f.label,
-        art: this.thumb('face:' + f.id, 192, 132, (g, w, hh) => {
-          const gr = g.createLinearGradient(0, 0, w, hh); gr.addColorStop(0, '#1E2235'); gr.addColorStop(1, '#2C2346'); g.fillStyle = gr; g.fillRect(0, 0, w, hh);
-          const P = Sample.person(g, Sample.personPose(w, hh, true), {});
-          FaceFX.paint(g, f.id, P);
-        }),
+        art: f.id === 'none' ? null : this.thumb('face2:' + f.id, 192, 132, (g, w, hh) => this.faceArt(g, w, hh, f.id)),
+        glyph: f.id === 'none' ? ICONS.smile : null,
         onclick: () => FaceFX.set(f.id),
       }));
     }
@@ -9202,7 +9657,7 @@ const LensDrawer = {
     const sg = $('#shader-grid');
     sg.innerHTML = '';
     for (const s of LENS_SHADERS) {
-      const c = this.thumb('look', 192, 132, (g, w, hh) => this.scene(g, w, hh, 'room'));
+      const c = art('look', 'room');
       if (s.css && s.css !== 'none') c.style.filter = s.css;
       sg.append(this.opt({ label: s.label, art: c, pressed: st.shader === s.id, cls: s.id === 'crt' ? 'crt' : '', onclick: () => Lens.set(null, s.id) }));
     }
@@ -12626,6 +13081,37 @@ injectCSS('cinema', `
 @media (prefers-reduced-motion:reduce){#watch-root.cinema.curtain::before,#watch-root.cinema.curtain::after{display:none}.cine-ambi{transition:none}#watch-root.cinema.ambi-yt .wt-media::before{animation:none}}
 `);
 
+/* ---- 29-calllog.js ---- */
+/* Recent calls on this device only (names, friend ids, times; never invite links) */
+const CallLog = {
+  KEY: 'vortex:calls', cur: null, nextFid: null,
+  list() { try { const a = JSON.parse(localStorage.getItem(this.KEY) || '[]'); return Array.isArray(a) ? a.filter((e) => e && Number.isFinite(e.at)) : []; } catch { return []; } },
+  save(a) { try { localStorage.setItem(this.KEY, JSON.stringify(a.slice(0, 30))); } catch { /* private mode */ } if (typeof App !== 'undefined') App.renderHub(); },
+  add(e) { const a = this.list(); a.unshift(e); this.save(a); },
+  clear() { this.save([]); },
+  begin(kind) { this.cur = { at: Date.now(), kind, names: new Map(), fids: new Set(this.nextFid ? [this.nextFid] : []) }; this.nextFid = null; },
+  friend(id) { if (this.cur && id) this.cur.fids.add(id); },
+  seen() { if (this.cur) for (const m of Net.members.values()) if (m.ready && m.name) this.cur.names.set(m.id, m.name); },
+  end() {
+    const c = this.cur;
+    this.cur = null;
+    if (!c) return;
+    this.add({ at: c.at, dur: Date.now() - c.at, kind: c.kind, names: [...new Set(c.names.values())].slice(0, 8), fids: [...c.fids].slice(0, 8) });
+  },
+  missed(name, from) { this.add({ at: Date.now(), dur: 0, kind: 'missed', names: [cleanName(name)], fids: from ? [from] : [] }); },
+  dur(ms) { const s = Math.round(ms / 1000), m = Math.floor(s / 60); return m >= 60 ? `${Math.floor(m / 60)} h ${m % 60} min` : m ? `${m} min` : `${s} s`; },
+  when(at) {
+    const d = new Date(at), t = new Date(), day = 864e5;
+    const time = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    const start = new Date(t.getFullYear(), t.getMonth(), t.getDate()).getTime();
+    if (at >= start) return time;
+    if (at >= start - day) return 'Yesterday ' + time;
+    if (at >= start - 6 * day) return d.toLocaleDateString([], { weekday: 'long' });
+    return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+  },
+};
+Bus.on('roster', () => CallLog.seen());
+
 /* ---- 30-app.js ---- */
 /* =====================================================================
    APP — green room, identity, friends UI, call lifecycle, panel bindings
@@ -12666,8 +13152,35 @@ const App = {
     this.renderIdentity();
     if (!name) setTimeout(() => { if (!IS_TOUCH && !Account.signedIn && !$('#gr-name-field').hidden) $('#gr-name').focus(); }, 300);
     Account.init();                                   // accounts load in the background; guests are never blocked
-    await Local.start();
-    this.afterMedia();
+    // like Meet and FaceTime, the home screen never opens the camera: only "Ready to join?" and calls do
+    this.greenMode(this.invited ? 'preview' : 'home');
+    this.renderHub();
+    setTimeout(() => { if (!this.inCall) Motion.enter($('#green .gr-body')); }, $('#splash') ? 1350 : 0);
+  },
+
+  /* camera + mic open the first time they're needed, and again after leaving a call */
+  async ensureMedia() {
+    if (Local.stopped) { await Local.resume(); this.afterMedia(); return; }
+    if (!this.mediaP) this.mediaP = Local.start().then(() => this.afterMedia());
+    await this.mediaP;
+  },
+  /* home: New call, join with a link, friends, recent calls · preview: "Ready to join?" with your camera */
+  greenMode(m) {
+    const g = $('#green');
+    if (g.dataset.mode !== m) { g.dataset.mode = m; Motion.enter(g.querySelector('.gr-body')); }
+    $('#gr-back').hidden = m !== 'preview';
+    if (m === 'preview') this.ensureMedia();
+    this.renderStart();
+  },
+  /* "Back" from "Ready to join?": drop the invite and turn the camera off again */
+  goHome() {
+    if (this.inCall || this.busy) return;
+    this.invited = null; this.inviteTok = '';
+    try { history.replaceState(null, '', location.pathname); } catch { /* */ }
+    this.status('');
+    this.greenMode('home');
+    const off = () => { if ($('#green').dataset.mode === 'home' && !this.inCall && !Local.stopped) Local.stopAll(); };
+    if (this.mediaP) this.mediaP.then(off); else off();
   },
 
   afterMedia() {
@@ -12686,13 +13199,14 @@ const App = {
   paintIcons() {
     const set = (sel, ic) => { const el = $(sel); if (el) el.innerHTML = ic; };
     const pre = (sel, ic) => { const el = $(sel); if (el) el.insertAdjacentHTML('afterbegin', ic); };   // keeps badges
+    set('#gr-back .gb-ic', ICONS.chevLeft);
     set('#gr-portrait', ICONS.portrait); set('#gr-fx', ICONS.image); set('#gr-flip', ICONS.flip);
     set('#gr-settings', ICONS.gear); pre('#gr-friends', ICONS.users);
     set('#room-copy-ic', ICONS.copy); set('#room-share', ICONS.share); set('#ppl-ic', ICONS.users);
-    set('#lay-grid', ICONS.grid); set('#lay-stage', ICONS.stage); set('#btn-settings', ICONS.gear); pre('#btn-friends', ICONS.users);
+    set('#tb-layout', ICONS.tiled); set('#tb-chat .ic', ICONS.chat); set('#btn-settings', ICONS.gear); pre('#btn-friends', ICONS.users);
     set('#d-mic-more', ICONS.chevUp); set('#d-cam-more', ICONS.chevUp);
     set('#d-share .ic', ICONS.screen); set('#d-pip .ic', ICONS.pip);
-    set('#d-chat .ic', ICONS.chat); set('#d-more .ic', ICONS.more); set('#d-end .ic', ICONS.phoneOff); set('#chat-send', ICONS.send);
+    set('#d-chat .ic', ICONS.chat); set('#d-more .ic', ICONS.moreV); set('#d-end .ic', ICONS.phoneOff); set('#chat-send', ICONS.send);
     set('#hand-btn .hb-ic', ICONS.hand); set('#lens-flip .ic-flip', ICONS.flip);
     for (const el of $$('.logo-mark')) el.innerHTML = LOGO();
     for (const el of $$('[data-ic]')) if (ICONS[el.dataset.ic]) el.innerHTML = ICONS[el.dataset.ic];
@@ -12827,6 +13341,8 @@ const App = {
     $('#gr-settings').onclick = () => Panels.toggle('drawer-settings');
     $('#gr-friends').onclick = () => Panels.toggle('drawer-friends');
     $('#gr-friends-all').onclick = () => Panels.open('drawer-friends');
+    $('#gr-back').onclick = () => this.goHome();
+    $('#hub-clear').onclick = () => CallLog.clear();
     $('#me-pill').onclick = (e) => this.openProfile(e.currentTarget);
     $('#gr-retry').onclick = async () => {
       Local.camErr = Local.micErr = null;
@@ -12858,7 +13374,7 @@ const App = {
   },
   /* answer a ring: choose mic / camera in a live preview, then join */
   async prejoin(o) {
-    if (Local.stopped) { await Local.resume(); this.afterMedia(); }
+    await this.ensureMedia();
     PreJoin.open(o);
   },
 
@@ -12939,9 +13455,9 @@ const App = {
     this.invited = code; this.inviteTok = m[1];
     try { history.replaceState(null, '', location.pathname + '?room=' + encodeURIComponent(code) + '&inv=' + m[1]); } catch { /* */ }
     $('#gr-code').value = ''; $('#gr-code-go').disabled = true;
-    this.renderStart();
-    if (!Account.signedIn && !$('#gr-name').value.trim()) { this.status("You're invited. Enter your name, then tap Join now."); $('#gr-name').focus(); return; }
-    this.enter('join');
+    this.status(!Account.signedIn && !$('#gr-name').value.trim() ? "You're invited. Enter your name, then tap Join now." : '');
+    this.greenMode('preview');
+    if (!Account.signedIn && !$('#gr-name').value.trim()) $('#gr-name').focus();
   },
 
   /* start a call or join one by link; resolves true once you're in */
@@ -12977,10 +13493,12 @@ const App = {
     this.busy = true;
     $('#gr-start').disabled = true;
     AudioEngine.resume();
+    this.enterMode = mode;
     const say = (m) => { this.status(m); JoinSheet.status(m); };
     JoinSheet.open(mode === 'start' ? 'Starting your call…' : opts.label ? `Joining ${opts.label}…` : 'Joining the call…', () => this.enter(mode, opts));
     say(mode === 'start' ? 'Starting your call…' : 'Joining the call…');
     try {
+      await this.ensureMedia();
       if (mode === 'start') await Net.startNew(name);
       else await Net.join(code, name, say, opts.tok || this.inviteTok || '');
       JoinSheet.close();
@@ -13012,8 +13530,9 @@ const App = {
     $('#call').hidden = true;
     $('#left').hidden = true;
     $('#green').hidden = false;
-    if (Local.stopped) { await Local.resume(); this.afterMedia(); }
     this.invited = room;
+    this.greenMode('preview');
+    await this.ensureMedia();
     this.updateGreen();
     const ok = await this.enter('join', { code: room, tok, label });
     if (!ok && Account.signedIn) Social.setStatus('online');
@@ -13047,6 +13566,12 @@ const App = {
     Social.setStatus('in-call');
     Background.start();
     Sound.play('join', 0.6);
+    CallLog.begin(this.enterMode === 'start' ? 'out' : 'in');
+    this.callAt = Date.now();
+    clearInterval(this.clockTimer);
+    this.clockTimer = setInterval(() => this.renderCallId(), 1000);
+    this.renderCallId();
+    Motion.view($('#call'));
   },
 
   /* leave the squad; { switching: true } keeps camera + mic for the next one */
@@ -13065,8 +13590,12 @@ const App = {
     SquadPiP.close();
     Panels.close();
     Knocks.clear();
+    CallLog.seen();
     await Net.leave();
+    CallLog.end();
+    NetQ.reset();
     clearInterval(this.teleTimer);
+    clearInterval(this.clockTimer);
     try { if (this.wake) this.wake.release(); } catch { /* */ }
     try { navigator.mediaSession.setActionHandler('enterpictureinpicture', null); } catch { /* */ }
     $('#audio-unlock').hidden = true;
@@ -13077,6 +13606,7 @@ const App = {
     $('#call').hidden = true;
     $('#toasts').innerHTML = '';
     $('#left').hidden = false;
+    Motion.view($('#left .left-card'));
     $('#left-sub').textContent = 'Rejoin with the same link, or go back to start a new call.';
     const back = Account.signedIn ? Net.myLink : this.inviteTok;
     $('#left-rejoin').onclick = () => { location.href = location.pathname + '?room=' + encodeURIComponent(room) + (back ? '&inv=' + back : ''); };   // not in a call any more: no leave prompt
@@ -13156,8 +13686,12 @@ const App = {
     $('#invite-share').onclick = () => this.shareInvite();
     $('#invite-ring').onclick = () => { if (Account.signedIn) Panels.open('drawer-friends'); else this.accountAction(); };
     $('#lock-pill').onclick = () => { if (Net.amLeader()) Net.setLocked(false); };
-    $('#lay-grid').onclick = () => Layout.setMode('grid');
-    $('#lay-stage').onclick = () => Layout.setMode('stage');
+    $('#tb-layout').onclick = (e) => { this.renderLayoutMenu(); Panels.toggle('pop-layout', e.currentTarget); };
+    $('#tb-chat').onclick = () => Panels.toggle('drawer-chat');
+    $('#tb-people').onclick = () => Panels.toggle('drawer-people');
+    $('#people-q').addEventListener('input', () => this.renderPeople());
+    $('#people-invite').onclick = () => { Panels.close('drawer'); this.inviteFlow(); };
+    $('#people-stats').onclick = () => { this.peopleStats = !this.peopleStats; this.renderPeople(); };
     $('#btn-settings').onclick = () => Panels.toggle('drawer-settings');
     $('#btn-friends').onclick = () => Panels.toggle('drawer-friends');
     $('#audio-unlock-btn').onclick = () => AudioUnlock.unlock();
@@ -13191,47 +13725,118 @@ const App = {
     window.addEventListener('pagehide', () => { if (this.inCall) { Net.broadcast({ t: 'BYE' }); Net.teardown(); } });
   },
 
-  /* More: everything that isn't a core dock button. Mic and camera settings
-     live behind the dock arrows on wider screens; phones hide those arrows,
-     so there (and only there) they appear here as a second row. */
-  renderMore() {
-    const g = $('#more-grid');
-    if (!g) return;
-    g.innerHTML = '';
-    const anchor = $('#d-more');
-    const item = (o) => g.append(h('button', {
-      class: 'more-item' + (o.on ? ' on' : '') + (o.cls ? ' ' + o.cls : ''), type: 'button', disabled: !!o.disabled,
-      title: o.title || o.label, 'aria-pressed': o.toggle ? String(!!o.on) : null, style: { '--mi': o.hue },
-      onclick: () => { if (!o.keep) Panels.close('pop'); o.fn(); },
-    }, h('span', { class: 'mi-ic', svg: o.icon }), h('span', { class: 'mi-l', text: o.label })));
-    item({ icon: ICONS.userPlus, hue: '#22D3EE', label: Account.signedIn ? 'Invite / Ring' : 'Invite', fn: () => this.inviteFlow() });
-    // screen sharing is desktop only: phones and tablets never show it (they still see others present)
-    if (CAN_SHARE_SCREEN) item({ icon: Share.active ? ICONS.screenStop : ICONS.screen, hue: '#60A5FA', label: Share.active ? 'Stop sharing' : 'Share screen', on: Share.active, toggle: true, fn: () => (Share.active ? Share.stop() : Share.start()) });
-    item({ icon: ICONS.pip, hue: '#8B5CF6', label: 'Picture-in-picture', on: SquadPiP.isOpen(), toggle: true, disabled: !SquadPiP.supported(),
-      title: SquadPiP.supported() ? 'Pop everyone out into a floating window' : "This browser can't show a floating window", fn: () => SquadPiP.toggle() });
-    item({ icon: ICONS.smile, hue: '#FBBF24', label: 'Reactions & sounds', keep: true, fn: () => Panels.open('pop-react', anchor) });
-    item({ icon: ICONS.cc, hue: '#34D399', label: Captions.enabled ? 'Captions on' : 'Live captions', on: Captions.enabled, toggle: true, fn: () => Captions.toggle() });
-    item({ icon: ICONS.tv, hue: '#EC4899', label: 'Watch together', on: Stage.watchOn, fn: () => Watch.open() });
-    item({ icon: ICONS.signal, hue: '#22D3EE', label: Radar.sharing ? 'Radar · sharing' : 'Radar', on: Radar.sharing, fn: () => Radar.open() });
-    item({ icon: ICONS.bolt, hue: '#FBBF24', label: Moments.on ? `Auto clips on${Moments.clips.length ? ' · ' + Moments.clips.length : ''}` : Moments.clips.length ? `Auto clips · ${Moments.clips.length}` : 'Auto clips', on: Moments.on, toggle: true,
-      disabled: typeof window.MediaRecorder === 'undefined', fn: () => Moments.menu() });
-    item({ icon: ICONS.rec, hue: '#FB4F6E', label: Recorder.active ? 'Stop recording' : 'Record clip', on: Recorder.active, cls: 'rec', toggle: true,
-      disabled: typeof window.MediaRecorder === 'undefined', title: typeof window.MediaRecorder === 'undefined' ? "This browser can't record" : 'Record faces and call audio to a file on this device', fn: () => Recorder.toggle() });
-    const host = Net.amLeader();
-    item({ icon: Net.locked ? ICONS.lock : ICONS.unlock, hue: '#FB923C', label: Net.locked ? 'Unlock call' : 'Lock call', on: Net.locked, cls: 'lock', toggle: true,
-      disabled: !host, title: host ? 'New people wait until you admit them' : 'Only the room host can lock or unlock', fn: () => Net.setLocked(!Net.locked) });
-    const row = $('#more-row');
-    row.innerHTML = '';
-    row.hidden = !IS_NARROW();
-    if (IS_NARROW()) {
-      // phones have no layout switch in the top bar, so it lives here
-      const stage = Settings.layout === 'stage';
-      row.append(
-        h('button', { class: 'btn btn-sm', type: 'button', onclick: () => Panels.open('pop-audio', anchor) }, h('span', { svg: ICONS.mic }), 'Mic & gate'),
-        h('button', { class: 'btn btn-sm', type: 'button', onclick: () => { Panels.close('pop'); Panels.open('drawer-lens'); } }, h('span', { svg: ICONS.image }), 'Effects'),
-        h('button', { class: 'btn btn-sm', type: 'button', title: stage ? 'Show everyone the same size' : 'Spotlight whoever is talking', onclick: () => { Panels.close('pop'); Layout.setMode(stage ? 'grid' : 'stage'); } },
-          h('span', { svg: stage ? ICONS.grid : ICONS.stage }), stage ? 'Grid view' : 'Speaker view'));
+  /* top bar: who you're with, and for how long */
+  renderCallId() {
+    if (!this.inCall) return;
+    const ms = Net.readyMembers();
+    const t = !ms.length ? (Ring.out ? `Calling ${Ring.out.name}…` : 'Waiting for others')
+      : ms.length === 1 ? ms[0].name : ms.length === 2 ? `${ms[0].name} & ${ms[1].name}` : `${ms[0].name}, ${ms[1].name} +${ms.length - 2}`;
+    const ti = $('#call-title');
+    if (ti.textContent !== t) ti.textContent = t;
+    const sec = Math.max(0, Math.floor((Date.now() - (this.callAt || Date.now())) / 1000));
+    const hh = Math.floor(sec / 3600), mm = Math.floor(sec / 60) % 60, ss = sec % 60;
+    $('#call-timer').textContent = (hh ? hh + ':' + String(mm).padStart(2, '0') : String(mm).padStart(2, '0')) + ':' + String(ss).padStart(2, '0');
+  },
+
+  /* Tiled · Sidebar · Spotlight (Zoom / Meet style) */
+  renderLayoutMenu() {
+    const box = $('#lay-list');
+    box.innerHTML = '';
+    const cur = Settings.layout === 'spot' ? 'spot' : Settings.layout === 'stage' ? 'stage' : 'grid';
+    const opts = [
+      { id: 'grid', icon: ICONS.tiled, label: 'Tiled', sub: 'Everyone the same size' },
+      { id: 'stage', icon: ICONS.sidebar, label: 'Sidebar', sub: 'Whoever talks, big; everyone else on the side' },
+      { id: 'spot', icon: ICONS.spotlight, label: 'Spotlight', sub: 'Only whoever is talking (or pinned)' },
+    ];
+    for (const o of opts) box.append(h('button', { class: 'lay-opt' + (o.id === cur ? ' on' : ''), type: 'button', role: 'menuitemradio', 'aria-checked': String(o.id === cur), onclick: () => { Panels.close('pop'); Layout.setMode(o.id); } },
+      h('span', { class: 'lo-ic', svg: o.icon }), h('span', { class: 'lo-t' }, h('b', { text: o.label }), h('span', { text: o.sub })), h('span', { class: 'lo-check', svg: ICONS.check })));
+  },
+
+  /* People: search, connection bars, mic state, and a menu per person */
+  renderPeople() {
+    const list = $('#people-list');
+    if (!list) return;
+    const q = ($('#people-q').value || '').trim().toLowerCase();
+    const ms = Net.readyMembers();
+    $('#people-title').textContent = `People (${ms.length + 1})`;
+    $('#people-invite').hidden = !Account.signedIn;
+    const st = $('#people-stats');
+    st.textContent = this.peopleStats ? 'Hide call stats' : 'Show call stats';
+    st.setAttribute('aria-pressed', String(!!this.peopleStats));
+    list.innerHTML = '';
+    const ld = Net.leader(), leader = ld && ld.id === Net.me.id ? 'self' : ld && ld.id;
+    const rows = [{ key: 'self', name: Net.me.name || 'You', av: Avatars.mine(), you: true, mic: Local.micOn, hand: Reactions.hand, level: NetQ.selfBad ? 1 : 4, m: null },
+      ...ms.map((m) => ({ key: m.id, name: m.name, av: Avatars.clean(m.avatar), mic: m.st.mic !== false, hand: !!m.st.hand, share: !!m.st.share, level: NetQ.level(m), m }))];
+    for (const r of rows) {
+      if (q && !r.name.toLowerCase().includes(q)) continue;
+      const tags = [];
+      if (r.you) tags.push('You');
+      if (r.key === leader) tags.push('Host');
+      const sub = r.hand ? 'Hand raised' : r.share ? 'Presenting' : r.m && r.m.poor ? 'Unstable connection' : r.you ? (Local.camOn ? 'Camera on' : 'Camera off') : '';
+      const stats = this.peopleStats && r.m ? h('div', { class: 'pr-stats mono', text: `${r.m.qRtt != null || r.m.rtt != null ? Math.round(r.m.qRtt ?? r.m.rtt) + ' ms' : '— ms'} · ${((r.m.qIn || 0) * 100).toFixed(1)}% loss · ${r.m.relay ? 'relay' : 'direct'}` }) : null;
+      const bars = h('span', { class: 'sig l' + r.level, title: ['', 'Poor', 'Fair', 'Good', 'Excellent'][r.level] + ' connection', 'aria-label': ['', 'Poor', 'Fair', 'Good', 'Excellent'][r.level] + ' connection' }, h('i'), h('i'), h('i'), h('i'));
+      list.append(h('div', { class: 'prow' + (r.m && r.m.poor ? ' poor' : '') },
+        avFill(h('span', { class: 'av' }), r.name, r.av),
+        h('div', { class: 'pr-main' },
+          h('div', { class: 'pr-name' }, h('span', { text: r.name }), tags.map((t) => h('span', { class: 'pr-tag', text: t }))),
+          sub ? h('div', { class: 'pr-sub', text: sub }) : null, stats),
+        bars,
+        h('span', { class: 'pr-mic' + (r.mic ? '' : ' off'), svg: r.mic ? ICONS.mic : ICONS.micOff, title: r.mic ? 'Mic on' : 'Muted' }),
+        h('button', { class: 'pr-more', type: 'button', 'aria-label': `Options for ${r.name}`, svg: ICONS.moreV, onclick: (e) => this.personMenu(r, e.currentTarget) })));
     }
+    if (!list.children.length) list.append(h('div', { class: 'hub-empty', text: 'Nobody here matches that name.' }));
+  },
+  personMenu(r, anchor) {
+    const box = $('#pmenu-list');
+    box.innerHTML = '';
+    const item = (icon, label, fn) => box.append(h('button', { class: 'ml-item', type: 'button', onclick: () => { Panels.close('pop'); fn(); } }, h('span', { class: 'ml-ic', svg: icon }), h('span', { class: 'ml-l', text: label })));
+    const pinned = Layout.pinned === r.key;
+    item(ICONS.pin, pinned ? 'Unpin' : 'Pin to the screen', () => Layout.togglePin(r.key));
+    item(ICONS.spotlight, 'Spotlight', () => { if (Layout.pinned !== r.key) Layout.togglePin(r.key); Layout.setMode('spot'); Panels.close('drawer'); });
+    if (r.m) item(ICONS.stats, 'Connection details', () => {
+      const m = r.m, rtt = m.qRtt ?? m.rtt;
+      toast(`${m.name}: ${['', 'poor', 'fair', 'good', 'excellent'][NetQ.level(m)] || 'unknown'} connection · ${rtt != null ? Math.round(rtt) + ' ms' : '— ms'} · ${((m.qIn || 0) * 100).toFixed(1)}% loss · ${m.relay ? 'through the relay' : 'direct'}`, { ms: 6000 });
+    });
+    if (r.you) item(ICONS.image, 'Camera effects', () => { Panels.close('drawer'); Panels.open('drawer-lens'); });
+    Panels.open('pop-pmenu', anchor);
+  },
+
+  /* ⋮ More: reactions on top, then a list (a bottom sheet on phones, a menu on computers) */
+  renderMore() {
+    const g = $('#more-grid'), em = $('#more-emoji');
+    if (!g) return;
+    g.innerHTML = ''; em.innerHTML = '';
+    for (const e of REACTION_EMOJI.slice(0, 7)) em.append(h('button', { type: 'button', text: e, 'aria-label': `React ${e}`, onclick: () => Reactions.send(e) }));
+    em.append(h('button', { class: 'em-more', type: 'button', 'aria-label': 'More reactions and sounds', svg: ICONS.plus, onclick: () => { Panels.close('pop'); Panels.open('pop-react', $('#d-more')); } }));
+    const item = (o) => {
+      if (o.hide) return;
+      g.append(h('button', {
+        class: 'ml-item' + (o.on ? ' on' : '') + (o.cls ? ' ' + o.cls : ''), type: 'button', disabled: !!o.disabled,
+        title: o.title || o.label, 'aria-pressed': o.toggle ? String(!!o.on) : null, style: { '--mi': o.hue },
+        onclick: () => { if (!o.keep) Panels.close('pop'); o.fn(); },
+      }, h('span', { class: 'ml-ic', svg: o.icon }), h('span', { class: 'ml-l', text: o.label }), o.toggle ? h('span', { class: 'ml-sw', 'aria-hidden': 'true' }) : null));
+    };
+    const noRec = typeof window.MediaRecorder === 'undefined';
+    item({ icon: ICONS.hand, hue: '#FBBF24', label: Reactions.hand ? 'Lower hand' : 'Raise hand', on: Reactions.hand, fn: () => Reactions.toggleHand() });
+    item({ icon: ICONS.userPlus, hue: '#22D3EE', label: Account.signedIn ? 'Add people' : 'Invite', fn: () => this.inviteFlow() });
+    // screen sharing is desktop only: phones and tablets never show it (they still see others present)
+    item({ hide: !CAN_SHARE_SCREEN, icon: Share.active ? ICONS.screenStop : ICONS.screen, hue: '#60A5FA', label: Share.active ? 'Stop sharing screen' : 'Share screen', on: Share.active, fn: () => (Share.active ? Share.stop() : Share.start()) });
+    item({ icon: ICONS.sparkles, hue: '#8B5CF6', label: 'Backgrounds and effects', fn: () => Panels.open('drawer-lens') });
+    item({ icon: ICONS.noise, hue: '#34D399', label: 'Noise reduction', on: Settings.aiNoise !== false, toggle: true, keep: true, fn: () => { $('#ai-noise').click(); this.renderMore(); } });
+    item({ icon: ICONS.cc, hue: '#34D399', label: 'Live captions', on: Captions.enabled, toggle: true, keep: true, fn: () => { Captions.toggle(); this.renderMore(); } });
+    item({ icon: ICONS.tv, hue: '#EC4899', label: 'Watch together', on: Stage.watchOn, fn: () => Watch.open() });
+    item({ icon: ICONS.rec, hue: '#FB4F6E', label: Recorder.active ? 'Stop recording' : 'Start recording', on: Recorder.active, cls: 'rec', disabled: noRec,
+      title: noRec ? "This browser can't record" : 'Record faces and call audio to a file on this device', fn: () => Recorder.toggle() });
+    item({ icon: ICONS.bolt, hue: '#FBBF24', label: Moments.clips.length ? `Auto clips · ${Moments.clips.length}` : 'Auto clips', on: Moments.on, disabled: noRec, fn: () => Moments.menu() });
+    item({ hide: !SquadPiP.supported(), icon: ICONS.pip, hue: '#8B5CF6', label: 'Picture-in-picture', on: SquadPiP.isOpen(), toggle: true, fn: () => SquadPiP.toggle() });
+    item({ icon: ICONS.signal, hue: '#22D3EE', label: Radar.sharing ? 'Radar · sharing' : 'Radar', on: Radar.sharing, fn: () => Radar.open() });
+    const host = Net.amLeader();
+    item({ icon: Net.locked ? ICONS.lock : ICONS.unlock, hue: '#FB923C', label: Net.locked ? 'Unlock call' : 'Lock call', on: Net.locked, toggle: true, cls: 'lock',
+      disabled: !host, title: host ? 'New people wait until you admit them' : 'Only the host can lock or unlock', fn: () => Net.setLocked(!Net.locked) });
+    item({ icon: ICONS.stats, hue: '#60A5FA', label: 'Call stats', fn: () => { this.peopleStats = true; Panels.open('drawer-people'); } });
+    item({ icon: ICONS.mic, hue: '#22D3EE', label: 'Audio settings', keep: true, fn: () => Panels.open('pop-audio', $('#d-more')) });
+    item({ icon: ICONS.gear, hue: '#9D99B8', label: 'Settings', fn: () => Panels.open('drawer-settings') });
+    $('#more-row').hidden = true;
   },
 
 
@@ -13272,6 +13877,7 @@ const App = {
     $('#set-acct-av').onclick = () => $('#acct-file').click();
     $('#set-acct-btn').onclick = () => this.accountAction();
     $('#set-save-supa').onclick = () => this.saveSupabase();
+    $('#set-relay-test').onclick = () => this.renderRelay(true);
     $('#set-copy-report').onclick = async () => { const ok = await copyText(NetLog.text()); toast(ok ? 'Connection report copied' : "Couldn't copy the report"); };
     // friends drawer
     $('#friends-signin').onclick = () => this.accountAction();
@@ -13393,24 +13999,57 @@ const App = {
     }
   },
   /* green-room quick strip: online friends, one tap to ring */
+  /* home: friends FaceTime-style (tap a face to ring them; offline friends get a call alert) */
   renderStrip() {
-    const wrap = $('#gr-friends-strip'), strip = $('#fstrip');
-    if (!wrap) return;
-    if (!Account.signedIn) { wrap.hidden = true; return; }
-    wrap.hidden = false;
+    const strip = $('#fstrip');
+    if (!strip) return;
     strip.innerHTML = '';
-    const fr = Social.friends(), on = fr.filter((f) => f.presence !== 'offline');
-    $('.label', wrap).textContent = on.length ? 'Friends online' : fr.length ? 'No friends online right now' : 'Add friends to call them in one tap';
-    strip.hidden = !on.length && !!fr.length;
-    for (const f of on.slice(0, 16)) {
-      strip.append(h('button', { class: 'fchip', type: 'button', title: `Call ${f.display_name} (${this.presLabel(f.presence)})`, 'aria-label': `Call ${f.display_name}`, onclick: () => this.callFriend(f.id) },
-        h('span', { class: 'fav' }, avFill(h('span', { class: 'av' }), f.display_name, f.avatar_url), h('span', { class: 'pdot ' + f.presence }), h('span', { class: 'fcall', svg: ICONS.phone })),
-        h('span', { class: 'fn', text: f.display_name })));
+    const lab = $('#gr-friends-strip .label');
+    $('#gr-friends-all').hidden = !Account.signedIn;
+    if (!Account.signedIn) {
+      lab.textContent = 'Friends';
+      const offer = Account.configured && !!Account.sb;
+      strip.append(h('div', { class: 'hub-empty' },
+        h('span', { text: offer ? "Sign in to see who's online and call your friends in one tap." : "Accounts are offline, so friends and ringing aren't available right now." }),
+        offer ? h('button', { class: 'btn btn-sm btn-primary', type: 'button', onclick: () => Auth.open('signin') }, 'Sign in') : null));
+      this.renderHub();
+      return;
     }
-    if (!fr.length) {
-      strip.append(h('button', { class: 'fchip', type: 'button', onclick: () => Panels.open('drawer-friends') },
-        h('span', { class: 'fav' }, h('span', { class: 'av', svg: ICONS.userPlus, style: { color: 'var(--cyan)', borderStyle: 'dashed' } })),
-        h('span', { class: 'fn', text: 'Add friend' })));
+    const rank = { 'in-call': 0, online: 1, offline: 2 };
+    const fr = Social.friends().slice().sort((x, y) => (rank[x.presence] ?? 2) - (rank[y.presence] ?? 2) || String(x.display_name).localeCompare(y.display_name));
+    const on = fr.filter((f) => f.presence !== 'offline').length;
+    lab.textContent = on ? `Friends · ${on} online` : 'Friends';
+    for (const f of fr.slice(0, 11)) {
+      strip.append(h('button', { class: 'hf' + (f.presence === 'offline' ? ' away' : ''), type: 'button', title: `Call ${f.display_name} (${this.presLabel(f.presence)})`, 'aria-label': `Call ${f.display_name}, ${this.presLabel(f.presence)}`, onclick: () => this.callFriend(f.id) },
+        h('span', { class: 'fav' }, avFill(h('span', { class: 'av' }), f.display_name, f.avatar_url), h('span', { class: 'pdot ' + f.presence }), h('span', { class: 'hf-call', svg: ICONS.cam })),
+        h('span', { class: 'fn', text: f.display_name }),
+        h('span', { class: 'fs', text: this.presLabel(f.presence) })));
+    }
+    strip.append(h('button', { class: 'hf add', type: 'button', onclick: () => Panels.open('drawer-friends') },
+      h('span', { class: 'fav' }, h('span', { class: 'av', svg: ICONS.userPlus })),
+      h('span', { class: 'fn', text: 'Add friend' }), h('span', { class: 'fs', text: fr.length ? `${fr.length} total` : 'Find people' })));
+    this.renderHub();
+  },
+  /* home: recent calls, newest first; friends get a call-back button */
+  renderHub() {
+    const box = $('#hub-recents');
+    if (!box) return;
+    const list = CallLog.list();
+    box.innerHTML = '';
+    $('#hub-clear').hidden = !list.length;
+    if (!list.length) { box.append(h('div', { class: 'hub-empty' }, h('span', { text: 'Calls you make and get will show up here.' }))); return; }
+    for (const e of list.slice(0, 8)) {
+      const fid = Account.signedIn ? (e.fids || []).find((id) => Social.isFriend(id)) : null;
+      const f = fid ? Social.people.get(fid) : null;
+      const name = f ? f.display_name + ((e.names || []).length > 1 ? ` +${e.names.length - 1}` : '') : (e.names || []).join(', ') || 'Just you';
+      const kind = e.kind === 'missed' ? 'Missed call' : e.kind === 'in' ? 'Incoming' : 'Outgoing';
+      box.append(h('div', { class: 'rc' + (e.kind === 'missed' ? ' missed' : '') },
+        avFill(h('span', { class: 'av' }), f ? f.display_name : (e.names || [])[0] || '?', f ? f.avatar_url : ''),
+        h('div', { class: 'rc-main' },
+          h('div', { class: 'rc-name', text: name }),
+          h('div', { class: 'rc-sub' }, h('span', { svg: e.kind === 'missed' ? ICONS.callMiss : e.kind === 'in' ? ICONS.callIn : ICONS.callOut }),
+            h('span', { text: kind + (e.dur >= 1000 ? ' · ' + CallLog.dur(e.dur) : '') + ' · ' + CallLog.when(e.at) }))),
+        fid ? h('button', { class: 'rc-btn', type: 'button', title: `Call ${f.display_name}`, 'aria-label': `Call ${f.display_name}`, svg: ICONS.cam, onclick: () => this.callFriend(fid) }) : null));
     }
   },
   renderBadges() {
@@ -13566,6 +14205,26 @@ const App = {
     this.renderIdentity();
     this.fillDevices();
     this.renderDiag();
+    $('#set-present').hidden = !CAN_SHARE_SCREEN;
+    $('#set-version').textContent = 'Version ' + APP_VERSION;
+    $('#set-adv').open = !!(Settings.turn.urls || Settings.server.host);
+    this.renderRelay();
+  },
+  /* the Cloudflare TURN relay is automatic: show whether it's ready, and test it for real */
+  async renderRelay(test) {
+    const dot = $('#set-relay-dot'), ti = $('#set-relay-title'), sub = $('#set-relay-sub'), btn = $('#set-relay-test');
+    const set = (st, t, d) => { dot.className = 'rl-dot ' + st; ti.textContent = t; if (d) sub.textContent = d; };
+    if (!TURN_CREDENTIALS_URL) { set('bad', 'No relay on this site', 'Calls on strict networks may not connect.'); btn.hidden = true; return; }
+    if (!test) set('wait', 'Checking the relay…');
+    await Ice.ready();
+    if (!Ice.list) { set('bad', "Relay unavailable", `Direct calls still work. (${Ice.failed || 'no answer'})`); return; }
+    if (!test) { set('ok', 'Relay ready', 'Calls connect directly when they can, and through the Vortex relay (Cloudflare) on strict networks like mobile data.'); return; }
+    btn.disabled = true;
+    set('wait', 'Testing the relay…');
+    const r = await Ice.test();
+    btn.disabled = false;
+    if (r.ok) set('ok', `Relay works · ${r.ms} ms`, `Reached the Cloudflare relay${r.proto ? ' over ' + r.proto.toUpperCase() : ''}. Calls will connect even on strict networks.`);
+    else set('bad', "The relay didn't answer", 'Your network may block it. Direct calls still work; try another network to compare.');
   },
   renderDiag() {
     const d = $('#diag');
@@ -13626,7 +14285,7 @@ const App = {
     Bus.on('local:state', () => { Chrome.updateDock(); Tiles.updateSelf(); this.updateGreen(); SquadPiP.refresh(); Background.sync(); });
     Bus.on('local:devices', () => { this.fillDevices(); this.updateGreen(); });
     Bus.on('vad:dominant', () => { if (Settings.layout === 'stage' && !Layout.pinned && !Stage.current()) Layout.apply(); });
-    Bus.on('roster', () => { Chrome.updateDock(); Background.sync(); if (Panels.isOpen('drawer-settings')) this.renderDiag(); });
+    Bus.on('roster', () => { Chrome.updateDock(); Background.sync(); if (Panels.isOpen('drawer-settings')) this.renderDiag(); this.renderCallId(); if (Panels.isOpen('drawer-people')) this.renderPeople(); });
     Bus.on('lock', () => { Chrome.updateDock(); if (Panels.isOpen('drawer-settings')) this.renderDiag(); });
     Bus.on('captions', () => Chrome.updateDock());
     Bus.on('net:sig', (ok) => { const p = $('#sig-pill'); if (p) p.hidden = ok || !this.inCall; });
@@ -13658,6 +14317,8 @@ const App = {
       if (id === 'drawer-friends') { this.renderFriends(); if (Account.signedIn) Social.refresh(); }
       if (id === 'pop-audio') { this.syncDsp(); this.fillDevices(); }
       if (id === 'pop-more') this.renderMore();
+      if (id === 'drawer-people') this.renderPeople();
+      if (id === 'pop-layout') this.renderLayoutMenu();
       if (id === 'pop-account') this.renderAccountPop();
     });
     Bus.on('vad:tick', () => { Tiles.vadTick(); SquadPiP.docTick(); });
