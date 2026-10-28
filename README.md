@@ -3,15 +3,36 @@
 </p>
 
 <p align="center">
-  <a href="https://vortex-video.pages.dev"><b>Open Vortex Video</b></a> ·
-  <a href="https://vortex-video.pages.dev/download/android"><b>Download for Android</b></a> ·
+  <a href="https://vortex-video.pages.dev"><img alt="Open in your browser" src="https://img.shields.io/badge/Open-in%20your%20browser-8B5CF6?style=for-the-badge&logo=googlechrome&logoColor=white"></a>
+  <a href="https://github.com/itbelikethatbruh/vortex-video/releases/latest/download/Vortex-Video-Setup.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows-0078D4?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="https://vortex-video.pages.dev/download/android"><img alt="Download for Android" src="https://img.shields.io/badge/Download-Android-34D399?style=for-the-badge&logo=android&logoColor=white"></a>
+</p>
+
+<p align="center">
+  <img alt="Status: beta" src="https://img.shields.io/badge/status-beta-EC4899">
+  <img alt="Latest Windows release" src="https://img.shields.io/github/v/release/itbelikethatbruh/vortex-video?label=windows&color=22D3EE">
+  <img alt="Up to 8 people" src="https://img.shields.io/badge/calls-up%20to%208%20people-8B5CF6">
+  <img alt="Peer-to-peer WebRTC" src="https://img.shields.io/badge/WebRTC-peer--to--peer-34D399">
+</p>
+
+<p align="center">
+  <a href="https://vortex-video.pages.dev/welcome.html">Website</a> ·
+  <a href="#features">Features</a> ·
   <a href="#how-it-works">How it works</a> ·
+  <a href="#downloads">Downloads</a> ·
   <a href="#run-your-own">Run your own</a>
 </p>
 
 ---
 
-**Vortex Video is a hangout app for small friend groups: a video call and a movie theater in one browser tab.** Calls go directly between your devices, movies play in sync on everyone's screen at full quality, and there's nothing to install. On Android, an app is available that opens it full screen and rings your phone when a friend calls.
+**Vortex Video is a hangout app for small friend groups: a video call and a movie theater in one.** Tap a friend's face to ring them, see who's calling before you answer, and watch movies in sync at full quality. Calls go directly between your devices. It runs in any modern browser, and there are apps for **Windows** and **Android** that ring you even when Vortex is closed.
+
+<p align="center">
+  <img src="docs/screens/home.png" alt="Vortex home screen: New call, paste an invite link, friends with online status, recent calls" width="100%">
+</p>
+<p align="center">
+  <img src="docs/screens/phones.png" alt="On a phone: the call screen, the ⋮ menu with reactions, the people list with connection bars, and the Tiled/Sidebar/Spotlight layouts" width="100%">
+</p>
 
 It's built for the way friends actually hang out online: someone starts a call, someone else puts on a movie, and the movie dips when people talk. It's one tab, with no account needed for your guests and no time limit.
 
@@ -32,7 +53,7 @@ Most tools do one of these jobs well and make you stitch the rest together. A ca
 | Video call + watch party in one place | ✅ | ⚠️ Mostly screen share | ⚠️ Screen share | ⚠️ Screen share | ✅ Apple devices | ⚠️ Mostly text chat |
 | Each person streams the original video, in sync | ✅ | ⚠️ YouTube activity only | ❌ | ❌ | ✅ Supported apps | ✅ |
 | Movie automatically dips when friends talk | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ |
-| Works on Android, Windows, Mac and iPhone | ✅ Browser | ✅ App | ✅ App | ✅ | ❌ SharePlay is Apple-only | ⚠️ Desktop browsers |
+| Works on Android, Windows, Mac and iPhone | ✅ Browser, plus Windows and Android apps | ✅ App | ✅ App | ✅ | ❌ SharePlay is Apple-only | ⚠️ Desktop browsers |
 | Guests join without an account | ✅ | ❌ | ✅ | ⚠️ Depends on settings | ⚠️ Web link, no SharePlay | ⚠️ Extension + own streaming subscription |
 | No time limit on group calls | ✅ | ✅ | ❌ 40 min | ❌ 60 min (3+ people) | ✅ | n/a |
 | See the caller's live video before you answer | ✅ | ❌ | ❌ | ❌ | ❌ | n/a |
@@ -57,14 +78,18 @@ We'd rather you hear this from us:
 <tr><td valign="top" width="50%">
 
 ### 🎥 Calls
-- **Works like Google Meet**: tap **New call**, share the link, and people join from a "Ready to join?" screen where they check their camera and mic first. Or paste an invite link on the home screen to join.
+- **A home screen like FaceTime, calls like Meet and Zoom.** Home shows your friends (who's online, who's in a call) and your recent calls, with no camera on. Tap a face to ring someone, tap **New call** to start one, or paste an invite link to get a "Ready to join?" preview.
+- **A call screen built for phones**: who you're with and a timer up top, people, chat and layout buttons, and a ⋮ sheet with reactions, raise hand, effects, noise reduction, captions, recording and more.
+- **Tiled, Sidebar or Spotlight** layouts, plus pin anyone.
+- **People list** with search, connection bars, mic status and per-person options, and optional live call stats.
+- **Bad-connection alerts**: when someone starts breaking up, everyone else sees it on their tile, and that person gets a banner with a one-tap fix (turn off camera).
 - Peer-to-peer video calls for up to 8 people, with automatic host migration. The call survives when whoever started it leaves.
 - Invite links (24 hours) and **ring a friend** with one tap: accept, audio-only or decline.
 - **See who's calling, live.** While your phone rings, the caller's camera plays on the ringing card (video only). They can't see or hear you until you answer, and callers can turn it off in Settings.
 - **Call alerts** when Vortex is closed or your phone is locked: "Drake is calling" with Answer and Decline, and a missed-call note if you don't pick up.
 - Friends list with online and in-call status.
 - Join preview: choose camera and mic before you go in.
-- Grid and speaker layouts, pin anyone, raise hand, reactions and chat.
+- Raise hand, reactions and chat bubbles.
 - **Picture-in-picture**: your friends' faces in a floating window while you use other apps.
 - Screen sharing from computers (desktop only).
 - Live captions, call recording and auto clips. Auto clips save the last 20 seconds when everyone laughs or cheers, are opt-in, and show everyone a badge.
@@ -95,7 +120,7 @@ We'd rather you hear this from us:
 </td><td valign="top">
 
 ### ✨ Camera & AI
-- WebGL backgrounds, blur, color looks and **12 face filters**, plus skin touch-up.
+- WebGL backgrounds, blur, studio light, color looks and **12 face filters**, plus skin touch-up. Effect previews use your own camera.
 - **Low-light boost** that lifts shadows without blowing out highlights.
 - 60 fps when your camera supports it, with automatic quality adaptation.
 - **Hand gestures**: ✋ pause or play for everyone, ☝️ raise your hand, 👍 or 🤟 send a reaction, ✌️ take a group snapshot.
@@ -125,19 +150,33 @@ flowchart LR
 - **Calls** use a full mesh: every member connects directly to every other. The room is a well-known "beacon" peer that admits newcomers and checks their invite. If the beacon holder leaves, the longest-standing member takes over.
 - **Accounts, friends and ringing** run on Supabase with row-level security on every table. Rings go through a database function that checks you're friends, rate-limits, and stamps the real sender, so a ring can't be forged. Presence uses one private channel per user, so only your friends see when you're online.
 - **Hosting** is a Cloudflare Pages worker that serves `public/` from this repo at a pinned commit, hands out short-lived TURN relay credentials, sends call alerts (Web Push), and publishes the Android app-link file.
+- **Windows** is a small [Electron](https://www.electronjs.org/) app (`desktop/`) around the site, with a tray icon so friends can ring you while it's minimized. GitHub Actions builds the installer and publishes it as a release.
 - **Android** is a [Trusted Web Activity](https://developer.chrome.com/docs/android/trusted-web-activity): the app opens the site full screen in Chrome, so it gets Chrome's full WebRTC, Picture-in-Picture and codec support. It uses Android's own permission prompts for notifications and location; camera and microphone permissions go through Chrome.
 
 ## Repository layout
 
 | Path | What it is |
 |---|---|
-| `public/` | The website: the app (`index.html`), web manifest, service worker and icons |
+| `public/` | The website: the app (`index.html`), the landing page (`welcome.html`), web manifest, service worker and icons |
+| `desktop/` | The Windows app (Electron) |
+| `tools/` | Rebuilds the landing page's Tailwind CSS |
 | `workers/site/_worker.js` | The Cloudflare Pages worker that serves the site, `/api/turn` and `/.well-known/assetlinks.json` |
 | `workers/keepalive/` | A cron Worker that keeps the free Supabase project from pausing |
 | `supabase-setup.sql` | Database schema, row-level security and realtime policies (safe to re-run) |
 | `android/` | The Android app project (Trusted Web Activity) |
 | `releases/` | Signed Android builds |
 | `.github/workflows/android.yml` | Builds the Android app on every change to `android/` |
+| `.github/workflows/windows.yml` | Builds the Windows installer and publishes a GitHub release |
+
+## Downloads
+
+| | Get it | Notes |
+|---|---|---|
+| 🌐 **Web** | [vortex-video.pages.dev](https://vortex-video.pages.dev) | Chrome, Edge, Firefox, Safari. Nothing to install. |
+| 🪟 **Windows 10/11** | [Vortex-Video-Setup.exe](https://github.com/itbelikethatbruh/vortex-video/releases/latest/download/Vortex-Video-Setup.exe) | Not code-signed yet: on "Windows protected your PC", click **More info → Run anyway**. SHA-256 and a VirusTotal link are in the [release notes](https://github.com/itbelikethatbruh/vortex-video/releases/latest). |
+| 🤖 **Android 7+** | [vortex-video.apk](https://vortex-video.pages.dev/download/android) | Allow "Install unknown apps" for your browser when asked. |
+
+The [download page](https://vortex-video.pages.dev/welcome.html) links each file to its VirusTotal report by SHA-256, so you can check it before installing.
 
 ## Run your own
 
@@ -166,7 +205,14 @@ flowchart LR
 </details>
 
 <details>
-<summary><b>3. Android app</b></summary>
+<summary><b>3. Windows app</b></summary>
+
+Run the **Windows app** workflow from the Actions tab (or push a `desktop-v*` tag). It builds `Vortex-Video-Setup.exe` on a Windows runner and publishes a release with its SHA-256. Add a `VT_API_KEY` repository secret (a free VirusTotal API key) and each build is also uploaded to VirusTotal.
+
+</details>
+
+<details>
+<summary><b>4. Android app</b></summary>
 
 1. Push a change under `android/`. CI builds an unsigned APK and publishes it to the `android-build` branch along with the matching `apksigner`.
 2. Sign it offline with your release key:
@@ -189,7 +235,7 @@ Keep the keystore and its passwords private and backed up. You need the same key
 
 ## Browser support
 
-Chrome, Edge and Firefox on desktop; Chrome on Android; Safari on iPhone and Mac. Picture-in-picture, screen sharing and some AI camera features depend on the browser and device, and the app tells you when one isn't available.
+Chrome, Edge and Firefox on desktop; Chrome on Android; Safari on iPhone and Mac; the Windows app. Picture-in-picture, screen sharing and some AI camera features depend on the browser and device, and the app tells you when one isn't available.
 
 ---
 
