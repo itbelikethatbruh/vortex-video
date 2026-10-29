@@ -1,0 +1,11 @@
+{
+  "web": { "version": "2.1.0-beta", "build": 21 },
+  "android": { "version": "1.2.0", "code": 3, "url": "/download/android" },
+  "windows": { "version": "2.0.0-beta.1", "url": "https://github.com/itbelikethatbruh/vortex-video/releases/latest/download/Vortex-Video-Setup.exe" },
+  "notes": [
+    "New Vortex ringtone and ringback sounds",
+    "Incoming calls vibrate in the ringtone's rhythm",
+    "Android: locked phones keep ringing until you answer",
+    "Updates in Settings, with Check for updates"
+  ]
+}

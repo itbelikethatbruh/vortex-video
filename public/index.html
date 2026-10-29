@@ -1012,6 +1012,27 @@ svg .d { fill: var(--duo, currentColor); transition: fill-opacity .2s; }
 .sr-select { width: 50%; max-width: 210px; height: 38px; min-width: 0; font-size: 13px; }
 .sr-kbd, kbd { font: 600 11px var(--mono); padding: 3px 7px; border-radius: 7px; background: rgba(255,255,255,.07); border: 1px solid var(--hair); color: var(--muted); white-space: nowrap; }
 .mkc-ic { background: transparent !important; padding: 0; } .mkc-ic svg { width: 100%; height: 100%; display: block; }
+.upd-row .btn { flex: none; }
+#upd-check:disabled { cursor: progress; }
+#upd-check:disabled .sr-ic svg { animation: updSpin 1s linear infinite; }
+@keyframes updSpin { to { transform: rotate(360deg); } }
+.upd-notes { padding: 4px 16px 14px 60px; font-size: 12.5px; color: var(--muted); }
+.upd-nh { font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.upd-notes ul { margin: 0; padding-left: 16px; display: grid; gap: 3px; }
+.upd-card {
+  position: fixed; left: 50%; bottom: calc(84px + var(--safe-b)); z-index: 95; width: min(calc(100vw - 32px), 420px);
+  padding: 14px; border-radius: var(--radius); background: rgba(20, 16, 36, 0.94); border: 1px solid var(--hair-2);
+  backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); box-shadow: var(--shadow), var(--glow);
+  opacity: 0; transform: translate(-50%, 16px) scale(0.98); transition: opacity .25s, transform .35s var(--spring);
+}
+.upd-card.in { opacity: 1; transform: translate(-50%, 0); }
+@media (min-width: 900px) { .upd-card { left: auto; right: 24px; bottom: 24px; transform: translateY(16px) scale(0.98); } .upd-card.in { transform: none; } }
+.upd-top { display: flex; gap: 12px; align-items: flex-start; }
+.upd-ic { flex: none; width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: var(--grad); color: #fff; }
+.upd-ic svg { width: 18px; height: 18px; }
+.upd-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; font-size: 12.5px; color: var(--muted); }
+.upd-txt b { color: var(--text); font-size: 14.5px; font-weight: 600; }
+.upd-acts { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
 .set-foot { display: flex; align-items: center; gap: 12px; margin: 22px 6px 4px; color: var(--muted); font-size: 12px; }
 .set-foot .logo-mark { width: 38px; height: 38px; flex: none; }
 .set-foot > div { display: flex; flex-direction: column; gap: 1px; }
@@ -1572,6 +1593,13 @@ kbd { font: 600 10.5px/1 var(--mono); padding: 4px 6px; border-radius: 6px; back
       </section>
     </div>
 
+    <div class="set-cap">Updates</div>
+    <section class="set-group">
+      <button class="srow srow-btn" id="upd-check" type="button"><span class="sr-ic" style="--c:#34D399" data-ic="refresh"></span><span class="sr-main"><span class="sr-l" id="upd-title">Check for updates</span><span class="sw-sub" id="upd-sub">Checks automatically</span></span></button>
+      <div id="upd-list"></div>
+      <div class="upd-notes" id="upd-notes" hidden></div>
+    </section>
+
     <div class="set-cap">About</div>
     <section class="set-group">
       <a class="srow srow-btn" href="/welcome.html" target="_blank" rel="noopener"><span class="sr-ic" style="--c:#22D3EE" data-ic="globe"></span><span class="sr-main"><span class="sr-l">Vortex website</span><span class="sw-sub">vortex-video.pages.dev</span></span><span class="sr-chev" data-ic="chevRight"></span></a>
@@ -1803,7 +1831,8 @@ const SUPABASE_URL = 'https://uyroxbozyyroxzlkrvun.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_1i5R1YQUaxuBBgy2UioXIA_csNcsoCg';   // publishable key (or legacy anon key)
 /* Call alerts (Web Push): the site's public VAPID key. Its private half is the VAPID_PRIVATE_JWK
    secret of the site worker (/api/ring). Empty = call alerts off. */
-const APP_VERSION = '2.0.0-beta';
+const APP_VERSION = '2.1.0-beta';
+const APP_BUILD = 21;                // bump with every web release, together with "web" in public/version.json
 const VAPID_PUBLIC = 'BL7xtSCqVxMWu-6ylVBuyfFP5wfQWMmeVujqiEiFuuEcjq6xJ--wgVozqEh4Lgef6iND-3FH79u-72qgR0Aiifw';
 
 /* Relay (TURN) for networks where two devices can't connect directly: some
@@ -13454,6 +13483,7 @@ const Cmdk = {
     add('Go to', 'Friends', ICONS.users, () => Panels.open('drawer-friends'));
     add('Go to', 'Settings', ICONS.gear, () => Panels.open('drawer-settings'), { key: inCall ? '' : ',' });
     add('Go to', MKC.acct() ? 'MKCinema account' : 'Connect MKCinema', ICONS.film, () => MKC.open(), { kw: 'movies add-ons watchlist' });
+    add('Go to', 'Check for updates', ICONS.refresh, () => Updates.check(true), { kw: 'update upgrade new version' });
     add('Go to', 'Get the Windows and Android apps', ICONS.upload, () => window.open('/welcome.html', '_blank', 'noopener'), { kw: 'download install' });
     return out;
   },
@@ -13489,6 +13519,147 @@ const Cmdk = {
   move(d) { if (!this.items.length) return; this.sel = (this.sel + d + this.items.length) % this.items.length; this.paint(); },
   run(it) { if (!it) return; Haptics.tap(); Panels.close('modal'); setTimeout(() => it.fn(), 30); },
 };
+
+/* ---- 29b-updates.js ---- */
+/* =====================================================================
+   Updates — public/version.json says what's current for each app:
+   web (this page; a reload picks it up), the Android app (its native shell
+   only; it shows this site) and the Windows app (same). Checked shortly after
+   start, every 30 minutes and when the app comes back to the screen. A found
+   update offers itself once (never mid-call or while ringing); "Later" snoozes
+   it for a day. Settings → Updates has the full picture and "Check for updates".
+   Ship a web update: bump APP_VERSION + APP_BUILD here and "web" in version.json.
+   ===================================================================== */
+const Updates = {
+  info: null, at: 0, busy: false, shown: '', pending: null, err: '',
+  /* which Vortex app this page is running in, and its version when known */
+  host() {
+    if (window.vortexDesktop) return { kind: 'windows', version: String(window.vortexDesktop.version || '2.0.0-beta.1') };
+    if (Store.get('twa', false)) {
+      const code = +Store.get('apk', 0) || 0;
+      return { kind: 'android', code, version: code ? '' : '1.1.0 or older' };
+    }
+    return { kind: 'web' };
+  },
+  init() {
+    // the Android app opens /?apk=<versionCode> (1.2.0 and later); older ones only show up as an android-app:// referrer
+    try {
+      const q = new URLSearchParams(location.search);
+      if (/^android-app:\/\/dev\.pages\.vortex_video\.twa/.test(document.referrer || '') || q.has('apk')) Store.set('twa', true);
+      if (/^\d{1,4}$/.test(q.get('apk') || '')) {
+        Store.set('apk', +q.get('apk'));
+        q.delete('apk');
+        history.replaceState(history.state, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+      }
+    } catch { /* */ }
+    setTimeout(() => this.check(), 8000);
+    setInterval(() => this.check(), 30 * 60000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && Date.now() - this.at > 10 * 60000) this.check(); });
+    setInterval(() => this.maybePrompt(), 15000);    // a prompt held back by a call shows up after it
+  },
+  async check(manual) {
+    if (this.busy) return this.info;
+    this.busy = true; this.err = '';
+    if (manual) this.render();
+    try {
+      const r = await fetch('/version.json?t=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const j = await r.json();
+      if (!j || typeof j !== 'object' || !j.web || !(+j.web.build > 0)) throw new Error('bad version file');
+      this.info = j; this.at = Date.now();
+    } catch (e) {
+      this.err = navigator.onLine === false ? "You're offline" : "Couldn't check right now";
+      console.warn('[updates]', e);
+    } finally { this.busy = false; }
+    this.render();
+    if (manual && !this.err) toast(this.available().length ? 'An update is available' : "You're up to date");
+    else if (manual) toast(this.err, { type: 'warn' });
+    this.maybePrompt(manual);
+    return this.info;
+  },
+  /* what can be updated here, newest information first */
+  available() {
+    const j = this.info, out = [];
+    if (!j) return out;
+    if (+j.web.build > APP_BUILD) out.push({ kind: 'web', version: String(j.web.version || ''), label: 'Vortex', act: 'Restart to update', sub: 'Takes a second, nothing to download' });
+    const hst = this.host();
+    if (hst.kind === 'android' && j.android && +j.android.code > hst.code) out.push({ kind: 'android', version: String(j.android.version || ''), label: 'Android app', act: 'Download', url: '/download/android', sub: 'Open the download to install it over this one. You stay signed in.' });
+    if (hst.kind === 'windows' && j.windows && cmpVersion(String(j.windows.version || ''), hst.version) > 0) out.push({ kind: 'windows', version: String(j.windows.version || ''), label: 'Windows app', act: 'Download', url: String(j.windows.url || '/welcome.html'), sub: 'Run the installer to update. You stay signed in.' });
+    return out;
+  },
+  notes() { return (this.info && Array.isArray(this.info.notes) ? this.info.notes : []).map((n) => cleanText(String(n), 120)).filter(Boolean).slice(0, 6); },
+  busyNow() { return (typeof App !== 'undefined' && (App.inCall || App.busy)) || (typeof Ring !== 'undefined' && (Ring.inc || Ring.out)); },
+  maybePrompt(force) {
+    const list = this.available();
+    if (!list.length) return;
+    const key = list.map((u) => u.kind + ':' + u.version).join(',');
+    if (this.busyNow()) { this.pending = key; return; }
+    if (this.shown === key && !force) return;
+    const sn = Store.get('updSnooze', null);
+    if (!force && sn && sn.key === key && Date.now() < +sn.until) return;
+    this.shown = key; this.pending = null;
+    this.prompt(list, key);
+  },
+  prompt(list, key) {
+    const old = $('#upd-card'); if (old) old.remove();
+    const u = list[0], notes = this.notes();
+    const close = (snooze) => {
+      if (snooze) Store.set('updSnooze', { key, until: Date.now() + 24 * 3600000 });
+      card.classList.remove('in'); setTimeout(() => card.remove(), 300);
+    };
+    const card = h('div', { class: 'upd-card', id: 'upd-card', role: 'dialog', 'aria-label': 'Update available' },
+      h('div', { class: 'upd-top' },
+        h('span', { class: 'upd-ic', svg: ICONS.sparkles }),
+        h('div', { class: 'upd-txt' },
+          h('b', { text: `${u.kind === 'web' ? 'Vortex' : u.label} ${u.version} is ready` }),
+          h('span', { text: notes.length ? notes.slice(0, 2).join(' · ') : u.sub }))),
+      h('div', { class: 'upd-acts' },
+        h('button', { class: 'btn btn-sm btn-ghost', type: 'button', text: 'Later', onclick: () => close(true) }),
+        h('button', { class: 'btn btn-sm btn-primary', type: 'button', text: u.kind === 'web' ? 'Update' : 'Download', onclick: () => { close(false); this.apply(u); } })));
+    document.body.append(card);
+    requestAnimationFrame(() => card.classList.add('in'));
+  },
+  async apply(u) {
+    if (u.kind === 'web') {
+      if (this.busyNow() && !confirm('Updating restarts Vortex and ends your call. Update now?')) return;
+      try { const reg = navigator.serviceWorker && await navigator.serviceWorker.getRegistration(); if (reg) await Promise.race([reg.update(), sleep(3000)]); } catch { /* */ }
+      location.reload();
+      return;
+    }
+    window.open(u.url, '_blank', 'noopener');
+    if (u.kind === 'android') toast('Downloading. Open it from your notifications to install.', { ms: 9000 });
+  },
+  /* Settings → Updates */
+  render() {
+    const box = $('#upd-list'); if (!box) return;
+    const hst = this.host();
+    const here = hst.kind === 'android' ? `Android app ${hst.version || (this.info && +this.info.android?.code === hst.code ? this.info.android.version : 'build ' + hst.code)}`
+      : hst.kind === 'windows' ? `Windows app ${hst.version}` : 'Web app';
+    const list = this.available();
+    $('#upd-title').textContent = this.busy ? 'Checking…' : 'Check for updates';
+    const state = this.err ? this.err : !this.at ? 'Checks automatically' : list.length ? `${list.length === 1 ? 'Update' : 'Updates'} available below` : `Up to date, checked ${fmtAgo(this.at)}`;
+    $('#upd-sub').textContent = `${state} · Vortex ${APP_VERSION}${hst.kind === 'web' ? '' : ' · ' + here}`;
+    $('#upd-check').disabled = this.busy;
+    box.replaceChildren(...list.map((u) => h('div', { class: 'srow upd-row' },
+      h('span', { class: 'sr-ic', style: { '--c': '#8B5CF6' }, svg: u.kind === 'web' ? ICONS.sparkles : ICONS.upload }),
+      h('span', { class: 'sr-main' }, h('span', { class: 'sr-l', text: `${u.label} ${u.version}` }), h('span', { class: 'sw-sub', text: u.sub })),
+      h('button', { class: 'btn btn-sm btn-primary', type: 'button', text: u.act, onclick: () => this.apply(u) }))));
+    const notes = list.length ? this.notes() : [];
+    const nb = $('#upd-notes');
+    nb.hidden = !notes.length;
+    nb.replaceChildren(...(notes.length ? [h('div', { class: 'upd-nh', text: "What's new" }), h('ul', {}, ...notes.map((n) => h('li', { text: n })))] : []));
+  },
+};
+/* 1.2.0 > 1.2.0-beta.3 > 1.2.0-beta.1 > 1.1.9 */
+function cmpVersion(a, b) {
+  const p = (v) => { const [main, pre] = String(v).split('-'); return { m: main.split('.').map((x) => +x || 0), pre: pre ? (pre.match(/\d+/g) || ['0']).map(Number) : null }; };
+  const A = p(a), B = p(b);
+  for (let i = 0; i < 3; i++) if ((A.m[i] || 0) !== (B.m[i] || 0)) return (A.m[i] || 0) - (B.m[i] || 0);
+  if (!A.pre || !B.pre) return (A.pre ? -1 : 0) - (B.pre ? -1 : 0);
+  for (let i = 0; i < Math.max(A.pre.length, B.pre.length); i++) if ((A.pre[i] || 0) !== (B.pre[i] || 0)) return (A.pre[i] || 0) - (B.pre[i] || 0);
+  return 0;
+}
+function fmtAgo(t) { const s = Math.round((Date.now() - t) / 1000); return s < 60 ? 'just now' : s < 3600 ? `${Math.round(s / 60)} min ago` : `${Math.round(s / 3600)} h ago`; }
 
 /* ---- 30-app.js ---- */
 /* =====================================================================
@@ -13530,6 +13701,7 @@ const App = {
     this.renderIdentity();
     if (!name) setTimeout(() => { if (!IS_TOUCH && !Account.signedIn && !$('#gr-name-field').hidden) $('#gr-name').focus(); }, 300);
     Account.init();                                   // accounts load in the background; guests are never blocked
+    Updates.init();
     // like Meet and FaceTime, the home screen never opens the camera: only "Ready to join?" and calls do
     this.greenMode(this.invited ? 'preview' : 'home');
     this.renderHub();
@@ -14625,6 +14797,7 @@ const App = {
     $('#set-studio').onclick = () => Panels.open('pop-audio');
     $('#set-mkc').onclick = () => MKC.open();
     $('#set-keys').onclick = () => { Panels.close('drawer'); Cmdk.open(); };
+    $('#upd-check').onclick = () => Updates.check(true);
   },
 
   renderLens() {
@@ -14667,6 +14840,7 @@ const App = {
     this.fillDevices();
     $('#set-present').hidden = !CAN_SHARE_SCREEN;
     $('#set-version').textContent = 'Version ' + APP_VERSION;
+    Updates.render();
   },
   fillDevices() {
     const fill = (sel, list, cur, def) => {
