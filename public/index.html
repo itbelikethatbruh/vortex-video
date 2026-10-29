@@ -3040,11 +3040,13 @@ const Sound = {
      repeat (vibration in step with a ringtone); rampFrom starts quieter and swells to vol over
      three cycles. stop() also fades out the cycle that's still sounding. */
   loop(name, periodMs, vol = 1, { onCycle, rampFrom } = {}) {
-    let n = 0, cur = null;
+    let n = 0;
+    const live = [];                     // cycles can overlap (reverb tails), so fade every recent one
     const once = () => {
       const v = rampFrom == null ? vol : rampFrom + (vol - rampFrom) * Math.min(1, n / 3);
       n++;
-      cur = this.play(name, v);
+      const out = this.play(name, v);
+      if (out) { live.push(out); if (live.length > 3) live.shift(); }
       if (onCycle) try { onCycle(); } catch { /* */ }
     };
     once();
@@ -3052,7 +3054,7 @@ const Sound = {
     return () => {
       clearInterval(iv);
       const c = AudioEngine.ctx;
-      if (cur && c) try { cur.gain.cancelScheduledValues(c.currentTime); cur.gain.setTargetAtTime(0, c.currentTime, 0.03); } catch { /* */ }
+      if (c) for (const out of live) try { out.gain.cancelScheduledValues(c.currentTime); out.gain.setTargetAtTime(0, c.currentTime, 0.03); } catch { /* */ }
     };
   },
   play(name, vol = 1) {
