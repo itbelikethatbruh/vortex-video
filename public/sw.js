@@ -48,7 +48,8 @@ async function onPush(d) {
       body: 'Vortex video call · tap to see them and answer',
       tag, renotify: true, requireInteraction: true,
       icon: '/icons/icon-192.png',
-      vibrate: [700, 400, 700, 400, 700, 400, 700, 400, 700],
+      // the ringtone's rhythm (Android browsers; the Vortex app's call channel rings and buzzes on its own)
+      vibrate: [80, 40, 80, 40, 80, 40, 320, 220, 80, 40, 80, 40, 80, 40, 450, 1250, 80, 40, 80, 40, 80, 40, 320, 220, 80, 40, 80, 40, 80, 40, 450],
       actions: [{ action: 'answer', title: 'Answer' }, { action: 'decline', title: 'Decline' }],
       data: d,
     });
