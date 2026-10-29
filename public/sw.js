@@ -37,10 +37,35 @@ self.addEventListener('push', (e) => {
   e.waitUntil(onPush(d));
 });
 
+/* Rings are also written to a small IndexedDB book, so a call missed while Vortex was closed still
+   lands in Recent calls: the page reads the book when it opens and logs the missed ones. */
+function ringBook(mode, fn) {
+  return new Promise((resolve) => {
+    let req;
+    try { req = indexedDB.open('vortex-rings', 1); } catch { resolve(); return; }
+    req.onupgradeneeded = () => req.result.createObjectStore('rings', { keyPath: 'id' });
+    req.onerror = () => resolve();
+    req.onsuccess = () => {
+      const db = req.result, tx = db.transaction('rings', mode);
+      try { fn(tx.objectStore('rings')); } catch { /* */ }
+      tx.oncomplete = tx.onerror = tx.onabort = () => { db.close(); resolve(); };
+    };
+  });
+}
+const bookRing = (d, name) => ringBook('readwrite', (st) => st.put({ id: d.id, from: String(d.from || ''), name, at: +d.at || Date.now(), state: 'ringing' }));
+const bookSet = (id, state) => ringBook('readwrite', (st) => {
+  const g = st.get(id);
+  g.onsuccess = () => { if (!g.result) return; if (state === 'gone') st.delete(id); else st.put(Object.assign(g.result, { state })); };
+});
+async function tellWindows(msg) {
+  for (const w of await self.clients.matchAll({ type: 'window', includeUncontrolled: true })) w.postMessage(msg);
+}
+
 async function onPush(d) {
   const tag = 'ring-' + d.id;
   const name = String(d.name || 'A friend').slice(0, 40);
   if (d.t === 'ring') {
+    await bookRing(d, name);
     const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
     if (wins.some((w) => w.visibilityState === 'visible')) return;          // the open app rings by itself
     if (Date.now() - (+d.at || 0) > 60000) return missed(tag, name);        // arrived too late to answer
@@ -55,6 +80,8 @@ async function onPush(d) {
     });
   }
   if (d.t === 'end') {
+    await bookSet(d.id, d.reason === 'missed' ? 'missed' : 'gone');
+    if (d.reason === 'missed') await tellWindows({ type: 'vortex-missed' });
     const open = await self.registration.getNotifications({ tag });
     for (const n of open) n.close();
     if (d.reason === 'missed' && open.length) return missed(tag, name);
@@ -74,6 +101,7 @@ self.addEventListener('notificationclick', (e) => {
     const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
     const win = wins.find((w) => new URL(w.url).origin === location.origin);
     if (d.t !== 'ring') { if (win) return win.focus(); return self.clients.openWindow('/'); }
+    await bookSet(d.id, 'gone');                 // answered or declined here: not a missed call
     if (e.action === 'decline') {
       // only an open Vortex window is signed in and can tell the caller; otherwise their ring just times out
       if (win) win.postMessage({ type: 'vortex-ring-decline', d });
