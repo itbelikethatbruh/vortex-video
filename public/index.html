@@ -1831,8 +1831,8 @@ const SUPABASE_URL = 'https://uyroxbozyyroxzlkrvun.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_1i5R1YQUaxuBBgy2UioXIA_csNcsoCg';   // publishable key (or legacy anon key)
 /* Call alerts (Web Push): the site's public VAPID key. Its private half is the VAPID_PRIVATE_JWK
    secret of the site worker (/api/ring). Empty = call alerts off. */
-const APP_VERSION = '2.1.0-beta';
-const APP_BUILD = 21;                // bump with every web release, together with "web" in public/version.json
+const APP_VERSION = '2.1.1-beta';
+const APP_BUILD = 22;                // bump with every web release, together with "web" in public/version.json
 const VAPID_PUBLIC = 'BL7xtSCqVxMWu-6ylVBuyfFP5wfQWMmeVujqiEiFuuEcjq6xJ--wgVozqEh4Lgef6iND-3FH79u-72qgR0Aiifw';
 
 /* Relay (TURN) for networks where two devices can't connect directly: some
@@ -13531,11 +13531,11 @@ const Cmdk = {
    Ship a web update: bump APP_VERSION + APP_BUILD here and "web" in version.json.
    ===================================================================== */
 const Updates = {
-  info: null, at: 0, busy: false, shown: '', pending: null, err: '',
+  info: null, at: 0, busy: false, shown: '', pending: null, err: '', inTwa: false,
   /* which Vortex app this page is running in, and its version when known */
   host() {
     if (window.vortexDesktop) return { kind: 'windows', version: String(window.vortexDesktop.version || '2.0.0-beta.1') };
-    if (Store.get('twa', false)) {
+    if (this.inTwa) {
       const code = +Store.get('apk', 0) || 0;
       return { kind: 'android', code, version: code ? '' : '1.1.0 or older' };
     }
@@ -13545,7 +13545,10 @@ const Updates = {
     // the Android app opens /?apk=<versionCode> (1.2.0 and later); older ones only show up as an android-app:// referrer
     try {
       const q = new URLSearchParams(location.search);
-      if (/^android-app:\/\/dev\.pages\.vortex_video\.twa/.test(document.referrer || '') || q.has('apk')) Store.set('twa', true);
+      // The Android app shares Chrome's storage with the browser, so "this tab is the app" lives in
+      // sessionStorage (one per app session) and Android updates never show in a Chrome tab
+      if (/^android-app:\/\/dev\.pages\.vortex_video\.twa/.test(document.referrer || '') || q.has('apk')) sessionStorage.setItem('vortex:twa', '1');
+      this.inTwa = sessionStorage.getItem('vortex:twa') === '1';
       if (/^\d{1,4}$/.test(q.get('apk') || '')) {
         Store.set('apk', +q.get('apk'));
         q.delete('apk');
@@ -13583,8 +13586,8 @@ const Updates = {
     if (!j) return out;
     if (+j.web.build > APP_BUILD) out.push({ kind: 'web', version: String(j.web.version || ''), label: 'Vortex', act: 'Restart to update', sub: 'Takes a second, nothing to download' });
     const hst = this.host();
-    if (hst.kind === 'android' && j.android && +j.android.code > hst.code) out.push({ kind: 'android', version: String(j.android.version || ''), label: 'Android app', act: 'Download', url: '/download/android', sub: 'Open the download to install it over this one. You stay signed in.' });
-    if (hst.kind === 'windows' && j.windows && cmpVersion(String(j.windows.version || ''), hst.version) > 0) out.push({ kind: 'windows', version: String(j.windows.version || ''), label: 'Windows app', act: 'Download', url: String(j.windows.url || '/welcome.html'), sub: 'Run the installer to update. You stay signed in.' });
+    if (hst.kind === 'android' && j.android && +j.android.code > hst.code) out.push({ kind: 'android', version: String(j.android.version || ''), label: 'Vortex for Android', act: 'Download', url: '/download/android', sub: 'Open the download to install it over this one. You stay signed in.' });
+    if (hst.kind === 'windows' && j.windows && cmpVersion(String(j.windows.version || ''), hst.version) > 0) out.push({ kind: 'windows', version: String(j.windows.version || ''), label: 'Vortex for Windows', act: 'Download', url: String(j.windows.url || '/welcome.html'), sub: 'Run the installer to update. You stay signed in.' });
     return out;
   },
   notes() { return (this.info && Array.isArray(this.info.notes) ? this.info.notes : []).map((n) => cleanText(String(n), 120)).filter(Boolean).slice(0, 6); },
@@ -13611,7 +13614,7 @@ const Updates = {
       h('div', { class: 'upd-top' },
         h('span', { class: 'upd-ic', svg: ICONS.sparkles }),
         h('div', { class: 'upd-txt' },
-          h('b', { text: `${u.kind === 'web' ? 'Vortex' : u.label} ${u.version} is ready` }),
+          h('b', { text: `Vortex ${u.version} is ready` }),
           h('span', { text: notes.length ? notes.slice(0, 2).join(' · ') : u.sub }))),
       h('div', { class: 'upd-acts' },
         h('button', { class: 'btn btn-sm btn-ghost', type: 'button', text: 'Later', onclick: () => close(true) }),
@@ -13633,12 +13636,12 @@ const Updates = {
   render() {
     const box = $('#upd-list'); if (!box) return;
     const hst = this.host();
-    const here = hst.kind === 'android' ? `Android app ${hst.version || (this.info && +this.info.android?.code === hst.code ? this.info.android.version : 'build ' + hst.code)}`
-      : hst.kind === 'windows' ? `Windows app ${hst.version}` : 'Web app';
+    const here = hst.kind === 'android' ? `Vortex for Android ${hst.version || (this.info && +this.info.android?.code === hst.code ? this.info.android.version : 'build ' + hst.code)}`
+      : hst.kind === 'windows' ? `Vortex for Windows ${hst.version}` : 'Vortex for web';
     const list = this.available();
     $('#upd-title').textContent = this.busy ? 'Checking…' : 'Check for updates';
     const state = this.err ? this.err : !this.at ? 'Checks automatically' : list.length ? `${list.length === 1 ? 'Update' : 'Updates'} available below` : `Up to date, checked ${fmtAgo(this.at)}`;
-    $('#upd-sub').textContent = `${state} · Vortex ${APP_VERSION}${hst.kind === 'web' ? '' : ' · ' + here}`;
+    $('#upd-sub').textContent = `${state} · ${hst.kind === 'web' ? 'Vortex ' + APP_VERSION : here}`;
     $('#upd-check').disabled = this.busy;
     box.replaceChildren(...list.map((u) => h('div', { class: 'srow upd-row' },
       h('span', { class: 'sr-ic', style: { '--c': '#8B5CF6' }, svg: u.kind === 'web' ? ICONS.sparkles : ICONS.upload }),
