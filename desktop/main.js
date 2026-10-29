@@ -69,6 +69,7 @@ app.whenReady().then(() => {
     desktopCapturer.getSources({ types: ['screen'] }).then((s) => cb(s.length ? { video: s[0], audio: 'loopback' } : {})).catch(() => cb({}));
   });
 
+  ipcMain.on('vx:version', (e) => { e.returnValue = app.getVersion(); });
   ipcMain.on('vx:show', show);
   ipcMain.on('vx:ring', (e, name) => {
     if (!win || (win.isVisible() && win.isFocused())) return;

@@ -23,7 +23,7 @@ plugins {
 def twaManifest = [
     applicationId: 'dev.pages.vortex_video.twa',
     hostName: 'vortex-video.pages.dev', // The domain being opened in the TWA.
-    launchUrl: '/', // The start path for the TWA. Must be relative to the domain.
+    launchUrl: '/?apk=3', // The start path for the TWA. ?apk= must equal versionCode: the site uses it to offer app updates.
     name: 'Vortex Video', // The application name.
     launcherName: 'Vortex', // The name shown on the Android Launcher.
     themeColor: '#07070C', // The color used for the status bar.
@@ -57,8 +57,8 @@ android {
         applicationId "dev.pages.vortex_video.twa"
         minSdkVersion 24
         targetSdkVersion 36
-        versionCode 2
-        versionName "1.1.0"
+        versionCode 3
+        versionName "1.2.0"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name
